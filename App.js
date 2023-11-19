@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Dropdown from './Frontend/src/Component/Dropdown';
+import ChooseFood from './Frontend/src/Screen/ChooseFood';
 import CollabMain from './Frontend/src/Screen/CollabMain';
 import CollabProduct from './Frontend/src/Screen/CollabProduct';
 import CreateSale from './Frontend/src/Screen/CreateSale';
@@ -10,8 +11,8 @@ export default function App() {
   return (
     // <CollabProduct/>
     // <FlashSaleShow/>
-    <CreateSale />
-
+    // <CreateSale />
+    <ChooseFood/>
     // <Dropdown/>
   );
 }

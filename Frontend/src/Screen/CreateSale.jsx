@@ -8,7 +8,7 @@ import SaleInput from '../Component/SaleInput';
 import MoneyInput from '../Component/MoneyInput';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import SaleSetUp from '../Component/SaleSetUp';
-const data = [
+export const  data = [
     {
         id: 1,
         foodName: 'Cơm chiên cá mặn',
@@ -39,6 +39,25 @@ const data = [
     },
     {
         id: 5,
+        foodName: 'Cơm chiên cá mặn',
+        stock: 10,
+        img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
+        price: 3000000
+    },
+    {
+        id: 6,
+        foodName: 'Cơm chiên cá mặn',
+        stock: 10,
+        img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
+        price: 3000000
+    },    {
+        id: 7,
+        foodName: 'Cơm chiên cá mặn',
+        stock: 10,
+        img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
+        price: 3000000
+    },    {
+        id: 8,
         foodName: 'Cơm chiên cá mặn',
         stock: 10,
         img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
@@ -180,6 +199,7 @@ const CreateSale = () => {
                         <Text>{selectedTimeEnd.getHours()}:{selectedTimeEnd.getMinutes()}:00</Text>
                     </View>
                 </TouchableWithoutFeedback>
+                <Line />
                 <TouchableWithoutFeedback>
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Chọn sản phẩm</Text>
@@ -266,7 +286,7 @@ const CreateSale = () => {
                         />
                     </>
                 )}
-                <View style={styles.food}>
+                {/* <View style={styles.food}> */}
                     <ScrollView style={{ width: '95%', height: 430 }} nestedScrollEnabled={true}>
                         {data.map((food) => (
                             <SaleSetUp
@@ -277,7 +297,7 @@ const CreateSale = () => {
                             />
                         ))}
                     </ScrollView>
-                </View>
+                {/* </View> */}
 
                 <TouchableOpacity style={styles.submitBtn} onPress={() => handleSubmit()}>
                     <Text style={styles.btnSubmit_text}>Xác nhận</Text>

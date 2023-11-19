@@ -73,11 +73,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#d9d9d9',
-        width: '100%',
+        width: '96%',
         height: 130,
         marginLeft: 15,
         marginBottom: 10,
-        marginTop: 10
+        marginTop: 10,
+        borderRadius:7
     },
     foodInfo: {
         width: 250,

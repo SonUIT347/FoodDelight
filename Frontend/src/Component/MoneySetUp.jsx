@@ -7,7 +7,7 @@ const MoneySetUp = ({ Info, percent, money }) => {
     const [discount, setDiscount] = useState(0)
     useEffect(() => {
         setDiscount(food.price - money)
-    },[money])
+    }, [money])
     const handleCount = (name) => {
 
         if (name === 'plus') {
@@ -42,28 +42,28 @@ const MoneySetUp = ({ Info, percent, money }) => {
                 <Text style={styles.foodName}>{food.foodName}</Text>
                 <Text>Số lượng: {food.stock}</Text>
                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity onPress={() => handleCount('minus')}>
-                        <AntDesign name="minus" size={24} color="black" />
-                    </TouchableOpacity>
-                    <TextInput
-                        onChangeText={(text) => setCount(text)}
-                        style={{
-                            width: 40,
-                            textAlign: 'center'
-                        }}
-                        keyboardType='numeric'
-                        value={count}
-                    />
-                    <TouchableOpacity onPress={() => handleCount('plus')}>
-                        <AntDesign name="plus" size={24} color="black" />
-                    </TouchableOpacity>
-                </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity onPress={() => handleCount('minus')}>
+                            <AntDesign name="minus" size={24} color="black" />
+                        </TouchableOpacity>
+                        <TextInput
+                            onChangeText={(text) => setCount(text)}
+                            style={{
+                                width: 40,
+                                textAlign: 'center'
+                            }}
+                            keyboardType='numeric'
+                            value={count}
+                        />
+                        <TouchableOpacity onPress={() => handleCount('plus')}>
+                            <AntDesign name="plus" size={24} color="black" />
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <Text>Giá: {food.price}</Text>
                 {discount > 0 ?
-                    (<Text>Giá giảm còn: {discount}</Text>):
-                        <Text style={{ color: 'red',fontSize:15 }}>Giá giảm còn: {discount}</Text>}
+                    (<Text>Giá giảm còn: {discount}</Text>) :
+                    <Text style={{ color: 'red', fontSize: 15 }}>Giá giảm còn: {discount}</Text>}
 
             </View>
         </View>
@@ -82,11 +82,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#d9d9d9',
-        width: '100%',
+        width: '96%',
         height: 130,
         marginLeft: 15,
         marginBottom: 10,
-        marginTop: 10
+        marginTop: 10,
+        borderRadius: 7
     },
     foodInfo: {
         width: 250,
@@ -94,10 +95,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         // alignItems:'center'
-    }, 
-    foodName:{
-        fontSize:20,
-        fontWeight:'bold'
+    },
+    foodName: {
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 })
 export default MoneySetUp
