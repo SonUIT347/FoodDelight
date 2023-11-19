@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const SubmitBtn = ({text}) => {
+const SubmitBtn = ({text, press}) => {
     return (
         <View>
-            <TouchableOpacity style={styles.btnSubmit}>
+            <TouchableOpacity style={styles.btnSubmit} onPress={() => press()} >
                 <Text style={styles.btnSubmit_text}>{text}</Text>
             </TouchableOpacity>
         </View>
@@ -12,7 +12,7 @@ const SubmitBtn = ({text}) => {
 }
 const styles = StyleSheet.create({
     btnSubmit:{
-        // width:'100%',
+        width:340,
         backgroundColor:'#45BC1B',
         height:54,
         justifyContent:'center',

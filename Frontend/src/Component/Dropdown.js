@@ -4,32 +4,44 @@ import { MultiSelect } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const data = [
-    { label: 'Món chính', value: '1', isSelected: false },
-    { label: 'Tráng miệng', value: '2', isSelected: false },
-    { label: 'Khai vị', value: '3', isSelected: false },
-    { label: 'Thịt', value: '4', isSelected: false },
-    { label: 'Cá', value: '5', isSelected: false },
-    { label: 'Ăn sáng', value: '6', isSelected: false },
-    { label: 'Ăn trưa', value: '7', isSelected: false },
-    { label: 'Ăn tối', value: '8', isSelected: false },
-    { label: 'Healthy', value: '8', isSelected: false },
+    { label: 'Món chính', value: 'Món chính', isSelected: false },
+    { label: 'Tráng miệng', value: 'Tráng miệng', isSelected: false },
+    { label: 'Khai vị', value: 'Khai vị', isSelected: false },
+    { label: 'Thịt', value: 'Thịt', isSelected: false },
+    { label: 'Cá', value: 'Cá', isSelected: false },
+    { label: 'Ăn sáng', value: 'Ăn sáng', isSelected: false },
+    { label: 'Ăn trưa', value: 'Ăn trưa', isSelected: false },
+    { label: 'Ăn tối', value: 'Ăn tối', isSelected: false },
+    { label: 'Healthy', value: 'Healthy', isSelected: false },
 ];
 
-const Dropdown = () => {
+const Dropdown = ({ selected, setSelected, setPost, post }) => {
     const [data1, setData] = useState([...data])
-    const [selected, setSelected] = useState([]);
+    const [cate, setCate] = useState([])
     const [selectIcon, setSelectIcon] = useState(false)
+    const getCategory = () => {
+        const selectedCategories = data1.filter((item) => item.isSelected);
+        const selectedCategoryValues = selectedCategories.map((item) => item.value);
+        setPost((prevState) => ({
+            ...prevState,
+            category: selected,
+        }));
+        // console.log(post)
+    };
     const renderItem = item => {
         return (
             <View style={styles.item}>
                 <Text style={styles.selectedTextStyle}>{item.label}</Text>
-                {!item.isSelected ? (<AntDesign style={styles.icon} color="black" name="Safety" size={20} />) : (<AntDesign style={styles.icon} color="green" name="Safety" size={20} />)}
+                {!item.isSelected ? (<AntDesign style={styles.icon} color="black" name="Safety" size={20} />)
+                    : (<AntDesign style={styles.icon} color="green" name="Safety" size={20} />
+                    )}
             </View>
         );
     };
 
     return (
         <View style={styles.container}>
+            {/* {console.log()} */}
             <MultiSelect
                 style={styles.dropdown}
                 placeholderStyle={styles.placeholderStyle}
@@ -44,7 +56,7 @@ const Dropdown = () => {
                 search
                 searchPlaceholder="Search..."
                 onChange={item => {
-                    setSelected(item), setSelectIcon(!selectIcon);
+                    setSelected(item), getCategory();
                 }}
                 renderLeftIcon={() => (
                     <AntDesign
@@ -54,13 +66,17 @@ const Dropdown = () => {
                         size={20}
                     />
                 )}
+
                 renderItem={renderItem}
+
                 renderSelectedItem={(item, unSelect) => (
-                    <TouchableOpacity onPress={() => unSelect(item)}>
+                    <TouchableOpacity onPress={() => (unSelect(item))}>
                         <View style={styles.selectedStyle}>
+                            {/* {console.log(selected)} */}
                             <Text style={styles.textSelectedStyle}>{item.label}</Text>
                             <AntDesign color="black" name="delete" size={17} />
                         </View>
+
                     </TouchableOpacity>
                 )}
             />
@@ -71,7 +87,7 @@ const Dropdown = () => {
 export default Dropdown;
 
 const styles = StyleSheet.create({
-    container: { padding: 10},
+    container: { padding: 10 },
     dropdown: {
         height: 50,
         backgroundColor: 'white',

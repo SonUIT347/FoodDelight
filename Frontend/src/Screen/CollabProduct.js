@@ -1,25 +1,38 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Entypo } from '@expo/vector-icons';
 import Line from '../Component/Line';
 import Dropdown from '../Component/Dropdown';
 import useImagePicker from '../Component/useImagePicker';
 import ImageShow from '../Component/ImageShow';
 import SubmitBtn from '../Component/SubmitBtn';
+
 const CollabProduct = () => {
     // const [image, setImage] = useState(null)
-    const [post, setPost] = useState([{
+    const [selected, setSelected] = useState([]);
+    // console.log('selected ' + selected)
+    const [post, setPost] = useState({
         image: [],
         nameProduct: '',
         desProduct: '',
         priceProduct: '',
-        categrory: [],
+        category: [selected],
         stock: ''
 
-    }])
-    const submit = () => {
+    })
+    const submit = (name, value) => {
+        // if ((name === "stock" || name === "priceProduct") && typeof value === "number" && value > 0){
+        setPost({ ...post, [name]: value })
         
     }
+    const press = () => {
+        // setPost({ ...post, 'category':selected})
+        console.log(image)
+        // console.log('psot ' + post.category)
+    }
+    // useEffect(() => {
+    //     press()
+    // },[selected])
     const {
         pickImage,
         image,
@@ -30,6 +43,7 @@ const CollabProduct = () => {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}
         >
+            {/* {console.log(post)} */}
             <ScrollView >
                 <Text style={styles.imageText}>Hình ảnh sản phẩm</Text>
                 <View style={styles.imagePicker}>
@@ -58,6 +72,7 @@ const CollabProduct = () => {
                             multiline
                             maxLength={100}
                             placeholder='Ví dụ: Cơm gà chiên đặc biệt'
+                            onChangeText={(text) => submit('nameProduct', text)}
                             style={{
                                 marginLeft: 10,
                                 height: 'auto',
@@ -72,6 +87,7 @@ const CollabProduct = () => {
                         <TextInput
                             multiline
                             maxLength={500}
+                            onChangeText={(text) => submit('desProduct', text)}
                             placeholder='Ví dụ: Cơm gà chiên đặc biệt'
                             style={{
                                 marginLeft: 10,
@@ -86,13 +102,20 @@ const CollabProduct = () => {
                         <Text style={styles.productName_title}>
                             Hạng mục
                         </Text>
-                        <Dropdown />
+                        <Dropdown
+                            selected={selected}
+                            setSelected={setSelected} 
+                            setPost={setPost}
+                            post={post}
+
+                        />
                     </View>
                     <View style={styles.productName}>
                         <Text style={styles.productName_title}>Giá bán VND</Text>
                         <TextInput
                             multiline
                             maxLength={12}
+                            onChangeText={(text) => submit('priceProduct', text)}
                             placeholder='Ví dụ: 350000'
                             style={{
                                 marginLeft: 10,
@@ -108,6 +131,7 @@ const CollabProduct = () => {
                         <TextInput
                             multiline
                             maxLength={12}
+                            onChangeText={(text) => submit('stock', text)}
                             placeholder='Ví dụ: 100'
                             style={{
                                 marginLeft: 10,
@@ -120,7 +144,7 @@ const CollabProduct = () => {
                     </View>
                 </View>
                 <View >
-                    <SubmitBtn text={'Gửi yêu cầu xét duyệt'}/>
+                    <SubmitBtn text={'Gửi yêu cầu xét duyệt'} press={press}/>
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>
