@@ -11,14 +11,14 @@ import SaleSetUp from '../Component/SaleSetUp';
 export const  data = [
     {
         id: 1,
-        foodName: 'Cơm chiên cá mặn',
+        foodName: 'Cơm chiên cá mặn 11',
         stock: 15,
         img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
         price: 1589666
     },
     {
         id: 2,
-        foodName: 'Cơm chiên cá mặn',
+        foodName: 'Cơm chiên cá mặn3',
         stock: 30,
         img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
         price: 1444558
@@ -32,14 +32,14 @@ export const  data = [
     },
     {
         id: 4,
-        foodName: 'Cơm chiên cá mặn',
+        foodName: 'Cơm chiên cá mặn7',
         stock: 10,
         img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
         price: 200000
     },
     {
         id: 5,
-        foodName: 'Cơm chiên cá mặn',
+        foodName: 'Cơm chiên cá mặn10',
         stock: 10,
         img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
         price: 3000000
