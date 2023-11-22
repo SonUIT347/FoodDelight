@@ -6,21 +6,20 @@ import PostSale from "../Component/PostSale";
 import Search from "../Component/Search";
 import No_Products from "../Component/No_Products";
 
-const Sale=({data_MainDishes, data_Desserts})=>{
-    const [data, setData] = useState([data_MainDishes, data_Desserts])
+const Sale_Items=({dataItem, header})=>{
+    const [data, setData] = useState(dataItem)
     const [clickedFilter, setClickedFilter] = useState([true, false, false, false, false])
 
     const HanderSearch=(text)=>{
         const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-        const newDataSearch1 = data_MainDishes.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch2 = data_Desserts.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        setData([newDataSearch1, newDataSearch2])
+        const newDataSearch = dataItem.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        setData(newDataSearch)
     }
 
     const handerClickedFilter_TatCa=()=>{
         setClickedFilter([true, false, false, false, false])
-        setData([data_MainDishes, data_Desserts])
+        setData([dataItem])
     }
 
     const handerClickedFilter=(value1, value2)=>{
@@ -38,22 +37,23 @@ const Sale=({data_MainDishes, data_Desserts})=>{
                     setClickedFilter([false, false, false, false, true])
             }
         }
-        const newDataFiltered1 = data_MainDishes.filter((item)=>((item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2))
+
+        const newDataFiltered = dataItem.filter((item)=>((item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2))
+        console.log(data)
         // console.log(newDataFiltered1)
-        const newDataFiltered2 = data_Desserts.filter((item)=>(item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2)  
-        setData([newDataFiltered1, newDataFiltered2])
+        setData(newDataFiltered)
     }
 
     return(
         <View style={styles.container}>
-            <View style={{position: 'absolute', width: '100%', marginTop: 50, backgroundColor: '#F5F5F5', zIndex: 1}}>
+            <View style={{position: 'absolute', width: '100%', marginTop: 85, backgroundColor: '#F5F5F5', zIndex: 1}}>
                 <Search
                     valueSearch={HanderSearch}
                 />
             </View>
 
             <View 
-                style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20, height: 50,
+                style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20, height: 85,
                 alignItems: 'center', width: '100%', }}
             >
                 <AntDesign 
@@ -62,7 +62,11 @@ const Sale=({data_MainDishes, data_Desserts})=>{
                     style={{backgroundColor: 'green', borderRadius: 20, width: 35, marginLeft: 20,
                     height: 35, textAlign: "center", textAlignVertical: 'center', position: "absolute"}}
                 />
-                <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>Giảm giá trong ngày</Text>
+                <View style={{width: '100%'}}>
+                    <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>{header}</Text>
+                    <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>giảm giá trong ngày</Text>
+                </View>
+
             </View>
 
             <View style={styles.filter}>
@@ -122,17 +126,13 @@ const Sale=({data_MainDishes, data_Desserts})=>{
 
             <ScrollView 
                 showsVerticalScrollIndicator={false}
+                style={{marginTop: 10}}
             >
-                <View style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center', width: '100%', paddingVertical: 10}}>
-                    <Text style={{fontSize: 20, fontWeight: 600}}>Món ăn chính</Text>
-                    <AntDesign name="rightcircleo" size={30} color="black" />
-                </View>
-
-                { data[0].length == 0 ? (
+                { data.length == 0 ? (
                         <No_Products/>
                     ) : (
-                        <View style={{flexWrap: "wrap", flexDirection: 'row', justifyContent: 'flex-start', marginBottom: -20}}>
-                            {data[0].map((item, index) => (
+                        <View style={{flexWrap: "wrap", flexDirection: 'row', justifyContent: 'flex-start'}}>
+                            {data.map((item, index) => (
                                 <View key={index} style={{width: '50%', marginBottom: 20}}>
                                     <View style={{alignItems: 'center'}}>
                                         <PostSale data={item}/>
@@ -143,31 +143,6 @@ const Sale=({data_MainDishes, data_Desserts})=>{
                         </View>
                     )
                 }
-
-
-
-                <View style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center', width: '100%', paddingVertical: 10}}>
-                    <Text style={{fontSize: 20, fontWeight: 600}}>Món tráng miệng</Text>
-                    <AntDesign name="rightcircleo" size={30} color="black" />
-                </View>
-
-                { data[1].length == 0 ? (
-                        <No_Products/>
-                    ) : (
-                        <View style={{flexWrap: "wrap", flexDirection: 'row', justifyContent: 'flex-start', marginBottom: 0}}>
-                            {data[1].map((item, index) => (
-                                <View key={index} style={{width: '50%', marginBottom: 20}}>
-                                    <View style={{alignItems: 'center'}}>
-                                        <PostSale data={item}/>
-                                    </View>
-                                    
-                                </View>
-                            ))}
-                        </View>
-                    )
-                }
-
-
             </ScrollView>
         </View>
         
@@ -175,7 +150,7 @@ const Sale=({data_MainDishes, data_Desserts})=>{
 
 }
 
-export default Sale
+export default Sale_Items
 
 const styles=StyleSheet.create({
     container:{
