@@ -103,30 +103,23 @@ const CreateSale = () => {
         const currentDate = selectDate
         console.log('Selected Date:', date);
         setSelectedDate(currentDate);
+        setShowDatePicker(false);
 
     };
     const handleDateChangeTimeEnd = (event, selectDate) => {
         const currentDate = selectDate
         console.log('Selected Date:', date);
         setSelectedTimeEnd(currentDate);
+        setShowTimePickerEnd(false);
 
     };
     const handleDateChangeTimeStart = (event, selectDate) => {
         const currentDate = selectDate
         console.log('Selected Date:', date);
         setSelectedTimeStart(currentDate);
+        setShowTimePickerStart(false);
 
     };
-    useEffect(() => {
-        setShowTimePickerEnd(false);
-
-    }, [selectedTimeEnd])
-    useEffect(() => {
-        setShowTimePickerStart(false);
-    }, [selectedTimeStart])
-    useEffect(() => {
-        setShowDatePicker(false);
-    }, [selectDate])
     const showMode = (currentMode, flag) => {
         switch (flag) {
             case 'timestart': {

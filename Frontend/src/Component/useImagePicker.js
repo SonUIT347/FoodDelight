@@ -4,16 +4,13 @@ import * as ImagePicker from 'expo-image-picker'
 const useImagePicker = () => {
     const [image, setImage] = useState([])
     const handleYesPress = (id) => {
-        // Handle 'Yes' button press
         deleteImage(id)
-
     };
 
     const handleNoPress = () => {
-        // Handle 'No' button press
     };
     const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
+
         if (image.length == 6) {
             Alert.alert('Chỉ được chọn 6 ảnh')
         } else {

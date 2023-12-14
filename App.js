@@ -15,6 +15,9 @@ import Home from './Frontend/src/Screen/Home';
 import Home_Items from './Frontend/src/Screen/Home_Items';
 import Sale from './Frontend/src/Screen/Sale';
 import Sale_Items from './Frontend/src/Screen/Sale_Items';
+import Invoice from './Frontend/src/Screen/Invoice';
+import InvoiceAccept from './Frontend/src/Screen/InvoiceAccept';
+import InvoiceComplete from './Frontend/src/Screen/InvoiceComplete';
 
 
 const data=[
@@ -55,13 +58,12 @@ export default function App() {
     // <CreateSale />
     // <ChooseFood/>
     // <NavigatorContainer>
-    <NavigationContainer>
-    <TopTab/>
-    </NavigationContainer>
+    // <NavigationContainer>
+    // <TopTab/>
+    // </NavigationContainer>
+    <InvoiceComplete/>
+    // <View style={styles.container}>
 
-    // </NavigatorContainer>
-
-    // <Dropdown/>
   );
 }
 
