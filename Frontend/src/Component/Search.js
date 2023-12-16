@@ -101,7 +101,7 @@ const Search = ({valueSearch}) => {
             <MaterialIcons name="cancel" size={24} color="black" onPress={()=>{setSearchTerm("")}}/>
         </View>
         
-        <View style={{width: '100%'}}>
+        <View style={{width: '100%', zIndex: 1}}>
               {
                 clickedHistory ? (
                   dataSearch.map((item, index)=>(

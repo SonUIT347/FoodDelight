@@ -18,6 +18,8 @@ import Sale_Items from './Frontend/src/Screen/Sale_Items';
 import Invoice from './Frontend/src/Screen/Invoice';
 import InvoiceAccept from './Frontend/src/Screen/InvoiceAccept';
 import InvoiceComplete from './Frontend/src/Screen/InvoiceComplete';
+import Cart from './Frontend/src/Screen/Cart';
+import Test from './Frontend/test';
 
 
 const data=[
@@ -61,8 +63,15 @@ export default function App() {
     // <NavigationContainer>
     // <TopTab/>
     // </NavigationContainer>
-    <InvoiceComplete/>
+    // <InvoiceComplete/>
+    // <Cart/>
     // <View style={styles.container}>
+
+
+    // <Sale data_Desserts={data} data_MainDishes={data}/>
+    <Sale_Items dataItem={data}/>
+    // <Test/>
+    // <Home/>
 
   );
 }

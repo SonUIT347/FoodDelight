@@ -19,7 +19,7 @@ const Sale_Items=({dataItem, header})=>{
 
     const handerClickedFilter_TatCa=()=>{
         setClickedFilter([true, false, false, false, false])
-        setData([dataItem])
+        setData(dataItem)
     }
 
     const handerClickedFilter=(value1, value2)=>{
@@ -46,15 +46,9 @@ const Sale_Items=({dataItem, header})=>{
 
     return(
         <View style={styles.container}>
-            <View style={{position: 'absolute', width: '100%', marginTop: 85, backgroundColor: '#F5F5F5', zIndex: 1}}>
-                <Search
-                    valueSearch={HanderSearch}
-                />
-            </View>
-
             <View 
                 style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20, height: 85,
-                alignItems: 'center', width: '100%', }}
+                alignItems: 'center', width: '100%', position: 'relative' }}
             >
                 <AntDesign 
                     name="arrowleft" 
@@ -63,7 +57,7 @@ const Sale_Items=({dataItem, header})=>{
                     height: 35, textAlign: "center", textAlignVertical: 'center', position: "absolute"}}
                 />
                 <View style={{width: '100%'}}>
-                    <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>{header}</Text>
+                    {/* <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>{header}</Text> */}
                     <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>giảm giá trong ngày</Text>
                 </View>
 
@@ -144,6 +138,12 @@ const Sale_Items=({dataItem, header})=>{
                     )
                 }
             </ScrollView>
+
+            <View style={{width: '100%', marginTop: 85, backgroundColor: 'gray', position: 'absolute', zIndex: 1}}>
+                <Search
+                    valueSearch={HanderSearch}
+                />
+            </View>
         </View>
         
     )
@@ -157,6 +157,7 @@ const styles=StyleSheet.create({
         flex: 1,
         width: '100%',
         marginTop: Platform.OS === 'android' ? 30 : 0,
+        position: 'relative'
         // backgroundColor: 'red',
         // justifyContent: 'center',
         // alignItems: 'center',
@@ -171,6 +172,7 @@ const styles=StyleSheet.create({
         // alignSelf: "center",
         height: 50,
         justifyContent: 'center',
+        // zIndex: -1,
         // textAlign: 'center',
     },
     txtButton:{
