@@ -20,17 +20,18 @@ import InvoiceAccept from './Frontend/src/Screen/InvoiceAccept';
 import InvoiceComplete from './Frontend/src/Screen/InvoiceComplete';
 import Cart from './Frontend/src/Screen/Cart';
 import Test from './Frontend/test';
+import Address from './Frontend/src/Screen/Address';
 
 
 const data=[
   {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-  name: 'Cơm gà xối mỡ',
+  name: 'Cơm gà xối mỡ a a a a a a a a a a a a a a a a a',
   description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
   price: 20000,
   quantitySold: 2100,
   sale: true,
-  priceReduced: 1000,
+  priceReduced: 10000,
   // id: 1,
 },    {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -42,6 +43,42 @@ const data=[
   priceReduced: 10000,
   // id: 1,
 },    {
+  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+  name: 'Cơm gà',
+  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+  price: 20000,
+  quantitySold: 2100,
+  sale: true,
+  priceReduced: 18000,
+  // id: 1,
+}, {
+  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+  name: 'Cơm gà',
+  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+  price: 20000,
+  quantitySold: 2100,
+  sale: true,
+  priceReduced: 18000,
+  // id: 1,
+}, {
+  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+  name: 'Cơm gà',
+  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+  price: 20000,
+  quantitySold: 2100,
+  sale: true,
+  priceReduced: 18000,
+  // id: 1,
+}, {
+  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+  name: 'Cơm gà',
+  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+  price: 20000,
+  quantitySold: 2100,
+  sale: true,
+  priceReduced: 18000,
+  // id: 1,
+}, {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
   name: 'Cơm gà',
   description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
@@ -64,14 +101,16 @@ export default function App() {
     // <TopTab/>
     // </NavigationContainer>
     // <InvoiceComplete/>
-    // <Cart/>
+
     // <View style={styles.container}>
 
 
     // <Sale data_Desserts={data} data_MainDishes={data}/>
-    <Sale_Items dataItem={data}/>
+    // <Sale_Items dataItem={data}/>
     // <Test/>
     // <Home/>
+    <Cart Data={data}/>
+    // <Address/>
 
   );
 }

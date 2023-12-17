@@ -1,17 +1,36 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 
-const Test = () => {
+const HomeScreen = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return (
-    <View style={styles.container}>
-      {/* Các phần tử bình thường */}
-      <Text>Phần tử 1</Text>
-      <Text>Phần tử 2</Text>
+    <View style={[styles.container, {backgroundColor: 'rgba(0, 0, 0, 0.5)'}]}>
+      <TouchableOpacity onPress={toggleModal} style={styles.button}>
+        <Text style={styles.buttonText}>Hiển thị Màn hình mới</Text>
+      </TouchableOpacity>
 
-      {/* View overlay với position: 'absolute' và không che phủ các phần tử khác */}
-      <View style={styles.overlay}>
-        <Text style={styles.overlayText}>Overlay Text</Text>
-      </View>
+      <Modal
+        // style = {{backgroundColor: 'red'}}
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={toggleModal}
+        statusBarTranslucent={true}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text>Màn hình mới</Text>
+            <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Đóng màn hình mới</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -22,21 +41,41 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'gray', // Một màu nền có độ trong suốt
-    zIndex: 1, // Điều này quan trọng để đặt overlay trên cùng
+  button: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
   },
-  overlayText: {
+  buttonText: {
     color: 'white',
-    fontSize: 20,
+    textAlign: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    // alignSelf: 'flex-end',
+    alignItems: 'stretch',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    // backgroundColor:
+    // height: '50%'
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 10,
+  },
+  closeButton: {
+    marginTop: 10,
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
-export default Test;
+export default HomeScreen;

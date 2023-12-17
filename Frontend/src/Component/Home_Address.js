@@ -75,7 +75,7 @@ import { AntDesign } from '@expo/vector-icons';
     value: (index + 1).toString(),
     label: province,
   }));
-  const Home_Address = () => {
+  const Home_Address = ({size, height}) => {
     const [value, setValue] = useState(null);
 
     // const renderItem = item => {
@@ -116,7 +116,7 @@ import { AntDesign } from '@expo/vector-icons';
             setValue(item.value);
           }}
           renderLeftIcon={() => (
-            <AntDesign name="enviromento" size={30} color="black" style={styles.icon}/>
+            <AntDesign name="enviromento" size={25} color="white" style={styles.icon}/>
           )}
         />
       </View>
@@ -130,17 +130,28 @@ const styles = StyleSheet.create({
     margin: 16,
     height: 30,
     borderBottomColor: 'gray',
+    // backgroundColor: 'red',
+    // alignSelf: 'flex-end'
     // color: 'red'
     // borderBottomWidth: 0.5,
   },
   icon: {
     marginRight: 5,
+    color: 'white'
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: 14,
+    textAlign: 'right',
+    paddingRight: 10,
+    height: 50,
+    textAlignVertical: 'center'
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: 14,
+    textAlign: 'right',
+    paddingRight: 10,
+    height: 50,
+    textAlignVertical: 'center'
   },
   iconStyle: {
     width: 20,
@@ -148,6 +159,6 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: 16,
+    fontSize: 14,
   },
 });
