@@ -24,6 +24,7 @@ import Address from './Frontend/src/Screen/Address';
 import Pay from './Frontend/src/Screen/Pay';
 import Profile from './Frontend/src/Screen/Profile';
 import Personal from './Frontend/src/Screen/Personal';
+import MyStore from './Frontend/src/Screen/MyStore';
 
 
 const data=[
@@ -114,7 +115,8 @@ export default function App() {
     // <Home/>
     // <Pay/>
     // <Profile/>
-    <Personal/>
+    // <Personal/>
+    <MyStore/>
     // <Cart Data={data}/>
     // <Address/>
 
