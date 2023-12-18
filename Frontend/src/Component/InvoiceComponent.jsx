@@ -1,15 +1,7 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 // import { data } from '../Screen/CreateSale'
-import Food from './Food'
 const InvoiceComponent = ({ food }) => {
-    useEffect(() => {
-        food.sumPrice = food.sumPrice + food.price
-    },[])
-    const sum = (b) => {
-        var a = a + b
-        console.log(b)
-    }
     return (
         <View style={styles.food_ctn}>
             <Image
@@ -25,7 +17,6 @@ const InvoiceComponent = ({ food }) => {
                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.foodName}</Text>
                 <Text style={{marginTop:5, marginBottom:5, fontSize: 15}}>Số lượng: {food.stock}</Text>
                 <Text style={{fontSize: 15}}>Giá: {food.price}</Text>
-                {sum(food.price)}
             </View>
         </View>
     )

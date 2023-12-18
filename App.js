@@ -95,6 +95,7 @@ const data=[
 ]
 
 export default function App() {
+  
   return (
     // <CollabProduct/>
     // <FlashSaleShow/>
@@ -107,6 +108,7 @@ export default function App() {
     // <InvoiceComplete/>
 
     // <View style={styles.container}>
+    <CollabProduct/>
 
 
     // <Sale data_Desserts={data} data_MainDishes={data}/>
@@ -116,7 +118,10 @@ export default function App() {
     // <Pay/>
     // <Profile/>
     // <Personal/>
+<<<<<<< HEAD
     <MyStore/>
+=======
+>>>>>>> 0ccaa47a64178f9aa7e80675595a5d3b186e6dee
     // <Cart Data={data}/>
     // <Address/>
 
