@@ -111,14 +111,14 @@ export default function App() {
     // <CollabProduct/>
 
 
-    // <Sale data_Desserts={data} data_MainDishes={data}/>
+    <Sale data_Desserts={data} data_MainDishes={data}/>
     // <Sale_Items dataItem={data}/>
     // <Test/>
     // <Home/>
     // <Pay/>
     // <Profile/>
     // <Personal/>
-    <MyStore/>
+    // <MyStore/>
     // <Cart Data={data}/>
     // <Address/>
 
