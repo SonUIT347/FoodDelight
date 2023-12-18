@@ -30,17 +30,27 @@ const data=[
 
 ]
 
+
+
 const Home = () => {
+
+    const handleValueProvince = () => {
+
+    }
+
+    const handleValueIndex = () => {
+        
+    }
 
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={{position: "absolute", width: '100%', zIndex: 1, backgroundColor: '#F5F5F5', marginTop: 60}}>
-                <Search/>
+                {/* <Search/> */}
             </View>
             <View style={{justifyContent: "flex-end"}}>
-                <View style={{flexDirection: 'row', alignItems: 'center', width: '65%', alignSelf: "flex-end", backgroundColor: 'red'}}>
-                    <Home_Address/>
+                <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', alignSelf: "flex-end", backgroundColor: 'white'}}>
+                        <Home_Address valueProvince={handleValueProvince} valueIndex={handleValueIndex}/>
                 </View>
                 <ScrollView horizontal={false} style={{marginTop: 60}}>
                     <View style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center'}}>

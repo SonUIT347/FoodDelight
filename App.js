@@ -108,9 +108,9 @@ export default function App() {
     // <Sale data_Desserts={data} data_MainDishes={data}/>
     // <Sale_Items dataItem={data}/>
     // <Test/>
-    // <Home/>
+    <Home/>
     // <Cart Data={data}/>
-    <Address/>
+    // <Address/>
 
   );
 }
