@@ -52,7 +52,7 @@ const MyStore = () => {
             />
             <View style={{width: '100%'}}>
                 {/* <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>{header}</Text> */}
-                <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>Thông tin cá nhân</Text>
+                <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>Tạo cửa hàng</Text>
             </View>
 
         </View>
