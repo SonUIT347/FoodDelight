@@ -21,6 +21,7 @@ import InvoiceComplete from './Frontend/src/Screen/InvoiceComplete';
 import Cart from './Frontend/src/Screen/Cart';
 import Test from './Frontend/test';
 import Address from './Frontend/src/Screen/Address';
+import Pay from './Frontend/src/Screen/Pay';
 
 
 const data=[
@@ -108,7 +109,8 @@ export default function App() {
     // <Sale data_Desserts={data} data_MainDishes={data}/>
     // <Sale_Items dataItem={data}/>
     // <Test/>
-    <Home/>
+    // <Home/>
+    <Pay/>
     // <Cart Data={data}/>
     // <Address/>
 
