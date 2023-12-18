@@ -1,10 +1,23 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import InvoiceComponent from '../Component/InvoiceComponent'
 import { FontAwesome5 } from '@expo/vector-icons';
+import axios from 'axios';
 const InvoiceAccept = () => {
+    const [data, setData] = useState([])
+    useEffect( () =>{
+        getData()
+    },[])
+    const getData = async () =>{
+        try{
+            const res = await axios.get('http:192.168.1.10:8080/food')
+            console.log(res.data[0].id)
 
+        }catch(error) {
+            console.log(error)
+        }
+    }
     var sumInvoice = 0
     const Invoice = [
         {
