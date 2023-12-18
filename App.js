@@ -109,8 +109,8 @@ export default function App() {
     // <Sale_Items dataItem={data}/>
     // <Test/>
     // <Home/>
-    <Cart Data={data}/>
-    // <Address/>
+    // <Cart Data={data}/>
+    <Address/>
 
   );
 }

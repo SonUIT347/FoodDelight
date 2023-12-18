@@ -75,19 +75,9 @@ import { AntDesign } from '@expo/vector-icons';
     value: (index + 1).toString(),
     label: province,
   }));
-  const Home_Address = ({size, height}) => {
+  const Home_Address = ({size, height, valueProvince, valueIndex}) => {
     const [value, setValue] = useState(null);
-
-    // const renderItem = item => {
-    //   return (
-    //     <View style={styles.item}>
-    //       <Text style={styles.textItem}>{item.label}</Text>
-    //       {item.value === value && (
-    //         <AntDesign name="enviromento" size={24} color="black" style={styles.icon}/>
-    //       )}
-    //     </View>
-    //   );
-    // };
+    const [province, setProvince] = useState(null);
 
     return (
       <View style={{flex: 1, color: 'red'}}>
@@ -102,6 +92,7 @@ import { AntDesign } from '@expo/vector-icons';
           // RenderSelectedItem={true}
           autoScroll={false}
           showsVerticalScrollIndicator={false}
+          
 
           data={provincesAndCities}
           search
@@ -114,6 +105,9 @@ import { AntDesign } from '@expo/vector-icons';
           value={value}
           onChange={item => {
             setValue(item.value);
+            valueIndex(item.value)
+            setProvince(item.label)
+            valueProvince(item.label)
           }}
           renderLeftIcon={() => (
             <AntDesign name="enviromento" size={25} color="white" style={styles.icon}/>
