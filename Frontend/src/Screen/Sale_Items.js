@@ -139,7 +139,7 @@ const Sale_Items=({dataItem, header})=>{
                 }
             </ScrollView>
 
-            <View style={{width: '100%', marginTop: 85, backgroundColor: 'gray', position: 'absolute', zIndex: 1}}>
+            <View style={{width: '100%', marginTop: 85, backgroundColor: 'white', position: 'absolute', zIndex: 1}}>
                 <Search
                     valueSearch={HanderSearch}
                 />

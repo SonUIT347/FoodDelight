@@ -6,6 +6,7 @@ import Home_Address from "../Component/Home_Address";
 import Search from "../Component/Search";
 import { AntDesign } from '@expo/vector-icons';
 import ShortPost from "../Component/ShortPost";
+import No_Products from "../Component/No_Products";
 
 const data=[
     {
@@ -32,14 +33,27 @@ const data=[
 
 
 
-const Home = () => {
-
+const Home = ({data_Desserts,data_MainDishes, data_Sale}) => {
+    const [dataDesserts, setDataDesserts] = useState(data_Desserts)
+    const [dataMainDishes, setDataMainDishes] = useState(data_MainDishes)
+    const [dataSale, setDataSale] = useState(data_Sale)
     const handleValueProvince = () => {
 
     }
 
     const handleValueIndex = () => {
         
+    }
+
+    const HanderSearch=(text)=>{
+        const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+
+        const newDataSearch1 = data_MainDishes.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch2 = data_Sale.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch3 = data_Desserts.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        setDataMainDishes(newDataSearch1)
+        setDataSale(newDataSearch2)
+        setDataDesserts(newDataSearch3)
     }
 
 
@@ -57,61 +71,96 @@ const Home = () => {
                         <Text style={{fontSize: 20, fontWeight: 600}}>Món ăn chính</Text>
                         <AntDesign name="rightcircleo" size={30} color="black" />
                     </View>
-                    <ScrollView 
-                        style={{marginHorizontal: 20, paddingVertical: 10}}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        {/* {data} */}
-                        {data.map((item, index)=>(
-                            <View
-                                key = {index} 
-                                style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
-                            >
-                                <ShortPost data={item}/>
+
+                    {
+                        dataMainDishes.length == 0 ? (
+                            <View style={{}}>
+                                <No_Products/>
+                                {/* <Text style={{width: '100%', flex: 1}}>fadfs</Text> */}
                             </View>
-                        ))}
-                        
-                    </ScrollView>
+                            
+                        ):(
+                            <ScrollView 
+                                style={{marginHorizontal: 20, paddingVertical: 10}}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                            >
+                                {dataMainDishes.map((item, index)=>(
+                                    <View
+                                        key = {index} 
+                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
+                                    >
+                                        <ShortPost data={item}/>
+                                    </View>
+                                ))}                                
+                            </ScrollView>
+                        )
+                    }
 
                     <TouchableOpacity style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center'}}>
                         <Text style={{fontSize: 20, fontWeight: 600}}>Đang Sale</Text>
                         <AntDesign name="rightcircleo" size={30} color="black" />
                     </TouchableOpacity>
 
-                    <ScrollView 
-                        style={{marginHorizontal: 20, paddingVertical: 10}}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        {data.map((item, index)=>(
-                            <View
-                                key = {index} 
-                                style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
-                            >
-                                <ShortPost data={item}/>
+                    {
+                        dataSale.length == 0 ? (
+                            <View style={{}}>
+                                <No_Products/>
+                                {/* <Text style={{width: '100%', flex: 1}}>fadfs</Text> */}
                             </View>
-                        ))}
-                    </ScrollView>
+                            
+                        ):(
+                            <ScrollView 
+                                style={{marginHorizontal: 20, paddingVertical: 10}}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                            >
+                                {dataSale.map((item, index)=>(
+                                    <View
+                                        key = {index} 
+                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
+                                    >
+                                        <ShortPost data={item}/>
+                                    </View>
+                                ))}                                
+                            </ScrollView>
+                        )
+                    }
                     <View style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center'}}>
                         <Text style={{fontSize: 20, fontWeight: 600}}>Món Tráng Miệng</Text>
                         <AntDesign name="rightcircleo" size={30} color="black" />
                     </View>
-                    <ScrollView 
-                        style={{marginHorizontal: 20, paddingVertical: 10}}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        {data.map((item, index)=>(
-                            <View
-                                key = {index} 
-                                style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
-                            >
-                                <ShortPost data={item}/>
+                    {
+                        dataDesserts.length == 0 ? (
+                            <View style={{}}>
+                                <No_Products/>
+                                {/* <Text style={{width: '100%', flex: 1}}>fadfs</Text> */}
                             </View>
-                        ))}
-                    </ScrollView>
+                            
+                        ):(
+                            <ScrollView 
+                                style={{marginHorizontal: 20, paddingVertical: 10}}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                            >
+                                {dataDesserts.map((item, index)=>(
+                                    <View
+                                        key = {index} 
+                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
+                                    >
+                                        <ShortPost data={item}/>
+                                    </View>
+                                ))}                                
+                            </ScrollView>
+                        )
+                    }
                 </ScrollView>
+            </View>
+
+            <View style={{width: '100%', marginTop: 55, backgroundColor: 'white', position: 'absolute', zIndex: 1}}>
+                <Search
+                    valueSearch={HanderSearch}
+                />
             </View>
             
         </SafeAreaView>
@@ -123,7 +172,7 @@ export default Home
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
     width: '100%',
     marginTop: Platform.OS === 'android' ? 30 : 0,
     // height: '100%',

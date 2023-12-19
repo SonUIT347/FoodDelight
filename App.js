@@ -39,6 +39,7 @@ export const data=[
   quantitySold: 2100,
   sale: true,
   priceReduced: 10000,
+  sold: 210
   // id: 1,
 },    {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -48,6 +49,7 @@ export const data=[
   quantitySold: 2100,
   sale: true,
   priceReduced: 10000,
+  sold: 210
   // id: 1,
 },    {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -57,6 +59,7 @@ export const data=[
   quantitySold: 2100,
   sale: true,
   priceReduced: 18000,
+  sold: 210
   // id: 1,
 }, {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -66,6 +69,7 @@ export const data=[
   quantitySold: 2100,
   sale: true,
   priceReduced: 18000,
+  sold: 210
   // id: 1,
 }, {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -75,6 +79,7 @@ export const data=[
   quantitySold: 2100,
   sale: true,
   priceReduced: 18000,
+  sold: 210
   // id: 1,
 }, {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -84,6 +89,7 @@ export const data=[
   quantitySold: 2100,
   sale: true,
   priceReduced: 18000,
+  sold: 210
   // id: 1,
 }, {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -93,6 +99,7 @@ export const data=[
   quantitySold: 2100,
   sale: true,
   priceReduced: 18000,
+  sold: 210
   // id: 1,
 }, 
 ]
@@ -114,15 +121,16 @@ export default function App() {
 
     // <View style={styles.container}>
     // <CollabProduct/>
-    // <CollabMain/>
-    // <Sale/>
+
+
     // <Sale data_Desserts={data} data_MainDishes={data}/>
     // <Sale_Items dataItem={data}/>
     // <Test/>
-    // <Home/>
+    // <Home data_Desserts={data} data_MainDishes={data} data_Sale={data}/>
     // <Pay/>
     // <Profile/>
     // <Personal/>
+    // <MyStore/>
     // <Cart Data={data}/>
     // <Address/>
 

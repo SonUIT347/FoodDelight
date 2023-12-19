@@ -66,11 +66,29 @@ const Profile=() => {
         <TouchableOpacity style={{marginVertical: 10}}>
             <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: '#F5FBF3', borderRadius: 15}}>
                 <View style={{flex: 1, padding: 10, paddingHorizontal: 20}}>
-                    <Text style={{fontSize: 16, fontWeight: 'bold'}}>Trạng thái đơn hàng</Text>
+                    <Text style={{fontSize: 16, fontWeight: 'bold'}}>Lịch sử mua hàng</Text>
                 </View>
                 <AntDesign name="right" size={24} color="#6AC949" style={{paddingRight: 10}}/>
             </View>
         </TouchableOpacity>
+
+        <View style={{flex: 1, justifyContent: 'flex-end', width: '100%', alignItems: 'center'}}>
+            <TouchableOpacity 
+                style={{backgroundColor: '#45BC1B', width: '100%', padding: 20, 
+                marginVertical: 10, borderRadius: 15}}
+            >
+                <Text style={styles.txtButton}>Đăng xuất</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+                style={{backgroundColor: 'red', width: '100%', padding: 20, marginVertical: 10, 
+                marginBottom: 20, borderRadius: 15}}
+            >
+                <Text style={styles.txtButton}>Xóa tài khoản</Text>
+            </TouchableOpacity>
+        </View>
+
+
     </View>
   );
 };
@@ -83,6 +101,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
     },
+    txtButton: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold'
+    }
 
 });
 

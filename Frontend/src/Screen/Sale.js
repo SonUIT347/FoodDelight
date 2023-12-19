@@ -45,11 +45,7 @@ const Sale=({data_MainDishes, data_Desserts})=>{
 
     return(
         <View style={styles.container}>
-            <View style={{position: 'absolute', width: '100%', marginTop: 50, backgroundColor: '#F5F5F5', zIndex: 1}}>
-                <Search
-                    valueSearch={HanderSearch}
-                />
-            </View>
+            
 
             <View 
                 style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20, height: 50,
@@ -168,6 +164,12 @@ const Sale=({data_MainDishes, data_Desserts})=>{
 
 
             </ScrollView>
+
+            <View style={{width: '100%', marginTop: 55, backgroundColor: 'white', position: 'absolute', zIndex: 1}}>
+                <Search
+                    valueSearch={HanderSearch}
+                />
+            </View>
         </View>
         
     )
