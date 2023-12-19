@@ -29,6 +29,7 @@ import Personal from './Frontend/src/Screen/Personal';
 import BottomTabUser from './Frontend/src/Layout/BottomTabUser';
 import DrawerTab from './Frontend/src/Layout/DrawerTab';
 import Post from './Frontend/src/Component/Post';
+import Product from './Frontend/src/Screen/Product';
 
 
 export const Data=[
@@ -133,7 +134,8 @@ export default function App() {
     // <Profile/>
     // <Personal/>
     // <MyStore/>
-    <Post/>
+    // <Post/>
+    <Product/>
     // <Cart />
     // <Address/>
 
