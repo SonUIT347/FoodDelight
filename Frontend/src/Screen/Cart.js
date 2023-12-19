@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, FlatList, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import No_Products from '../Component/No_Products';
-const Cart=({Data})=>{
+import { Data } from '../../../App';
+
+const Cart=()=>{
     const [data, setData] = useState(Data)
     const [arrCount, setArrCount] = useState(new Array(Data.length).fill(1))
     const [sum, setSum] = useState()
@@ -113,7 +115,7 @@ const Cart=({Data})=>{
     
   return (
     <View style={styles.container}>
-        {console.log(data.length)}
+        {/* {console.log(data.length)} */}
         <View 
             style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20, height: 85,
             alignItems: 'center', width: '100%', position: 'relative' }}

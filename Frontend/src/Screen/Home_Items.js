@@ -6,10 +6,14 @@ import Post from "../Component/Post";
 import Search from "../Component/Search";
 import No_Products from "../Component/No_Products";
 
+import { Data } from "../../../App";
 
-const Home_Items=({data, header})=>{
+const header = "Món ăn chính"
 
-    const [dataItem, setDataItem] = useState(data)
+
+const Home_Items=()=>{
+
+    const [dataItem, setDataItem] = useState(Data)
     const [clickedFilter, setClickedFilter] = useState([true, false, false, false])
 
     const renderItem = ({ item }) => (
@@ -21,25 +25,25 @@ const Home_Items=({data, header})=>{
     const HanderSearch=(text)=>{
         const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-        const newDataSearch = data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
         setDataItem(newDataSearch)
     }
 
     const handerClickedFilter_TatCa=()=>{
         setClickedFilter([true, false, false, false])
-        setDataItem(data)
+        setDataItem(Data)
     }
 
     const handerClickedFilter_BanChay=()=>{
         setClickedFilter([false, true, false, false])
         if (header=="Món ăn chính")
         {
-            setDataItem(data)
+            setDataItem(Data)
             // Data món ăn chính bán chạy
         }
         else
         {
-            setDataItem(data)
+            setDataItem(Data)
             // Data món tráng miệng bán chạy
         }
     }
@@ -53,7 +57,7 @@ const Home_Items=({data, header})=>{
         }
         else
         {
-            setDataItem(data)
+            setDataItem(Data)
             // Data món tráng miệng bán chạy
         }
     }
@@ -62,12 +66,12 @@ const Home_Items=({data, header})=>{
         setClickedFilter([false, false, false, true])
         if (header=="Món ăn chính")
         {
-            setDataItem(data)
+            setDataItem(Data)
             // Data món ăn chính bán chạy
         }
         else
         {
-            setDataItem(data)
+            setDataItem(Data)
             // Data món tráng miệng bán chạy
         }
     }

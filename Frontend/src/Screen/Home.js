@@ -7,13 +7,37 @@ import Search from "../Component/Search";
 import { AntDesign } from '@expo/vector-icons';
 import ShortPost from "../Component/ShortPost";
 import No_Products from "../Component/No_Products";
-import { data } from "../../../App";
+import { Data } from "../../../App";
+
+// const data=[
+//     {
+//         img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
+//         name: 'Cơm gà xối mỡ',
+//         price: 20000,
+//         sold: 210
+//     },
+//     {
+//         img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
+//         name: 'Cơm gà thái lan',
+//         price: 20000,
+//         sold: 210
+//     },
+//     {
+//         img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
+//         name: 'Cơm thịt kho trứng',
+//         price: 20000,
+//         sold: 210
+//     },
 
 
-const Home = ({data_Desserts,data_MainDishes, data_Sale}) => {
-    const [dataDesserts, setDataDesserts] = useState(data)
-    const [dataMainDishes, setDataMainDishes] = useState(data)
-    const [dataSale, setDataSale] = useState(data)
+// ]
+
+
+
+const Home = () => {
+    const [dataDesserts, setDataDesserts] = useState(Data)
+    const [dataMainDishes, setDataMainDishes] = useState(Data)
+    const [dataSale, setDataSale] = useState(Data)
     const handleValueProvince = () => {
 
     }
@@ -25,9 +49,9 @@ const Home = ({data_Desserts,data_MainDishes, data_Sale}) => {
     const HanderSearch=(text)=>{
         const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-        const newDataSearch1 = data_MainDishes.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch2 = data_Sale.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch3 = data_Desserts.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch1 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch2 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch3 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
         setDataMainDishes(newDataSearch1)
         setDataSale(newDataSearch2)
         setDataDesserts(newDataSearch3)
@@ -65,7 +89,7 @@ const Home = ({data_Desserts,data_MainDishes, data_Sale}) => {
                                 {dataMainDishes.map((item, index)=>(
                                     <View
                                         key = {index} 
-                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
+                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==dataMainDishes.length-1 && {paddingRight: 0}]}
                                     >
                                         <ShortPost data={item}/>
                                     </View>
@@ -95,7 +119,7 @@ const Home = ({data_Desserts,data_MainDishes, data_Sale}) => {
                                 {dataSale.map((item, index)=>(
                                     <View
                                         key = {index} 
-                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
+                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==dataSale.length-1 && {paddingRight: 0}]}
                                     >
                                         <ShortPost data={item}/>
                                     </View>
@@ -123,7 +147,7 @@ const Home = ({data_Desserts,data_MainDishes, data_Sale}) => {
                                 {dataDesserts.map((item, index)=>(
                                     <View
                                         key = {index} 
-                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==data.length-1 && {paddingRight: 0}]}
+                                        style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==dataDesserts.length-1 && {paddingRight: 0}]}
                                     >
                                         <ShortPost data={item}/>
                                     </View>

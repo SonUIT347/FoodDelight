@@ -3,22 +3,24 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from "
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import PostSale from "../Component/PostSale";
-const Sale=({data_MainDishes, data_Desserts})=>{
+import Search from "../Component/Search";
+import No_Products from "../Component/No_Products";
+import { Data } from "../../../App";
 
-    
-    const [data, setData] = useState([data_MainDishes, data_Desserts])
+const Sale=()=>{
+    const [data, setData] = useState([Data, Data])
     const [clickedFilter, setClickedFilter] = useState([true, false, false, false, false])
 
     const HanderSearch=(text)=>{
         const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        const newDataSearch1 = data_MainDishes.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch2 = data_Desserts.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch1 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch2 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
         setData([newDataSearch1, newDataSearch2])
     }
 
     const handerClickedFilter_TatCa=()=>{
         setClickedFilter([true, false, false, false, false])
-        setData([data_MainDishes, data_Desserts])
+        setData([Data, Data])
     }
 
     const handerClickedFilter=(value1, value2)=>{
@@ -36,9 +38,9 @@ const Sale=({data_MainDishes, data_Desserts})=>{
                     setClickedFilter([false, false, false, false, true])
             }
         }
-        const newDataFiltered1 = data_MainDishes.filter((item)=>((item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2))
+        const newDataFiltered1 = Data.filter((item)=>((item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2))
         // console.log(newDataFiltered1)
-        const newDataFiltered2 = data_Desserts.filter((item)=>(item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2)  
+        const newDataFiltered2 = Data.filter((item)=>(item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2)  
         setData([newDataFiltered1, newDataFiltered2])
     }
 

@@ -5,21 +5,22 @@ import { Ionicons } from '@expo/vector-icons';
 import PostSale from "../Component/PostSale";
 import Search from "../Component/Search";
 import No_Products from "../Component/No_Products";
+import { Data } from "../../../App";
 
-const Sale_Items=({dataItem, header})=>{
-    const [data, setData] = useState(dataItem)
+const Sale_Items=()=>{
+    const [data, setData] = useState(Data)
     const [clickedFilter, setClickedFilter] = useState([true, false, false, false, false])
 
     const HanderSearch=(text)=>{
         const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-        const newDataSearch = dataItem.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
         setData(newDataSearch)
     }
 
     const handerClickedFilter_TatCa=()=>{
         setClickedFilter([true, false, false, false, false])
-        setData(dataItem)
+        setData(Data)
     }
 
     const handerClickedFilter=(value1, value2)=>{
@@ -38,7 +39,7 @@ const Sale_Items=({dataItem, header})=>{
             }
         }
 
-        const newDataFiltered = dataItem.filter((item)=>((item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2))
+        const newDataFiltered = Data.filter((item)=>((item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2))
         console.log(data)
         // console.log(newDataFiltered1)
         setData(newDataFiltered)

@@ -28,9 +28,10 @@ import Profile from './Frontend/src/Screen/Profile';
 import Personal from './Frontend/src/Screen/Personal';
 import BottomTabUser from './Frontend/src/Layout/BottomTabUser';
 import DrawerTab from './Frontend/src/Layout/DrawerTab';
+import Post from './Frontend/src/Component/Post';
 
 
-export const data=[
+export const Data=[
   {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
   name: 'Cơm gà xối mỡ a a a a a a a a a a a a a a a a a',
@@ -112,24 +113,26 @@ export default function App() {
     // <CreateSale />
     // <ChooseFood/>
     // <NavigatorContainer>
-    <NavigationContainer>
-    <DrawerTab/>
-    </NavigationContainer>
+    // <NavigationContainer>
+    // <DrawerTab/>
+    // </NavigationContainer>
     // <InvoiceComplete/>
 
     // <View style={styles.container}>
     // <CollabProduct/>
 
 
-    // <Sale data_Desserts={data} data_MainDishes={data}/>
-    // <Sale_Items dataItem={data}/>
+    // <Sale/>
+    // <Home_Items/>
+    // <Sale_Items/>
     // <Test/>
     // <Home/>
     // <Pay/>
     // <Profile/>
     // <Personal/>
     // <MyStore/>
-    // <Cart Data={data}/>
+    <Post/>
+    // <Cart />
     // <Address/>
 
   );
