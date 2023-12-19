@@ -1,3 +1,5 @@
+
+import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Dropdown from './Frontend/src/Component/Dropdown';
@@ -24,9 +26,11 @@ import Address from './Frontend/src/Screen/Address';
 import Pay from './Frontend/src/Screen/Pay';
 import Profile from './Frontend/src/Screen/Profile';
 import Personal from './Frontend/src/Screen/Personal';
+import BottomTabUser from './Frontend/src/Layout/BottomTabUser';
+import DrawerTab from './Frontend/src/Layout/DrawerTab';
 
 
-const data=[
+export const data=[
   {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
   name: 'Cơm gà xối mỡ a a a a a a a a a a a a a a a a a',
@@ -101,15 +105,17 @@ export default function App() {
     // <CreateSale />
     // <ChooseFood/>
     // <NavigatorContainer>
-    // <NavigationContainer>
-    // <TopTab/>
-    // </NavigationContainer>
+    <NavigationContainer>
+    {/* <TopTab/> */}
+    {/* <BottomTabUser/> */}
+    <DrawerTab/>
+    </NavigationContainer>
     // <InvoiceComplete/>
 
     // <View style={styles.container}>
-    <CollabProduct/>
-
-
+    // <CollabProduct/>
+    // <CollabMain/>
+    // <Sale/>
     // <Sale data_Desserts={data} data_MainDishes={data}/>
     // <Sale_Items dataItem={data}/>
     // <Test/>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, FlatList, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import No_Products from '../Component/No_Products';
+
 const Cart=({Data})=>{
     const [data, setData] = useState(Data)
     const [arrCount, setArrCount] = useState(new Array(Data.length).fill(1))

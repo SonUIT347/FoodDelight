@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import Line from '../Component/Line';
 
-const CollabMain = () => {
+const CollabMain = ({naviagtion}) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -52,7 +52,7 @@ const CollabMain = () => {
                 </View>
                 <View style={styles.product_element}>
                     <View >
-                        <TouchableOpacity style={styles.income}>
+                        <TouchableOpacity style={styles.income} onPress={() => naviagtion.navigate('TopTab')}>
                             <Text>58</Text>
                             <Text style={{ fontSize: 12 }}>Đang hoạt động</Text>
                         </TouchableOpacity>

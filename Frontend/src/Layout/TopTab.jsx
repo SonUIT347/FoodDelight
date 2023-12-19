@@ -5,7 +5,7 @@ import FoodPending from '../Screen/FoodPending'
 import FoodAccept from '../Screen/FoodAccept'
 import FoodDeny from '../Screen/FoodDeny'
 const Tab = createMaterialTopTabNavigator()
-const TopTab = () => {
+const TopTab = ({naviagtion}) => {
   return (
     <Tab.Navigator initialRouteName='Đang chờ duyệt' >
         <Tab.Screen name='Đang chờ duyệt' component={FoodPending}/>
