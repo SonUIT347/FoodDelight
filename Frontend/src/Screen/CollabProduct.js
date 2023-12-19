@@ -7,7 +7,7 @@ import useImagePicker from '../Component/useImagePicker';
 import ImageShow from '../Component/ImageShow';
 import SubmitBtn from '../Component/SubmitBtn';
 
-const CollabProduct = () => {
+const CollabProduct = ({navigation}) => {
     // const [image, setImage] = useState(null)
     const [selected, setSelected] = useState([]);
     // console.log('selected ' + selected)
@@ -144,7 +144,7 @@ const CollabProduct = () => {
                     </View>
                 </View>
                 <View >
-                    <SubmitBtn text={'Gửi yêu cầu xét duyệt'} press={press}/>
+                    <SubmitBtn text={'Gửi yêu cầu xét duyệt'} press={() => navigation.navigate('StatusNav')}/>
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'flex-start',
         flexDirection: 'column',
-        top: 100
     },
     addImage: {
         flexDirection: 'row',

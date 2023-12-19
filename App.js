@@ -115,8 +115,6 @@ export default function App() {
     // <ChooseFood/>
     // <NavigatorContainer>
     // <NavigationContainer>
-    // {/* <TopTab/> */}
-    // {/* <BottomTabUser/> */}
     // <DrawerTab/>
     // </NavigationContainer>
     // <InvoiceComplete/>

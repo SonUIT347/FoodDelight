@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import React, { useState } from 'react'
 import InvoiceComponent from '../Component/InvoiceComponent'
 import { FontAwesome5 } from '@expo/vector-icons';
-const Invoice = () => {
+const Invoice = ({navigation}) => {
 
     var sumInvoice = 0
     const Invoice = [
@@ -82,7 +82,7 @@ const Invoice = () => {
                             <Text style={styles.invoiceText}>Mặt hàng: {Invoice.data.length}</Text>
                             <Text style={styles.invoiceText}>Tổng hóa đơn: {Invoice.sumPrice} VND</Text>
                             <View style={styles.touch}>
-                                <TouchableOpacity style={{width:100, height: 30, backgroundColor:'#45BC1B', justifyContent:'center', alignItems:'center', borderRadius:5,margin:5}}>
+                                <TouchableOpacity style={{width:100, height: 30, backgroundColor:'#45BC1B', justifyContent:'center', alignItems:'center', borderRadius:5,margin:5}} onPress={() => navigation.navigate('InvoiceDetail')}>
                                     <Text style={{color:'white'}}>Nhận đơn</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{width:100, height: 30, backgroundColor:'#F80C0C', justifyContent:'center', alignItems:'center', borderRadius:5,margin:5}}>

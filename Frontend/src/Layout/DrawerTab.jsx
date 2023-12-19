@@ -7,7 +7,7 @@ const Drawer = createDrawerNavigator()
 const DrawerTab = () => {
   return (
     <Drawer.Navigator initialRouteName='Collaborator' screenOptions={{
-        headerShown: true
+        headerShown: false
     }}>
         <Drawer.Screen name='User' component={BottomTabUser}/>
         <Drawer.Screen name='Collaborator' component={BottomTabCollab} />

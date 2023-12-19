@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import Line from '../Component/Line';
 
-const CollabMain = ({naviagtion}) => {
+const CollabMain = ({navigation}) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -52,7 +52,7 @@ const CollabMain = ({naviagtion}) => {
                 </View>
                 <View style={styles.product_element}>
                     <View >
-                        <TouchableOpacity style={styles.income} onPress={() => naviagtion.navigate('TopTab')}>
+                        <TouchableOpacity style={styles.income} onPress={() => navigation.navigate('StatusNav')}>
                             <Text>58</Text>
                             <Text style={{ fontSize: 12 }}>Đang hoạt động</Text>
                         </TouchableOpacity>
@@ -72,7 +72,7 @@ const CollabMain = ({naviagtion}) => {
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.addProduct}>
+            <TouchableOpacity style={styles.addProduct} onPress={() => navigation.navigate('AddFood')}>
                 <Line />
                 <View style={{
                     flexDirection: 'row',
@@ -90,7 +90,7 @@ const CollabMain = ({naviagtion}) => {
                 </View>
 
             </TouchableOpacity>
-            <TouchableOpacity style={styles.createsale}>
+            <TouchableOpacity style={styles.createsale} onPress={() => navigation.navigate('CreateSale')}>
                 <Foundation
                     name="burst-sale"
                     size={24}
