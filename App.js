@@ -113,8 +113,6 @@ export default function App() {
     // <ChooseFood/>
     // <NavigatorContainer>
     <NavigationContainer>
-    {/* <TopTab/> */}
-    {/* <BottomTabUser/> */}
     <DrawerTab/>
     </NavigationContainer>
     // <InvoiceComplete/>
@@ -126,7 +124,7 @@ export default function App() {
     // <Sale data_Desserts={data} data_MainDishes={data}/>
     // <Sale_Items dataItem={data}/>
     // <Test/>
-    // <Home data_Desserts={data} data_MainDishes={data} data_Sale={data}/>
+    // <Home/>
     // <Pay/>
     // <Profile/>
     // <Personal/>

@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { data } from './CreateSale'
 import Food from '../Component/Food'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 const ChooseFood = () => {
     const [chooseData, setChooseData] = useState([])
     console.log(chooseData)
@@ -20,7 +21,9 @@ const ChooseFood = () => {
                     ))}
                 </View>
             </ScrollView>
-            <Text>asds</Text>
+            <TouchableOpacity>
+                <Text>Xac nhan</Text>
+            </TouchableOpacity>
         </View>
     )
 }

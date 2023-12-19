@@ -3,10 +3,9 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from "
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import PostSale from "../Component/PostSale";
-import Search from "../Component/Search";
-import No_Products from "../Component/No_Products";
-
 const Sale=({data_MainDishes, data_Desserts})=>{
+
+    
     const [data, setData] = useState([data_MainDishes, data_Desserts])
     const [clickedFilter, setClickedFilter] = useState([true, false, false, false, false])
 

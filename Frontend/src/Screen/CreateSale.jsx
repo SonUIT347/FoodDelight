@@ -6,9 +6,9 @@ import Line from '../Component/Line';
 import PercentInput from '../Component/PercentInput';
 import SaleInput from '../Component/SaleInput';
 import MoneyInput from '../Component/MoneyInput';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons';
 import SaleSetUp from '../Component/SaleSetUp';
-export const  data = [
+export const data = [
     {
         id: 1,
         foodName: 'Cơm chiên cá mặn 11',
@@ -50,13 +50,13 @@ export const  data = [
         stock: 10,
         img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
         price: 3000000
-    },    {
+    }, {
         id: 7,
         foodName: 'Cơm chiên cá mặn',
         stock: 10,
         img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
         price: 3000000
-    },    {
+    }, {
         id: 8,
         foodName: 'Cơm chiên cá mặn',
         stock: 10,
@@ -64,8 +64,8 @@ export const  data = [
         price: 3000000
     }
 ]
-const CreateSale = () => {
-
+const CreateSale = ({navigation}) => {
+    const [food, setFood] = useState([])
     const [isDisplay, setIsDisplay] = useState(false)
     const [isChoose, setIsChoose] = useState('percent')
     const [saleName, setSaleName] = useState('')
@@ -158,19 +158,20 @@ const CreateSale = () => {
     }
     const handleSubmit = () => {
         checkPrice()
-        if(selectedTimeStart.getTime() > selectedTimeEnd.getTime()){
+        if (selectedTimeStart.getTime() > selectedTimeEnd.getTime()) {
             Alert.alert('Thời gian bắt đầu phải trước thời gian kết thúc')
         }
     }
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={{height:800}}>
-                <SaleInput
+            <ScrollView style={{ height: 800 }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Tên khuyến mãi</Text>
+                <TextInput
                     title={'Tên khuyến mãi'}
                     placeholder={'Tên khuyến mãi'}
-                    saleName={saleName}
-                    setSaleName={setSaleName}
+                    onChangeText={(text) => setSaleName(text)}
                 />
+                <Line />
                 <TouchableWithoutFeedback onPress={() => showMode('date', flag = 'date')}>
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Ngày giảm giá</Text>
@@ -193,11 +194,11 @@ const CreateSale = () => {
                     </View>
                 </TouchableWithoutFeedback>
                 <Line />
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => navigation.navigate('ChooseFood', {chooseData:food, setChooseData: setFood})} >
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Chọn sản phẩm</Text>
-                        <View style={{flexDirection:'row', justifyContent:'flex-end'}}>
-                        <MaterialIcons name="navigate-next" size={24} color="black"  />
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                            <MaterialIcons name="navigate-next" size={24} color="black" />
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
@@ -280,16 +281,16 @@ const CreateSale = () => {
                     </>
                 )}
                 {/* <View style={styles.food}> */}
-                    <ScrollView style={{ width: '95%', height: 430 }} nestedScrollEnabled={true}>
-                        {data.map((food) => (
-                            <SaleSetUp
-                                Info={food}
-                                percent={percent}
-                                money={money}
-                                isChoose={isChoose}
-                            />
-                        ))}
-                    </ScrollView>
+                <ScrollView style={{ width: '95%', height: 430 }} nestedScrollEnabled={true}>
+                    {data.map((food) => (
+                        <SaleSetUp
+                            Info={food}
+                            percent={percent}
+                            money={money}
+                            isChoose={isChoose}
+                        />
+                    ))}
+                </ScrollView>
                 {/* </View> */}
 
                 <TouchableOpacity style={styles.submitBtn} onPress={() => handleSubmit()}>
@@ -343,21 +344,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    submitBtn:{
-        width:'90%',
-        backgroundColor:'#45BC1B',
-        height:40,
-        justifyContent:'center',
-        alignItems:'center',
-        marginTop:20,
-        marginLeft:20,
-        marginRight:20,
-        borderRadius:15
+    submitBtn: {
+        width: '90%',
+        backgroundColor: '#45BC1B',
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 15
     },
-    btnSubmit_text:{
-        color:'white',
-        fontSize:16,
-        fontWeight:'bold'
+    btnSubmit_text: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 })
 export default CreateSale

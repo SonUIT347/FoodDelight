@@ -7,36 +7,13 @@ import Search from "../Component/Search";
 import { AntDesign } from '@expo/vector-icons';
 import ShortPost from "../Component/ShortPost";
 import No_Products from "../Component/No_Products";
-
-const data=[
-    {
-        img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
-        name: 'Cơm gà xối mỡ',
-        price: 20000,
-        sold: 210
-    },
-    {
-        img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
-        name: 'Cơm gà thái lan',
-        price: 20000,
-        sold: 210
-    },
-    {
-        img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
-        name: 'Cơm thịt kho trứng',
-        price: 20000,
-        sold: 210
-    },
-
-
-]
-
+import { data } from "../../../App";
 
 
 const Home = ({data_Desserts,data_MainDishes, data_Sale}) => {
-    const [dataDesserts, setDataDesserts] = useState(data_Desserts)
-    const [dataMainDishes, setDataMainDishes] = useState(data_MainDishes)
-    const [dataSale, setDataSale] = useState(data_Sale)
+    const [dataDesserts, setDataDesserts] = useState(data)
+    const [dataMainDishes, setDataMainDishes] = useState(data)
+    const [dataSale, setDataSale] = useState(data)
     const handleValueProvince = () => {
 
     }
