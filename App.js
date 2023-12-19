@@ -30,7 +30,7 @@ import BottomTabUser from './Frontend/src/Layout/BottomTabUser';
 import DrawerTab from './Frontend/src/Layout/DrawerTab';
 
 
-export const data=[
+export const Data=[
   {
   img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
   name: 'Cơm gà xối mỡ a a a a a a a a a a a a a a a a a',
@@ -112,26 +112,26 @@ export default function App() {
     // <CreateSale />
     // <ChooseFood/>
     // <NavigatorContainer>
-    <NavigationContainer>
-    {/* <TopTab/> */}
-    {/* <BottomTabUser/> */}
-    <DrawerTab/>
-    </NavigationContainer>
+    // <NavigationContainer>
+    // {/* <TopTab/> */}
+    // {/* <BottomTabUser/> */}
+    // <DrawerTab/>
+    // </NavigationContainer>
     // <InvoiceComplete/>
 
     // <View style={styles.container}>
     // <CollabProduct/>
 
 
-    // <Sale data_Desserts={data} data_MainDishes={data}/>
-    // <Sale_Items dataItem={data}/>
+    <Sale/>
+    // <Sale_Items/>
     // <Test/>
-    // <Home data_Desserts={data} data_MainDishes={data} data_Sale={data}/>
+    // <Home/>
     // <Pay/>
     // <Profile/>
     // <Personal/>
     // <MyStore/>
-    // <Cart Data={data}/>
+    // <Cart />
     // <Address/>
 
   );
