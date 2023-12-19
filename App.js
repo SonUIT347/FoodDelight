@@ -28,6 +28,7 @@ import Profile from './Frontend/src/Screen/Profile';
 import Personal from './Frontend/src/Screen/Personal';
 import BottomTabUser from './Frontend/src/Layout/BottomTabUser';
 import DrawerTab from './Frontend/src/Layout/DrawerTab';
+import Post from './Frontend/src/Component/Post';
 
 
 export const Data=[
@@ -123,7 +124,8 @@ export default function App() {
     // <CollabProduct/>
 
 
-    <Sale/>
+    // <Sale/>
+    // <Home_Items/>
     // <Sale_Items/>
     // <Test/>
     // <Home/>
@@ -131,6 +133,7 @@ export default function App() {
     // <Profile/>
     // <Personal/>
     // <MyStore/>
+    <Post/>
     // <Cart />
     // <Address/>
 
