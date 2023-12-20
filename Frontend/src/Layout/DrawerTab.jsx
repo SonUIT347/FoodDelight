@@ -6,7 +6,7 @@ import BottomTabCollab from './BottomTabCollab'
 const Drawer = createDrawerNavigator()
 const DrawerTab = () => {
   return (
-    <Drawer.Navigator initialRouteName='Collaborator' screenOptions={{
+    <Drawer.Navigator initialRouteName='User' screenOptions={{
         headerShown: false
     }}>
         <Drawer.Screen name='User' component={BottomTabUser}/>

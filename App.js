@@ -113,9 +113,9 @@ export default function App() {
     // <CreateSale />
     // <ChooseFood/>
     // <NavigatorContainer>
-    // <NavigationContainer>
-    // <DrawerTab/>
-    // </NavigationContainer>
+    <NavigationContainer>
+    <DrawerTab/>
+    </NavigationContainer>
     // <InvoiceComplete/>
 
     // <View style={styles.container}>
@@ -131,7 +131,7 @@ export default function App() {
     // <Profile/>
     // <Personal/>
     // <MyStore/>
-    <Post/>
+    // <Post/>
     // <Cart />
     // <Address/>
 

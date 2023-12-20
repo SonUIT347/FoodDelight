@@ -42,7 +42,7 @@ const data = [
     gioKetthuc:'2023-11-15T12:50:00'
   }
 ]
-const FlashSaleShow = () => {
+const FlashSaleShow = ({navigation}) => {
   return (
   
         <SaleComponent data={data}/>

@@ -3,7 +3,7 @@ import React from 'react'
 
 import { useTime } from './useTime';
 import SubmitBtn from './SubmitBtn';
-const SaleComponent = ({ data }) => {
+const SaleComponent = ({ data, navigation }) => {
   const {
     currentTime
   } = useTime()
@@ -51,7 +51,10 @@ const SaleComponent = ({ data }) => {
         data={data}
         renderItem={renderItem}
       />
-      <SubmitBtn text={'Tao uwu dai'} />
+      {/* <SubmitBtn text={'Tao uwu dai'} /> */}
+      <TouchableOpacity onPress={() => navigation.navigate('CreateSale')}>
+          <Text>Tao uu dai</Text>
+      </TouchableOpacity>
     </View>
   )
 }
