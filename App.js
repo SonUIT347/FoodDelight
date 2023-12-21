@@ -30,6 +30,10 @@ import BottomTabUser from './Frontend/src/Layout/BottomTabUser';
 import DrawerTab from './Frontend/src/Layout/DrawerTab';
 import Post from './Frontend/src/Component/Post';
 import Product from './Frontend/src/Screen/Product';
+import MyStore from './Frontend/src/Screen/MyStore';
+import Login from './Frontend/src/Screen/Login';
+import Register from './Frontend/src/Screen/Register';
+import AuthNav from './Frontend/src/Layout/AuthNav';
 
 
 export const Data=[
@@ -115,10 +119,13 @@ export default function App() {
     // <ChooseFood/>
     // <NavigatorContainer>
     <NavigationContainer>
-    <DrawerTab/>
+    {/* <DrawerTab/> */}
+    <AuthNav/>
     </NavigationContainer>
     // <InvoiceComplete/>
-
+    // <MyStore/>
+    // <Login/>
+    // <Register/>
     // <View style={styles.container}>
     // <CollabProduct/>
 

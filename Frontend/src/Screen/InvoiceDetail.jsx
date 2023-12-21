@@ -90,7 +90,7 @@ const InvoiceDetail = () => {
                 <Text style={{ marginLeft: 18, fontSize: 20 }}>So dien thoai: 0355729961</Text>
                 <View style={styles.info}>
                     <AntDesign name="user" size={24} color="#4ECB71" />
-                    <Text style={{ marginLeft: 18, fontSize: 20 }}>Nguoi dung dep trai</Text>
+                    <Text style={{ marginLeft: 18, fontSize: 20 }}>Nguoi dung </Text>
                 </View>
                 <ScrollView>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
