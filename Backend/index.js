@@ -1,8 +1,10 @@
-const express = require('express')
-const app = express();
-const jwt = require('jsonwebtoken');
-const mysql = require('mysql')
-const bodyParser = require('body-parser')
+import express from 'express';
+
+import mysql from 'mysql';
+import bodyParser from 'body-parser';
+import routerAccount from './src/Routes/loginRoute.js'; 
+
+const app = express()
 
 app.use(bodyParser.json({type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -23,25 +25,7 @@ db.connect((err) => {
     if(err) throw err;
     console.log('Connected Database...')
 })
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    db.query('SELECT * FROM account WHERE username = ? AND password = ?', [username, password], (error, rows, fields) => {
-      if (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-      } else {
-        if (rows.length > 0) {
-            const user = rows[0]
-            const token = jwt.sign({ userId: user.id, username: user.username }, secretKey, { expiresIn: '1h' });
-          // Authentication successful
-          res.status(200).json({ token });
-        } else {
-          // Authentication failed
-          res.status(401).json({ message: 'Invalid credentials' });
-        }
-      }
-    });
-  });
+app.use(routerAccount)
 app.get('/food', (req, res) => {
     db.query('select * from food', (error, rows, field) =>{
         if(error)
@@ -51,3 +35,4 @@ app.get('/food', (req, res) => {
         }
     })
 })
+export default db

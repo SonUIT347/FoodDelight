@@ -13,7 +13,7 @@ const Login = ({ navigation }) => {
     };
     const loginUser = async () => {
         try {
-            const response = await fetch('http://192.168.1.6:8080/login', {
+            const response = await fetch('http://192.168.1.12:8080/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
