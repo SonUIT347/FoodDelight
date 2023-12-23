@@ -1,10 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Name = 'Nguyễn Ngọc Thắng'
 
-const Profile=() => {
+const Profile=({navigation}) => {
+    const logOut = async () => {
+        navigation.navigate('Login')
+        await AsyncStorage.removeItem('IdUser')
+        await AsyncStorage.removeItem('role')
+    }
   return (
     <View style={styles.container}>
         <View 
@@ -77,7 +83,7 @@ const Profile=() => {
                 style={{backgroundColor: '#45BC1B', width: '100%', padding: 20, 
                 marginVertical: 10, borderRadius: 15}}
             >
-                <Text style={styles.txtButton}>Đăng xuất</Text>
+                <Text style={styles.txtButton} onPress={logOut} >Đăng xuất</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 

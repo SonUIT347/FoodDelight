@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuth from '../context/useAuth';
 
 const Login = ({ navigation }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
     const handleAccount = () => {
         // Implement your logic for handling login here
         console.log('Login pressed');
     };
     const loginUser = async () => {
         try {
-            const response = await fetch('http://192.168.1.12:8080/login', {
+            const response = await fetch('http://192.168.1.30:8080/login:username', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -23,24 +21,35 @@ const Login = ({ navigation }) => {
 
             if (response.status === 200) {
                 const responseData = await response.json(); // Parse the response as JSON
-                const token = responseData.token;
-
+                const userID = responseData.user.IdUser;
+                const role = responseData.user.PhanQuyen
+                console.log(responseData.user.IdUser)
+                console.log(typeof role)
                 // Save the token to AsyncStorage
-                await AsyncStorage.setItem('token', token);
-                const tk = AsyncStorage.getItem('token')
-                console.log(tk)
+                await AsyncStorage.setItem('IdUser', userID);
+                await AsyncStorage.setItem('role', role);
+                // const tk = AsyncStorage.getItem('token')
+                // console.log(tk)
                 // Navigate to the 'Drawer' screen or any other screen
                 navigation.navigate('Drawer');
                 console.log('Login success');
+                setUsername('')
+                setPassword('')
             } else {
                 // Authentication failed
-                console.error('Login failed');
+                alert('Login failed. Please check your credentials.');
+                console.log('Login failed');
             }
         } catch (error) {
-            console.error('Login error:', error.message);
+            console.log('Login error:', error);
         }
     };
-
+    const {
+        username,
+        password,
+        setUsername,
+        setPassword
+    } = useAuth()
     return (
         <View style={styles.container}>
             <View style={styles.Logo}>

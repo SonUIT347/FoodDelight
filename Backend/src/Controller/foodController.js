@@ -1,7 +1,7 @@
-import {db} from '../../index.js'
+import db from "../..index";
 
 
-export const CreateFood = (req,res) => {
+export const saveFood = (req,res) => {
     const q = 'select * from food'
     db.query(q, (err, data) => {
         if (err) return res.json(err);

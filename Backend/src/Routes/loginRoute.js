@@ -1,9 +1,10 @@
 import express from 'express';
-import { login } from '../Controller/loginControler.js';
+import { getUserCount, login, register } from '../Controller/loginControler.js';
 
-const routerAccount = express.Router()
+export const routerAccount = express.Router()
 
-routerAccount.post('/login', login)
-
-
-export default routerAccount
+export const registerAccount = express.Router()
+export const routerGetUserCount = express.Router()
+routerAccount.post('/login:username', login)
+registerAccount.post('/register', register)
+routerGetUserCount.get('/usercount', getUserCount)

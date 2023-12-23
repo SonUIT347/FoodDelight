@@ -1,8 +1,81 @@
 import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import axios from 'axios';
+import useAuth from '../context/useAuth';
 const Register = ({ navigation }) => {
+    const [confirmPass, setConfirmPass] = useState('')
+    const {
+        username,
+        setUsername,
+        password,
+        setPassword,
+        getUserCount,
+        userCount,
+        findMissingValue
+    } = useAuth()
+    const [arrayUserId, setArrayUserId] = useState([])
+    const [id, setId] = useState(null)
+    useEffect(() => {
+        getUserId()
+    }, [])
+    const getUserId = async () => {
+        try {
+            const response = await axios.get('http://192.168.1.30:8080/getUserId');
+            const modifiedUserIds = response.data.map(userId => parseInt(userId.slice(2), 10));
+
+            setArrayUserId(modifiedUserIds);
+
+            console.log(modifiedUserIds);
+            setId(findMissingValue(modifiedUserIds))
+        } catch (error) {
+            console.error('Error fetching user IDs:', error.message);
+        }
+    };
+    const role = 1
+    const handleRegister = async () => {
+        if (username == '' || password == '' || confirmPass == '') {
+            alert('Hãy điền đầy đủ thông tin');
+        } else if (password !== confirmPass) {
+            alert('Mật khẩu không trùng khớp');
+        } else {
+            await getUserCount()
+            if (id === null) {
+                IdUser = 'FD0' + (userCount + 1)
+            } else {
+                IdUser = 'FD0' + id
+            }
+            try {
+                const response = await axios.post('http://192.168.1.30:8080/register', {
+                    username,
+                    password,
+                    role,
+                    IdUser
+                });
+                console.log(response.data)
+                navigation.navigate('Drawer');
+                setUsername('')
+                setPassword('')
+            } catch (err) {
+                console.log('An error to register: ', err)
+            }
+            const Adress = ''
+            const status = ''
+            try {
+                const res = await axios.post('http://192.168.1.30:8080/createcus', {
+                    IdUser,
+                    username,
+                    Adress,
+                    status
+                });
+                console.log(res.data)
+            } catch (err) {
+                console.log('An error to create customer: ', err)
+            }
+        }
+
+    }
     return (
         <View style={styles.container}>
             <View style={styles.Logo}>
@@ -14,21 +87,25 @@ const Register = ({ navigation }) => {
                 <TextInput
                     placeholder='Enter username'
                     style={styles.username_input}
+                    value={username}
+                    onChangeText={(text) => setUsername(text)}
                 />
             </View>
-            <View style={styles.Username}>
+            {/* <View style={styles.Username}>
                 <Feather name="mail" size={24} color="black" />
                 <TextInput
                     placeholder='Enter email'
                     style={styles.username_input}
                 />
-                {/* 20521850 */}
-            </View>
+            </View> */}
             <View style={styles.Username}>
                 <AntDesign name="lock" size={24} color="black" />
                 <TextInput
                     placeholder='Enter password'
                     style={styles.username_input}
+                    value={password}
+                    secureTextEntry={true}
+                    onChangeText={(text) => setPassword(text)}
                 />
             </View>
             <View style={styles.Username}>
@@ -36,11 +113,14 @@ const Register = ({ navigation }) => {
                 <TextInput
                     placeholder='Confirm password'
                     style={styles.username_input}
+                    value={confirmPass}
+                    secureTextEntry={true}
+                    onChangeText={(text) => setConfirmPass(text)}
                 />
             </View>
 
             <View style={styles.Login}>
-                <TouchableOpacity
+                <TouchableOpacity onPress={handleRegister}
                 // 20521850
                 >
                     <Text style={styles.Login_text}>CREATE</Text>

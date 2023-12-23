@@ -10,7 +10,7 @@ import CollabProduct from './Frontend/src/Screen/CollabProduct';
 import CreateSale from './Frontend/src/Screen/CreateSale';
 import FlashSaleShow from './Frontend/src/Screen/FlashSaleShow';
 import { NavigationContainer } from '@react-navigation/native';
-
+import React, { useEffect } from 'react';
 // 
 
 import Home from './Frontend/src/Screen/Home';
@@ -34,97 +34,101 @@ import MyStore from './Frontend/src/Screen/MyStore';
 import Login from './Frontend/src/Screen/Login';
 import Register from './Frontend/src/Screen/Register';
 import AuthNav from './Frontend/src/Layout/AuthNav';
+import AuthContext from './Frontend/src/context/AuthContext';
 
 
-export const Data=[
+export const Data = [
   {
-  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-  name: 'Cơm gà xối mỡ a a a a a a a a a a a a a a a a a',
-  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-  price: 20000,
-  quantitySold: 2100,
-  sale: true,
-  priceReduced: 10000,
-  sold: 210
-  // id: 1,
-},    {
-  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-  name: 'Cơm gà xối mỡ',
-  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-  price: 20000,
-  quantitySold: 2100,
-  sale: true,
-  priceReduced: 10000,
-  sold: 210
-  // id: 1,
-},    {
-  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-  name: 'Cơm gà',
-  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-  price: 20000,
-  quantitySold: 2100,
-  sale: true,
-  priceReduced: 18000,
-  sold: 210
-  // id: 1,
-}, {
-  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-  name: 'Cơm gà',
-  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-  price: 20000,
-  quantitySold: 2100,
-  sale: true,
-  priceReduced: 18000,
-  sold: 210
-  // id: 1,
-}, {
-  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-  name: 'Cơm gà',
-  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-  price: 20000,
-  quantitySold: 2100,
-  sale: true,
-  priceReduced: 18000,
-  sold: 210
-  // id: 1,
-}, {
-  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-  name: 'Cơm gà',
-  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-  price: 20000,
-  quantitySold: 2100,
-  sale: true,
-  priceReduced: 18000,
-  sold: 210
-  // id: 1,
-}, {
-  img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-  name: 'Cơm gà',
-  description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-  price: 20000,
-  quantitySold: 2100,
-  sale: true,
-  priceReduced: 18000,
-  sold: 210
-  // id: 1,
-}, 
+    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+    name: 'Cơm gà xối mỡ a a a a a a a a a a a a a a a a a',
+    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+    price: 20000,
+    quantitySold: 2100,
+    sale: true,
+    priceReduced: 10000,
+    sold: 210
+    // id: 1,
+  }, {
+    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+    name: 'Cơm gà xối mỡ',
+    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+    price: 20000,
+    quantitySold: 2100,
+    sale: true,
+    priceReduced: 10000,
+    sold: 210
+    // id: 1,
+  }, {
+    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+    name: 'Cơm gà',
+    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+    price: 20000,
+    quantitySold: 2100,
+    sale: true,
+    priceReduced: 18000,
+    sold: 210
+    // id: 1,
+  }, {
+    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+    name: 'Cơm gà',
+    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+    price: 20000,
+    quantitySold: 2100,
+    sale: true,
+    priceReduced: 18000,
+    sold: 210
+    // id: 1,
+  }, {
+    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+    name: 'Cơm gà',
+    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+    price: 20000,
+    quantitySold: 2100,
+    sale: true,
+    priceReduced: 18000,
+    sold: 210
+    // id: 1,
+  }, {
+    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+    name: 'Cơm gà',
+    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+    price: 20000,
+    quantitySold: 2100,
+    sale: true,
+    priceReduced: 18000,
+    sold: 210
+    // id: 1,
+  }, {
+    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+    name: 'Cơm gà',
+    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+    price: 20000,
+    quantitySold: 2100,
+    sale: true,
+    priceReduced: 18000,
+    sold: 210
+    // id: 1,
+  },
 ]
 
 export default function App() {
-  
   return (
     // <CollabProduct/>
     // <FlashSaleShow/>
     // <CreateSale />
     // <ChooseFood/>
     // <NavigatorContainer>
-    <NavigationContainer>
-    <AuthNav/>
-    </NavigationContainer>
+    <AuthContext>
+      <NavigationContainer>
+        <AuthNav />
+      </NavigationContainer>
+      {/* <Register /> */}
+    </AuthContext>
+
     // <InvoiceComplete/>
     // <MyStore/>
     // <Login/>
-    // <Register/>
+
     // <View style={styles.container}>
     // <CollabProduct/>
 
