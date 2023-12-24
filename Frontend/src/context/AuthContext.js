@@ -7,6 +7,7 @@ const AuthContext = ({ children }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [userCount, setUserCount] = useState(null);
+    const ip = '192.168.1.12'
     // const [IdUser, setIdUser] = useState = (0)
     // useEffect(() => {
     //   axios.get('http://192.168.1.30:8080/usercount')
@@ -40,7 +41,7 @@ const AuthContext = ({ children }) => {
       }
       
     const getUserCount = () => {
-        axios.get('http://192.168.1.30:8080/usercount').then(response =>{
+        axios.get(`http://${ip}:8080/usercount`).then(response =>{
             setUserCount(response.data.userCount);
         })
         .catch(err => {
@@ -54,7 +55,8 @@ const AuthContext = ({ children }) => {
         setPassword,
         userCount,
         getUserCount,
-        findMissingValue
+        findMissingValue,
+        ip
     }
     return (
         <authContext.Provider value={value}>

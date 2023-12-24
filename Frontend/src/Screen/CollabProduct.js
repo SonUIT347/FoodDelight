@@ -7,10 +7,15 @@ import useImagePicker from '../Component/useImagePicker';
 import ImageShow from '../Component/ImageShow';
 import SubmitBtn from '../Component/SubmitBtn';
 
-const CollabProduct = ({navigation}) => {
+const CollabProduct = ({ navigation }) => {
     // const [image, setImage] = useState(null)
     const [selected, setSelected] = useState([]);
-    // console.log('selected ' + selected)
+    const [nameFood, setNameFood] = useState('')
+    const [desFood, setDesFood] = useState('')
+    const [priceFood, setPriceFood] = useState(0)
+    const [stock, setStock] = useState(0)
+    console.log('selected ' + selected)
+    console.log('selected ' + typeof selected)
     const [post, setPost] = useState({
         image: [],
         nameProduct: '',
@@ -20,10 +25,13 @@ const CollabProduct = ({navigation}) => {
         stock: ''
 
     })
-    const submit = (name, value) => {
+    const submit = () => {
         // if ((name === "stock" || name === "priceProduct") && typeof value === "number" && value > 0){
-        setPost({ ...post, [name]: value })
         
+        console.log(selected)
+        // const tempArray = selected.split(',').map(item => item.trim());
+
+        console.log(tempArray);
     }
     const press = () => {
         // setPost({ ...post, 'category':selected})
@@ -72,13 +80,14 @@ const CollabProduct = ({navigation}) => {
                             multiline
                             maxLength={100}
                             placeholder='Ví dụ: Cơm gà chiên đặc biệt'
-                            onChangeText={(text) => submit('nameProduct', text)}
+                            onChangeText={(text) => setNameFood(text)}
                             style={{
                                 marginLeft: 10,
                                 height: 'auto',
                                 width: '95%',
                                 fontSize: 18
                             }}
+                            value={nameFood}
                         />
                         <Line />
                     </View>
@@ -87,7 +96,7 @@ const CollabProduct = ({navigation}) => {
                         <TextInput
                             multiline
                             maxLength={500}
-                            onChangeText={(text) => submit('desProduct', text)}
+                            onChangeText={(text) => setDesFood(text)}
                             placeholder='Ví dụ: Cơm gà chiên đặc biệt'
                             style={{
                                 marginLeft: 10,
@@ -95,6 +104,7 @@ const CollabProduct = ({navigation}) => {
                                 width: '95%',
                                 fontSize: 18
                             }}
+                            value={desFood}
                         />
                         <Line />
                     </View>
@@ -104,10 +114,9 @@ const CollabProduct = ({navigation}) => {
                         </Text>
                         <Dropdown
                             selected={selected}
-                            setSelected={setSelected} 
+                            setSelected={setSelected}
                             setPost={setPost}
                             post={post}
-
                         />
                     </View>
                     <View style={styles.productName}>
@@ -115,7 +124,7 @@ const CollabProduct = ({navigation}) => {
                         <TextInput
                             multiline
                             maxLength={12}
-                            onChangeText={(text) => submit('priceProduct', text)}
+                            onChangeText={(text) => setPriceFood(text)}
                             placeholder='Ví dụ: 350000'
                             style={{
                                 marginLeft: 10,
@@ -123,6 +132,7 @@ const CollabProduct = ({navigation}) => {
                                 width: '95%',
                                 fontSize: 18
                             }}
+                            value={priceFood}
                         />
                         <Line />
                     </View>
@@ -131,7 +141,7 @@ const CollabProduct = ({navigation}) => {
                         <TextInput
                             multiline
                             maxLength={12}
-                            onChangeText={(text) => submit('stock', text)}
+                            onChangeText={(text) => setStock(text)}
                             placeholder='Ví dụ: 100'
                             style={{
                                 marginLeft: 10,
@@ -139,12 +149,13 @@ const CollabProduct = ({navigation}) => {
                                 width: '95%',
                                 fontSize: 18
                             }}
+                            value={stock}
                         />
                         <Line />
                     </View>
                 </View>
                 <View >
-                    <SubmitBtn text={'Gửi yêu cầu xét duyệt'} press={() => navigation.navigate('StatusNav')}/>
+                    <SubmitBtn text={'Gửi yêu cầu xét duyệt'} press={() => submit()} />
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>

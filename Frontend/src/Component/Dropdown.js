@@ -72,7 +72,6 @@ const Dropdown = ({ selected, setSelected, setPost, post }) => {
                 renderSelectedItem={(item, unSelect) => (
                     <TouchableOpacity onPress={() => (unSelect(item))}>
                         <View style={styles.selectedStyle}>
-                            {/* {console.log(selected)} */}
                             <Text style={styles.textSelectedStyle}>{item.label}</Text>
                             <AntDesign color="black" name="delete" size={17} />
                         </View>

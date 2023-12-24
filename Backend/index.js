@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import { registerAccount, routerAccount, routerGetUserCount } from './src/Routes/loginRoute.js';
 import { routerGetUserId } from './src/Routes/userRoute.js';
 import { routerCreateCus } from './src/Routes/customerRoute.js';
+import { foodRouter } from './src/Routes/FoodRoute.js';
 
 const app = express()
 
@@ -34,6 +35,7 @@ app.use(registerAccount)
 app.use(routerGetUserCount)
 app.use(routerGetUserId)
 app.use(routerCreateCus)
+app.use(foodRouter)
 // app.get('/food', (req, res) => {
 //     db.query('select * from food', (error, rows, field) =>{
 //         if(error)

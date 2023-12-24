@@ -1,3 +1,6 @@
 import express from 'express'
+import { saveFood } from '../Controller/foodController.js'
 
-const foodRouter = express.Router()
+export const foodRouter = express.Router()
+
+foodRouter.post('/createfood', saveFood)

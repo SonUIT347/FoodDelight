@@ -9,9 +9,17 @@ const Login = ({ navigation }) => {
         // Implement your logic for handling login here
         console.log('Login pressed');
     };
+    const {
+        username,
+        password,
+        setUsername,
+        setPassword, 
+        ip
+    } = useAuth()
     const loginUser = async () => {
+        console.log(ip)
         try {
-            const response = await fetch('http://192.168.1.30:8080/login:username', {
+            const response = await fetch(`http://${ip}:8080/login:username`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,12 +52,7 @@ const Login = ({ navigation }) => {
             console.log('Login error:', error);
         }
     };
-    const {
-        username,
-        password,
-        setUsername,
-        setPassword
-    } = useAuth()
+
     return (
         <View style={styles.container}>
             <View style={styles.Logo}>

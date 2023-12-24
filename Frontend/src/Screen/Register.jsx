@@ -13,7 +13,8 @@ const Register = ({ navigation }) => {
         setPassword,
         getUserCount,
         userCount,
-        findMissingValue
+        findMissingValue,
+        ip
     } = useAuth()
     const [arrayUserId, setArrayUserId] = useState([])
     const [id, setId] = useState(null)
@@ -22,7 +23,7 @@ const Register = ({ navigation }) => {
     }, [])
     const getUserId = async () => {
         try {
-            const response = await axios.get('http://192.168.1.30:8080/getUserId');
+            const response = await axios.get(`http://${ip}:8080/getUserId`);
             const modifiedUserIds = response.data.map(userId => parseInt(userId.slice(2), 10));
 
             setArrayUserId(modifiedUserIds);
@@ -33,7 +34,7 @@ const Register = ({ navigation }) => {
             console.error('Error fetching user IDs:', error.message);
         }
     };
-    const role = 1
+    const role = 0
     const handleRegister = async () => {
         if (username == '' || password == '' || confirmPass == '') {
             alert('Hãy điền đầy đủ thông tin');
@@ -47,7 +48,7 @@ const Register = ({ navigation }) => {
                 IdUser = 'FD0' + id
             }
             try {
-                const response = await axios.post('http://192.168.1.30:8080/register', {
+                const response = await axios.post(`http://${ip}:8080/register`, {
                     username,
                     password,
                     role,
@@ -63,7 +64,7 @@ const Register = ({ navigation }) => {
             const Adress = ''
             const status = ''
             try {
-                const res = await axios.post('http://192.168.1.30:8080/createcus', {
+                const res = await axios.post(`http://${ip}:8080/createcus`, {
                     IdUser,
                     username,
                     Adress,
