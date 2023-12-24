@@ -23,6 +23,12 @@ const server = app.listen(8080, () =>{
     // var host = server.address().address
     // var port = server.address().port
 })
+
+app.listen(8080,'172.17.9.17', () =>{
+    // var host = server.address().address
+    // var port = server.address().port
+    console.log("server running "+ 8080)
+})
 db.connect((err) => {
     // if(err){
     //     console.log(err)
@@ -30,6 +36,17 @@ db.connect((err) => {
     console.log(err)
     console.log('Connected Database...')
 })
+
+app.get('/data', (req, res)=>{
+    var sql = "select * from taikhoan";
+    db.query(sql, (err, kq)=>{
+        if(err)
+            throw err;
+        console.log("afdadf" +kq);
+        res.send(kq);
+    })
+})
+
 app.use(routerAccount)
 app.use(registerAccount)
 app.use(routerGetUserCount)

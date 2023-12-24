@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
 import useAuth from '../context/useAuth';
+import { IP } from '../../../Backend/IPAddress';
 const Register = ({ navigation }) => {
     const [confirmPass, setConfirmPass] = useState('')
     const {
