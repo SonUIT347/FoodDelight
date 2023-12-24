@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
 import useAuth from '../context/useAuth';
+import { IP } from '../../../Backend/IPAddress';
 const Register = ({ navigation }) => {
     const [confirmPass, setConfirmPass] = useState('')
     const {
@@ -22,7 +23,7 @@ const Register = ({ navigation }) => {
     }, [])
     const getUserId = async () => {
         try {
-            const response = await axios.get('http://192.168.1.30:8080/getUserId');
+            const response = await axios.get(`http://${IP}:8080/getUserId`);
             const modifiedUserIds = response.data.map(userId => parseInt(userId.slice(2), 10));
 
             setArrayUserId(modifiedUserIds);
@@ -47,7 +48,7 @@ const Register = ({ navigation }) => {
                 IdUser = 'FD0' + id
             }
             try {
-                const response = await axios.post('http://192.168.1.30:8080/register', {
+                const response = await axios.post(`http://${IP}:8080/register`, {
                     username,
                     password,
                     role,
@@ -63,7 +64,7 @@ const Register = ({ navigation }) => {
             const Adress = ''
             const status = ''
             try {
-                const res = await axios.post('http://192.168.1.30:8080/createcus', {
+                const res = await axios.post(`http://${IP}:8080/createcus`, {
                     IdUser,
                     username,
                     Adress,

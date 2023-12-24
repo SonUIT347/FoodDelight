@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { AntDesign, Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuth from '../context/useAuth';
+import { IP } from '../../../Backend/IPAddress';
 
 const Login = ({ navigation }) => {
     const handleAccount = () => {
@@ -11,7 +12,7 @@ const Login = ({ navigation }) => {
     };
     const loginUser = async () => {
         try {
-            const response = await fetch('http://192.168.1.30:8080/login:username', {
+            const response = await fetch(`http://${IP}:8080/login:username`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
