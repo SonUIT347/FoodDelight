@@ -1,6 +1,9 @@
 import express from 'express'
-import { saveFood } from '../Controller/foodController.js'
+import { getFoodCount, getImageCount, saveFood } from '../Controller/foodController.js'
 
 export const foodRouter = express.Router()
 
 foodRouter.post('/createfood', saveFood)
+foodRouter.get('/foodCount', getFoodCount)
+
+foodRouter.get('/imageCount', getImageCount)

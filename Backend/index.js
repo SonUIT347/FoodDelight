@@ -24,15 +24,12 @@ const server = app.listen(8080, () =>{
     // var port = server.address().port
 })
 
-app.listen(8080,'172.17.9.17', () =>{
-    // var host = server.address().address
-    // var port = server.address().port
-    console.log("server running "+ 8080)
-})
+// app.listen(8080,'172.17.9.17', () =>{
+//     // var host = server.address().address
+//     // var port = server.address().port
+//     console.log("server running "+ 8080)
+// })
 db.connect((err) => {
-    // if(err){
-    //     console.log(err)
-    // };
     console.log(err)
     console.log('Connected Database...')
 })
