@@ -1,6 +1,11 @@
 import express from 'express'
-import { saveFood } from '../Controller/foodController.js'
+import { saveFood, selectFoodMains, selectFoodSales, selectFoodDesserts, selectFoodDesserts_Sale, selectFoodMains_Sale } from '../Controller/foodController.js'
 
 export const foodRouter = express.Router()
 
 foodRouter.post('/createfood', saveFood)
+foodRouter.get('/selectFoodMains', selectFoodMains)
+foodRouter.get('/selectFoodDesserts', selectFoodDesserts)
+foodRouter.get('/selectFoodSales', selectFoodSales)
+foodRouter.get('/selectFoodMains_Sale', selectFoodMains_Sale)
+foodRouter.get('/selectFoodDesserts_Sale', selectFoodDesserts_Sale)

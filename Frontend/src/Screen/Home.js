@@ -8,53 +8,112 @@ import { AntDesign } from '@expo/vector-icons';
 import ShortPost from "../Component/ShortPost";
 import No_Products from "../Component/No_Products";
 import { Data } from "../../../App";
-
-// const data=[
-//     {
-//         img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
-//         name: 'Cơm gà xối mỡ',
-//         price: 20000,
-//         sold: 210
-//     },
-//     {
-//         img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
-//         name: 'Cơm gà thái lan',
-//         price: 20000,
-//         sold: 210
-//     },
-//     {
-//         img: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
-//         name: 'Cơm thịt kho trứng',
-//         price: 20000,
-//         sold: 210
-//     },
-
-
-// ]
+import useAuth from "../context/useAuth";
+import axios from "axios";
 
 
 
 const Home = () => {
-    const [dataDesserts, setDataDesserts] = useState(Data)
-    const [dataMainDishes, setDataMainDishes] = useState(Data)
-    const [dataSale, setDataSale] = useState(Data)
-    const handleValueProvince = () => {
+    const [dataDesserts, setDataDesserts] = useState([])
+    const [dataMainDishes, setDataMainDishes] = useState([])
+    const [dataSale, setDataSale] = useState([])
+    const [dataDesserts0, setDataDesserts0] = useState([])
+    const [dataMainDishes0, setDataMainDishes0] = useState([])
+    const [dataSale0, setDataSale0] = useState([])
+    const [province, setProvince] = useState('')
+    const [txtSeacrh, setTxtSearch] = useState('')
 
+    const {
+        ip
+    } = useAuth()
+
+    useEffect(() => {
+        console.log(ip)
+        getDataFoodMain()
+        getDataFoodDesserts()
+        getDataFoodSales()
+    }, []);
+
+    useEffect(() => {
+        HanderFilterSearch()
+        // const newDataSearch1 = dataMainDishes.filter((item)=>((item.Tinh)==province))
+        // const newDataSearch2 = dataSale.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
+        // const newDataSearch3 = dataDesserts.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
+        // setDataMainDishes(newDataSearch1)
+        // setDataSale(newDataSearch2)
+        // setDataDesserts(newDataSearch3)
+        console.log(province + "abc")
+    }, [province]);
+
+    const getDataFoodMain = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/selectFoodMains`);
+            const data = response.data;
+            console.log(data)
+            setDataMainDishes(data)
+            setDataMainDishes0(data)
+        } catch (error) {
+            console.error('Error fetching data food mains', error.message);
+        }
+    };
+
+    const getDataFoodDesserts = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/selectFoodDesserts`);
+            const data = response.data;
+            // console.log(data)
+            setDataDesserts(data)
+            setDataDesserts0(data)
+        } catch (error) {
+            console.error('Error fetching data food mains', error.message);
+        }
+    };
+
+    const getDataFoodSales = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/selectFoodSales`);
+            const data = response.data;
+            // console.log(data)
+            setDataSale(data)
+            setDataSale0(data)
+        } catch (error) {
+            console.error('Error fetching data food mains', error.message);
+        }
+    };
+    
+    const handleValueProvince=(valueProvince)=>{
+        setProvince(valueProvince)
     }
 
     const handleValueIndex = () => {
         
     }
+    
+    function HanderFilterSearch() {
+        const searchTextNormalized = txtSeacrh.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        const newDataSearch1 = dataMainDishes0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch2 = dataSale0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch3 = dataDesserts0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch01 = newDataSearch1.filter((item)=>((item.Tinh)==province))
+        const newDataSearch02 = newDataSearch2.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
+        const newDataSearch03 = newDataSearch3.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
+        setDataMainDishes(newDataSearch01)
+        setDataSale(newDataSearch02)
+        setDataDesserts(newDataSearch03)
+    }
 
     const HanderSearch=(text)=>{
         const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-
-        const newDataSearch1 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch2 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch3 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        setDataMainDishes(newDataSearch1)
-        setDataSale(newDataSearch2)
-        setDataDesserts(newDataSearch3)
+        const newDataSearch1 = dataMainDishes0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch2 = dataSale0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch3 = dataDesserts0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch01 = newDataSearch1.filter((item)=>((item.Tinh)==province))
+        const newDataSearch02 = newDataSearch2.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
+        const newDataSearch03 = newDataSearch3.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
+        setDataMainDishes(newDataSearch01)
+        setDataSale(newDataSearch02)
+        setDataDesserts(newDataSearch03)
+        setTxtSearch(text)
     }
 
 
@@ -68,10 +127,10 @@ const Home = () => {
                         <Home_Address valueProvince={handleValueProvince} valueIndex={handleValueIndex}/>
                 </View>
                 <ScrollView horizontal={false} style={{marginTop: 60}}>
-                    <View style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center'}}>
-                        <Text style={{fontSize: 20, fontWeight: 600}}>Món ăn chính</Text>
+                    <TouchableOpacity style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center'}}>
+                        <Text style={{fontSize: 20, fontWeight: 600}}>Món Ăn Chính</Text>
                         <AntDesign name="rightcircleo" size={30} color="black" />
-                    </View>
+                    </TouchableOpacity>
 
                     {
                         dataMainDishes.length == 0 ? (
@@ -127,10 +186,10 @@ const Home = () => {
                             </ScrollView>
                         )
                     }
-                    <View style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center'}}>
+                    <TouchableOpacity style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center'}}>
                         <Text style={{fontSize: 20, fontWeight: 600}}>Món Tráng Miệng</Text>
                         <AntDesign name="rightcircleo" size={30} color="black" />
-                    </View>
+                    </TouchableOpacity>
                     {
                         dataDesserts.length == 0 ? (
                             <View style={{}}>

@@ -12,5 +12,18 @@ export const getAllUserID = (req, res) => {
         res.json(userIds);
       }
     });
-  };
+};
+
+export const getUserId = (req, res) => {
+  const  username = req.params.username;
+  const q = 'SELECT IdUser FROM taikhoan WHERE userName = ?';
+  db.query(q, [username], (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error fetching userId');
+    } else {
+      res.json(data);
+    }
+});
+};
   

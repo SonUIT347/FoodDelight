@@ -75,7 +75,7 @@ import { AntDesign } from '@expo/vector-icons';
     value: (index + 1).toString(),
     label: province,
   }));
-  const Home_Address = ({size, height, valueProvince, valueIndex}) => {
+  const Home_Address = ({size, height, valueProvince}) => {
     const [value, setValue] = useState(null);
     const [province, setProvince] = useState(null);
 
@@ -105,7 +105,7 @@ import { AntDesign } from '@expo/vector-icons';
           value={value}
           onChange={item => {
             setValue(item.value);
-            valueIndex(item.value)
+            // valueIndex(item.value)
             setProvince(item.label)
             valueProvince(item.label)
           }}

@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { AntDesign, Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuth from '../context/useAuth';
-import { IP } from '../../../Backend/IPAddress';
 
 const Login = ({ navigation }) => {
     const handleAccount = () => {

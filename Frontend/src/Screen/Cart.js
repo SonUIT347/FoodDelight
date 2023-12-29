@@ -3,15 +3,65 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, Fla
 import { AntDesign } from '@expo/vector-icons';
 import No_Products from '../Component/No_Products';
 import { Data } from '../../../App';
+import useAuth from '../context/useAuth';
+import axios from "axios";
+
+const username = 'tranvanson'
 
 const Cart=()=>{
-    const [data, setData] = useState(Data)
+    const [data, setData] = useState([])
     const [arrCount, setArrCount] = useState(new Array(Data.length).fill(1))
     const [sum, setSum] = useState()
     
     useEffect(()=>{
-        setSum(data.reduce((sum, item, index) => sum + arrCount[index]*(item.sale ? (item.priceReduced):(item.price)), 0))
+        setSum(data.reduce((sum, item, index) => sum + arrCount[index]*(item.GiaTien_New), 0))
     }, [arrCount])
+
+    useEffect(()=>{
+        getDataCart()
+    }, [])
+
+    const {
+        ip
+    } = useAuth()
+
+    const getDataCart = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/cart/${username}`);
+            const dt = response.data;
+            const newArrCount = dt.map(item=>item.SL)
+            console.log(dt)
+            setData(dt)
+            setArrCount(newArrCount)
+        } catch (error) {
+            console.error('Error fetching data cart', error.message);
+        }        
+    };
+
+    const updateDataCart = async () => {
+        for (let i = 0; i < data.length; i++) {
+            try {
+                const response = await fetch(`http://${ip}:8080/UpdateCart`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({maMA: data[i].MaMA, username, SL: arrCount[i]}),
+                });
+                if (response.status === 200) {
+                    const responseData = await response.json(); // Parse the response as JSON
+                } else {
+                    // Authentication failed
+                    alert('Update failed. Please check address.');
+                    console.log('Update failed');
+                }
+            } catch (error) {
+                console.log('Update error:', error);
+            }  
+        }
+        getDataCart()
+            
+    };
 
     const formattedAmount=(item)=>{
         if (item)
@@ -28,7 +78,7 @@ const Cart=()=>{
         setArrCount(newCounters);
     };
 
-    const handleOnMinus = (index) => {
+    const handleOnMinus = (item, index) => {
         // console.log(index)
         if(arrCount[index] != 1)
         {
@@ -37,9 +87,21 @@ const Cart=()=>{
             setArrCount(newCounters);
         }
         else
-            handleOnDelete(index)
+            handleOnDelete(item, index)
         
     };
+
+    const handleOnPay=()=>{
+        updateDataCart()
+    }
+
+    // const handleArrCount=(index)=>{
+
+    //     const newCounters = [...arrCount];
+    //     newCounters[index] = data[index].SL;
+    //     setArrCount(newCounters);
+
+    // }
 
     function handlePrice(index, item) {
         // const a = formattedAmount(arrCount[index]*(item.sale ? (item.priceReduced):(item.price)))
@@ -49,7 +111,7 @@ const Cart=()=>{
         // return a
     }
 
-    const handleOnDelete = (index_0) => {
+    const handleOnDelete = (item, index_0) => {
         console.log(index_0)
         Alert.alert(
             'Xác nhận xóa',
@@ -61,11 +123,28 @@ const Cart=()=>{
               },
               {
                 text: 'Có',
-                onPress: () => {
-                    const updatedData = data.filter((item, index) => index !== index_0);
-                    const updateArrCount = arrCount.filter((item, index) => index !== index_0);
-                    setData(updatedData)
-                    setArrCount(updateArrCount)
+                onPress: async () => {
+                    console.log(ip)
+                    // console.log("check insert: " + maKH)
+                    try {
+                        const response = await fetch(`http://${ip}:8080/DeleteCart`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({maMA: item.MaMA, username}),
+                        });
+                        if (response.status === 200) {
+                            const responseData = await response.json(); // Parse the response as JSON
+                        } else {
+                            // Authentication failed
+                            alert('Delete failed. Please check address.');
+                            console.log('Delete failed');
+                        }
+                    } catch (error) {
+                        console.log('Delete error:', error);
+                    }
+                    getDataCart()
                 },
               },
             ],
@@ -75,12 +154,11 @@ const Cart=()=>{
 
     const renderItem = ({ item, index }) => (
         <View key={index} style={{backgroundColor: '#F5F5F5', marginHorizontal: 20, marginVertical: 5, borderRadius: 14, flexDirection: 'row'}}>
-            <Image source={{uri:item.img}} style={{width: 90, height: 90, borderRadius: 14, margin: 10}}/>
+            <Image source={{uri:item.Url}} style={{width: 90, height: 90, borderRadius: 14, margin: 10}}/>
             <View style={{width: '100%', height: '100%', flex: 1, position: 'relative'}}>
                 <View style={{position: 'relative', justifyContent: 'center', marginTop: 10, flexDirection: 'row'}}>
-                    <Text numberOfLines={1} style={{flex: 1, fontSize: 17, textAlignVertical: 'center', fontWeight: 'bold'}}>{item.name}</Text>
-
-                    <TouchableOpacity onPress={()=>{handleOnDelete(index)}}>
+                    <Text numberOfLines={1} style={{flex: 1, fontSize: 17, textAlignVertical: 'center', fontWeight: 'bold'}}>{item.TenMA}</Text>
+                    <TouchableOpacity onPress={()=>{handleOnDelete(item, index)}}>
                         <AntDesign 
                             name="delete" 
                             size={20} color="black" 
@@ -90,15 +168,15 @@ const Cart=()=>{
                     </TouchableOpacity>
                 </View>
 
-                <Text style={{color: 'gray'}}>{formattedAmount(item.sale ? (item.priceReduced):(item.price))}đ/Phần</Text>
+                <Text style={{color: 'gray'}}>{formattedAmount(item.GiaTien_New)}đ/Phần</Text>
 
                 <View style={{position: 'absolute', width: '100%', bottom: 10}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
                         <View style={{backgroundColor: '#6AC949', height: 35, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 10}}>
-                            <Text style={{color: 'white', fontSize: 18}}>{formattedAmount(arrCount[index]*(item.sale ? (item.priceReduced):(item.price)))}</Text>
+                            <Text style={{color: 'white', fontSize: 18}}>{formattedAmount(arrCount[index]*(item.GiaTien_New))}</Text>
                         </View>
                         <View style={{height: 35, width: 100, backgroundColor:'white', marginRight: 10, flexDirection: 'row', alignItems: 'center', borderRadius: 10}}>
-                            <TouchableOpacity style={{flex: 1,}} onPress={()=>{handleOnMinus(index)}}>
+                            <TouchableOpacity style={{flex: 1,}} onPress={()=>{handleOnMinus(item, index)}}>
                                 <AntDesign name="minus" size={24} color="#6AC949" style={{textAlign: 'center'}}/>
                             </TouchableOpacity>
                             <Text style={{flex: 1, fontSize: 18, textAlign: 'center'}}>{arrCount[index]}</Text>
@@ -116,6 +194,7 @@ const Cart=()=>{
   return (
     <View style={styles.container}>
         {/* {console.log(data.length)} */}
+        {console.log(arrCount)}
         <View 
             style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20, height: 85,
             alignItems: 'center', width: '100%', position: 'relative' }}
@@ -180,7 +259,7 @@ const Cart=()=>{
                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>{formattedAmount(sum)} đ</Text>
                 </View>
             </View>
-            <TouchableOpacity style={{margin: 20, marginTop: 10, backgroundColor: '#45BC1B', padding: 10, borderRadius: 17, height: 50, alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableOpacity onPress={()=>handleOnPay()} style={{margin: 20, marginTop: 10, backgroundColor: '#45BC1B', padding: 10, borderRadius: 17, height: 50, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={{fontSize: 20, color: 'white'}}>Thanh toán</Text>
             </TouchableOpacity>
         </View>

@@ -4,22 +4,22 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Zocial } from '@expo/vector-icons';
 // import { TouchableOpacity } from "react-native-web";
 
-const data={
-    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-    name: 'Cơm gà xối mỡ',
-    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-    price: 20000,
-    quantitySold: 2100,
-    sale: true,
-    priceReduced: 9000
-}
+// const data={
+//     img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
+//     name: 'Cơm gà xối mỡ',
+//     description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
+//     price: 20000,
+//     quantitySold: 2100,
+//     sale: true,
+//     priceReduced: 9000
+// }
 // console.log(provincesAndCities.length)
 
 
 const PostSale = ({data}) => {
 
     const HanderRemain=()=>{
-        return data.quantitySold>=1000 ? ("Còn " + (data.quantitySold/1000).toFixed(1)+"k") : ("Còn " + data.sold + "")
+        return data.SL>=1000 ? ("Còn " + (data.SL/1000).toFixed(1)+"k") : ("Còn " + data.SL + "")
     }
 
     const formattedAmount=(item)=>{
@@ -36,10 +36,10 @@ const PostSale = ({data}) => {
             <View style={{position: "relative"}}>
                 <View style={{height: 160, width: 160, backgroundColor: '#E8EAED', borderRadius: 14 }}>
                     <View style={{ alignItems: "flex-end"}}>
-                        <Image source={{uri:data.img}} style={{width: 160, height: 160, borderRadius: 14}}/>
+                        <Image source={{uri:data.Url}} style={{width: 160, height: 160, borderRadius: 14}}/>
 
                         <View style={{backgroundColor: 'red', justifyContent: 'center', alignItems: 'center', width: 45, height: 45, position: "absolute", borderRadius: 14}}>
-                            <Text style={{fontWeight: 500, color: 'white'}}>-{((data.price-data.priceReduced)/data.price*100).toFixed()}%</Text>
+                            <Text style={{fontWeight: 500, color: 'white'}}>-{((data.SoTienGiam)/data.GiaTien*100).toFixed()}%</Text>
                         </View>
                     </View>
                 </View>
@@ -47,14 +47,14 @@ const PostSale = ({data}) => {
 
             <View style={{padding: 5, flexDirection: 'row', alignItems: "center", width: '100%', paddingBottom: 0}}>
                 <Text style={{fontWeight: 600, fontSize: 16}} numberOfLines={1}>
-                    {formattedAmount(data.priceReduced)}đ
+                    {formattedAmount(data.GiaTien - data.SoTienGiam)}đ
                 </Text>
                 <Text style={{fontWeight: 300, fontSize: 13, textDecorationLine: 'line-through', paddingLeft: 5}} numberOfLines={1}>
-                    {formattedAmount(data.price)}
+                    {formattedAmount(data.GiaTien)}
                 </Text>
             </View>
                 
-            <Text style={{fontSize: 16, fontWeight: 500, width: '100%', paddingHorizontal: 5}} numberOfLines={1}>{data.name}</Text>
+            <Text style={{fontSize: 16, fontWeight: 500, width: '100%', paddingHorizontal: 5}} numberOfLines={1}>{data.TenMA}</Text>
 
             <Text style={{paddingHorizontal: 5, fontSize: 13, width: '100%'}} numberOfLines={3}>{data.description}</Text>
 

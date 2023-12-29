@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,24 +6,86 @@ import PostSale from "../Component/PostSale";
 import Search from "../Component/Search";
 import No_Products from "../Component/No_Products";
 import { Data } from "../../../App";
+import useAuth from '../context/useAuth';
+import axios from "axios";
 
 const Sale=()=>{
-    const [data, setData] = useState([Data, Data])
+    const [dataFoodMains, setDataFoodMains] = useState([])
+    const [dataFoodDesserts, setDataFoodDesserts] = useState([])
+    const [dataFoodMains0, setDataFoodMains0] = useState([])
+    const [dataFoodDesserts0, setDataFoodDesserts0] = useState([])
     const [clickedFilter, setClickedFilter] = useState([true, false, false, false, false])
+    const [text, setText] = useState('')
+    const [valuee1, setValuee1] = useState('')
+    const [valuee2, setValuee2] = useState('')
+
+    useEffect(()=>{
+        getDataFoodDesserts_Sale()
+        getDataFoodMains_Sale()
+    }, [])
+
+    const {
+        ip
+    } = useAuth()
+
+    const getDataFoodMains_Sale = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/selectFoodMains_Sale`);
+            const data = response.data;
+            console.log(data)
+            setDataFoodMains(data)
+            setDataFoodMains0(data)
+        } catch (error) {
+            console.error('Error fetching data food mains', error.message);
+        }
+    };
+
+    const getDataFoodDesserts_Sale = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/selectFoodDesserts_Sale`);
+            const data = response.data;
+            console.log(data)
+            setDataFoodDesserts(data)
+            setDataFoodDesserts0(data)
+        } catch (error) {
+            console.error('Error fetching data food mains', error.message);
+        }
+    };
 
     const HanderSearch=(text)=>{
+        setText(text)
         const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        const newDataSearch1 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch2 = Data.filter((item)=>((item.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        setData([newDataSearch1, newDataSearch2])
+        const newDataSearch1 = dataFoodMains0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch2 = dataFoodDesserts0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        if (clickedFilter[0] == true)
+        {
+            setDataFoodDesserts(newDataSearch2)
+            setDataFoodMains(newDataSearch1)
+        }
+        else{
+            const newDataFiltered1 = newDataSearch1.filter((item)=>(item.SoTienGiam/item.GiaTien*100 >= valuee1 && item.SoTienGiam/item.GiaTien*100 <= valuee2))
+        // console.log(newDataFiltered1)
+            const newDataFiltered2 = newDataSearch2.filter((item)=>(item.SoTienGiam/item.GiaTien*100 >= valuee1 && item.SoTienGiam/item.GiaTien*100 <= valuee2))
+
+            setDataFoodDesserts(newDataFiltered2)
+            setDataFoodMains(newDataFiltered1)
+        }
+        
     }
 
     const handerClickedFilter_TatCa=()=>{
         setClickedFilter([true, false, false, false, false])
-        setData([Data, Data])
+        console.log(text)
+        const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        const newDataSearch1 = dataFoodMains0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch2 = dataFoodDesserts0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        setDataFoodDesserts(newDataSearch2)
+        setDataFoodMains(newDataSearch1)
     }
 
     const handerClickedFilter=(value1, value2)=>{
+        setValuee1(value1)
+        setValuee2(value2)
         if(value1 == 0)
             setClickedFilter([false, true, false, false, false])
         else
@@ -38,10 +100,15 @@ const Sale=()=>{
                     setClickedFilter([false, false, false, false, true])
             }
         }
-        const newDataFiltered1 = Data.filter((item)=>((item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2))
+        const newDataFiltered1 = dataFoodDesserts0.filter((item)=>(item.SoTienGiam/item.GiaTien*100 >= value1 && item.SoTienGiam/item.GiaTien*100 <= value2))
         // console.log(newDataFiltered1)
-        const newDataFiltered2 = Data.filter((item)=>(item.price-item.priceReduced)/item.price*100 >= value1 && (item.price-item.priceReduced)/item.price*100 <= value2)  
-        setData([newDataFiltered1, newDataFiltered2])
+        const newDataFiltered2 = dataFoodMains0.filter((item)=>(item.SoTienGiam/item.GiaTien*100 >= value1 && item.SoTienGiam/item.GiaTien*100 <= value2))
+
+        const searchTextNormalized = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        const newDataSearch1 = newDataFiltered2.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        const newDataSearch2 = newDataFiltered1.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
+        setDataFoodDesserts(newDataSearch2)
+        setDataFoodMains(newDataSearch1)
     }
 
     return(
@@ -124,11 +191,11 @@ const Sale=()=>{
                     <AntDesign name="rightcircleo" size={30} color="black" />
                 </View>
 
-                { data[0].length == 0 ? (
+                { dataFoodMains.length == 0 ? (
                         <No_Products/>
                     ) : (
                         <View style={{flexWrap: "wrap", flexDirection: 'row', justifyContent: 'flex-start', marginBottom: -20}}>
-                            {data[0].map((item, index) => (
+                            {dataFoodMains.map((item, index) => (
                                 <View key={index} style={{width: '50%', marginBottom: 20}}>
                                     <View style={{alignItems: 'center'}}>
                                         <PostSale data={item}/>
@@ -147,11 +214,11 @@ const Sale=()=>{
                     <AntDesign name="rightcircleo" size={30} color="black" />
                 </View>
 
-                { data[1].length == 0 ? (
+                { dataFoodDesserts.length == 0 ? (
                         <No_Products/>
                     ) : (
                         <View style={{flexWrap: "wrap", flexDirection: 'row', justifyContent: 'flex-start', marginBottom: 0}}>
-                            {data[1].map((item, index) => (
+                            {dataFoodDesserts.map((item, index) => (
                                 <View key={index} style={{width: '50%', marginBottom: 20}}>
                                     <View style={{alignItems: 'center'}}>
                                         <PostSale data={item}/>

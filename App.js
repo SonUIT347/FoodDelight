@@ -120,10 +120,20 @@ export default function App() {
     // <NavigatorContainer>
     <AuthContext>
       {/* <CollabProduct /> */}
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <AuthNav />
-      </NavigationContainer>
+      </NavigationContainer> */}
       {/* <Register /> */}
+      {/* <Home/> x*/}
+      {/* <Cart/ x> */}
+      {/* <Address/> x*/}
+      {/* <MyStore/> */}
+      {/* <Pay/> x*/}
+      {/* <Sale/> x*/}
+      {/* <Sale_Items/> */}
+      {/* <Personal/> */}
+      {/* <Profile/> */}
+      <Product/>
     </AuthContext>
 
     // <InvoiceComplete/>
