@@ -1,6 +1,6 @@
 import express from 'express'
 import { saveFood, selectFoodMains, selectFoodSales, selectFoodDesserts, selectFoodDesserts_Sale, selectFoodMains_Sale } from '../Controller/foodController.js'
-import { getFoodCount, getImageCount, saveFood } from '../Controller/foodController.js'
+import { getFoodCount, getImageCount } from '../Controller/foodController.js'
 
 export const foodRouter = express.Router()
 
