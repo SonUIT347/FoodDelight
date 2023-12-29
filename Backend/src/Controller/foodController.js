@@ -129,3 +129,27 @@ export const selectFoodDesserts_Sale = async (req, res) => {
         }
     });
 };
+export const getFoodCount = async (req, res) => {
+    const q = 'SELECT COUNT(*) AS foodCount FROM monan'
+    db.query(q, (err, rows) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error fetching user count');
+        } else {
+          const foodCount = rows[0].foodCount;
+          res.json({ foodCount });
+        }
+      });
+}
+export const getImageCount = async (req, res) => {
+    const q = 'SELECT COUNT(*) AS imageCount FROM anhmonan'
+    db.query(q, (err, rows) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error fetching user count');
+        } else {
+          const imageCount = rows[0].imageCount;
+          res.json({ imageCount });
+        }
+      });
+}
