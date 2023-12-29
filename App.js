@@ -119,12 +119,12 @@ export default function App() {
     // <ChooseFood/>
     // <NavigatorContainer>
     <AuthContext>
-      {/* <CollabProduct /> */}
-      {/* <NavigationContainer>
+      <CollabProduct />
+      {/* {/* <NavigationContainer>
         <AuthNav />
-      </NavigationContainer> */}
+      </NavigationContainer> */} */}
       {/* <Register /> */}
-      {/* <Home/> x*/}
+      <Home/>
       {/* <Cart/ x> */}
       {/* <Address/> x*/}
       {/* <MyStore/> */}
@@ -133,7 +133,7 @@ export default function App() {
       {/* <Sale_Items/> */}
       {/* <Personal/> */}
       {/* <Profile/> */}
-      <Product/>
+      {/* <Product/> */}
     </AuthContext>
 
     // <InvoiceComplete/>

@@ -1,12 +1,22 @@
 import { View, Text, Alert } from 'react-native'
 import React, { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
+import axios from 'axios'
+import useAuth from '../context/useAuth'
 const useImagePicker = () => {
     const [image, setImage] = useState([])
+    const [imageCount, setImageCount] = useState(null)
+    const {
+        ip
+    } = useAuth()
     const handleYesPress = (id) => {
         deleteImage(id)
     };
-
+    const getImageCount = () => {
+        axios.get(`http://${ip}:8080/imageCount`).then(response => {
+            setImageCount(response.data.imageCount)
+        })
+    }
     const handleNoPress = () => {
     };
     const pickImage = async () => {
@@ -50,7 +60,9 @@ const useImagePicker = () => {
         image,
         setImage,
         deleteImage,
-        handleAlert
+        handleAlert,
+        getImageCount,
+        imageCount
     }
 
 

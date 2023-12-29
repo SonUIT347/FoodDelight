@@ -6,46 +6,106 @@ import Dropdown from '../Component/Dropdown';
 import useImagePicker from '../Component/useImagePicker';
 import ImageShow from '../Component/ImageShow';
 import SubmitBtn from '../Component/SubmitBtn';
-
+import axios from 'axios';
+import useAuth from '../context/useAuth';
+import { storage } from '../firebase/firebaseConfig';
+import { getDownloadURL } from "firebase/storage";
+import { ref, uploadBytesResumable } from 'firebase/storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const CollabProduct = ({ navigation }) => {
-    // const [image, setImage] = useState(null)
-    const [selected, setSelected] = useState([]);
-    const [nameFood, setNameFood] = useState('')
-    const [desFood, setDesFood] = useState('')
-    const [priceFood, setPriceFood] = useState(0)
-    const [stock, setStock] = useState(0)
-    console.log('selected ' + selected)
-    console.log('selected ' + typeof selected)
-    const [post, setPost] = useState({
-        image: [],
-        nameProduct: '',
-        desProduct: '',
-        priceProduct: '',
-        category: [selected],
-        stock: ''
-
-    })
-    const submit = () => {
-        // if ((name === "stock" || name === "priceProduct") && typeof value === "number" && value > 0){
-        
-        console.log(selected)
-        // const tempArray = selected.split(',').map(item => item.trim());
-
-        console.log(tempArray);
-    }
-    const press = () => {
-        // setPost({ ...post, 'category':selected})
-        console.log(image)
-        // console.log('psot ' + post.category)
-    }
-    // useEffect(() => {
-    //     press()
-    // },[selected])
+    const {
+        ip,
+        getFoodCount,
+        foodCount
+    } = useAuth()
     const {
         pickImage,
         image,
         setImage,
-        handleAlert } = useImagePicker()
+        handleAlert,
+        getImageCount,
+        imageCount
+    } = useImagePicker()
+    // console.log(image)
+    const [selected, setSelected] = useState([]);
+    const [imageUrl, setImageUrl] = useState([])
+    const [nameFood, setNameFood] = useState('')
+    const [desFood, setDesFood] = useState('')
+    const [priceFood, setPriceFood] = useState(0)
+    const [stock, setStock] = useState(0)
+
+    const uploadImage = async () => {
+        const downloadUrls = await Promise.all(
+            image.map(async (imageUrl) => {
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+                const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+                const storageRef = ref(storage, 'images/' + filename);
+                const uploadTask = uploadBytesResumable(storageRef, blob);
+
+                return new Promise((resolve, reject) => {
+                    uploadTask.on(
+                        'state_changed',
+                        (snapshot) => {
+                            // Progress tracking
+                        },
+                        (error) => {
+                            reject(error);
+                        },
+                        () => {
+                            getDownloadURL(uploadTask.snapshot.ref)
+                                .then((downloadURL) => resolve(downloadURL))
+                                .catch((error) => reject(error));
+                        }
+                    );
+                });
+            })
+        );
+
+        return downloadUrls;
+    };
+
+    const trangthai = 'pending'
+    const macollaborator = 'MC0001' //AsyncStorage.setItem('IdUser', userID); 
+    const luotban = 0
+    getFoodCount()
+    const mama = 'MA00' + (foodCount + 1)
+    getImageCount()
+    const maAnh = 'MA00' + (imageCount + 1)
+    const addFood = async () => {
+        try {
+            const imageUrls = await uploadImage();
+            const response = await axios.post(`http://${ip}:8080/createfood`, {
+                mama,
+                macollaborator,
+                nameFood,
+                priceFood,
+                luotban,
+                trangthai,
+                stock,
+                selected,
+                imageUrls,
+                maAnh
+            });
+            // navigation.navigate('Drawer');
+            setNameFood('')
+            setDesFood('')
+            setPriceFood(0)
+            setStock(0)
+            setSelected([])
+            setImage([])
+        } catch (err) {
+            console.log('An error to add food: ', err)
+        }
+    }
+    const submit = () => {
+        if (nameFood !== '' && desFood !== '' && priceFood != 0 && stock != 0 && selected !== null) {
+            addFood()
+        } else {
+            alert('Vui lòng nhập đầy đủ thông tin')
+        }
+
+    }
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -115,8 +175,6 @@ const CollabProduct = ({ navigation }) => {
                         <Dropdown
                             selected={selected}
                             setSelected={setSelected}
-                            setPost={setPost}
-                            post={post}
                         />
                     </View>
                     <View style={styles.productName}>

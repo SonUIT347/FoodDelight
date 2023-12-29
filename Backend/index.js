@@ -33,9 +33,6 @@ const server = app.listen(8080, () =>{
 //     console.log("server running "+ 8080)
 // })
 db.connect((err) => {
-    // if(err){
-    //     console.log(err)
-    // };
     console.log(err)
     console.log('Connected Database...')
 })

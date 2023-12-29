@@ -19,24 +19,18 @@ const AuthContext = ({ children }) => {
     //     });
     // }, [IdUser]);
     function findMissingValue(arr) {
-        // Check if the array is empty or has no items
         if (arr.length === 0) {
           return null;
         }
-        // Sort the array in ascending order
         arr.sort((a, b) => a - b);
-        // Check the first element
         if (arr[0] !== 1) {
-          return 1; // The missing value is 1
+          return 1;
         }
-        // Check for gaps in the sequence
         for (let i = 0; i < arr.length - 1; i++) {
           if (arr[i] + 1 !== arr[i + 1]) {
-            // If there is a gap, return the missing value
             return arr[i] + 1;
           }
         }
-        // If no missing value is found, return the next value in the sequence
         return arr[arr.length - 1] + 1;
       }
       
@@ -48,6 +42,12 @@ const AuthContext = ({ children }) => {
             console.log(err)
         })
     }
+    const getFoodCount = () => {
+      axios.get(`http://${ip}:8080/foodCount`).then(response => {
+        setFoodCount(response.data.foodCount)
+      })
+    }
+
     const value = {
         username,
         password,
@@ -56,7 +56,9 @@ const AuthContext = ({ children }) => {
         userCount,
         getUserCount,
         findMissingValue,
-        ip
+        ip,
+        getFoodCount,
+        foodCount,
     }
     return (
         <authContext.Provider value={value}>

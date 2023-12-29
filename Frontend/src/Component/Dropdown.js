@@ -4,28 +4,21 @@ import { MultiSelect } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const data = [
-    { label: 'Món chính', value: 'Món chính', isSelected: false },
-    { label: 'Tráng miệng', value: 'Tráng miệng', isSelected: false },
-    { label: 'Khai vị', value: 'Khai vị', isSelected: false },
-    { label: 'Thịt', value: 'Thịt', isSelected: false },
-    { label: 'Cá', value: 'Cá', isSelected: false },
-    { label: 'Ăn sáng', value: 'Ăn sáng', isSelected: false },
-    { label: 'Ăn trưa', value: 'Ăn trưa', isSelected: false },
-    { label: 'Ăn tối', value: 'Ăn tối', isSelected: false },
-    { label: 'Healthy', value: 'Healthy', isSelected: false },
+    { label: 'Món chính', value: 'LM0001', isSelected: false },
+    { label: 'Tráng miệng', value: 'LM0003', isSelected: false },
+    { label: 'Khai vị', value: 'LM0002', isSelected: false },
+    { label: 'Ăn sáng', value: 'LM0004', isSelected: false },
+    { label: 'Ăn trưa', value: 'LM0005', isSelected: false },
+    { label: 'Ăn tối', value: 'LM0006', isSelected: false },
 ];
 
-const Dropdown = ({ selected, setSelected, setPost, post }) => {
+const Dropdown = ({ selected, setSelected }) => {
     const [data1, setData] = useState([...data])
     const [cate, setCate] = useState([])
     const [selectIcon, setSelectIcon] = useState(false)
     const getCategory = () => {
         const selectedCategories = data1.filter((item) => item.isSelected);
         const selectedCategoryValues = selectedCategories.map((item) => item.value);
-        setPost((prevState) => ({
-            ...prevState,
-            category: selected,
-        }));
         // console.log(post)
     };
     const renderItem = item => {
