@@ -1,45 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, Button, StyleSheet } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import React, { useState } from 'react';
+import { View, Image, TouchableOpacity, StyleSheet, Text, Button } from 'react-native';
 
-const MyImagePicker = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+const images = [
+  'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
+  // 'https://media.phunutoday.vn/files/upload_images/2016/01/21/cach-lam-banh-my-trung-ngon-1-phunutoday_vn.jpg',
+  // 'https://inoxquanghuy.vn/wp-content/uploads/2022/12/hu-tieu-xuong-ngon.jpg',
+  // Thêm đường dẫn hình ảnh khác nếu cần
+];
 
-  useEffect(() => {
-    (async () => {
-      // Kiểm tra quyền truy cập thư viện ảnh
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Xin vui lòng cấp quyền truy cập thư viện ảnh để sử dụng tính năng này.');
-      }
-    })();
-  }, []);
+const ImageStack = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const pickImage = async () => {
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 4],
-        quality: 1,
-      });
+  const handleNext = () => {
+    const nextIndex = (currentIndex + 1) % images.length;
+    setCurrentIndex(nextIndex);
+  };
 
-      if (!result.canceled) {
-        // console.log(result.assets[0].uri)
-        setSelectedImage(result.assets[0].uri);
-      }
-    } catch (error) {
-      console.error('Lỗi khi chọn ảnh: ', error);
-    }
+  const handlePrev = () => {
+    const prevIndex = (currentIndex - 1 + images.length) % images.length;
+    setCurrentIndex(prevIndex);
   };
 
   return (
     <View style={styles.container}>
-      {/* {console.log(selectedImage)} */}
-      {selectedImage && <Image source={{ uri: selectedImage }} style={styles.image} />}
+      <Image source={{ uri: images[currentIndex] }} style={styles.image} />
 
-      {/* <Image source={{ uri: selectedImage }} style={styles.image} /> */}
-      <Button title="Chọn ảnh" onPress={pickImage} />
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity onPress={handlePrev} style={styles.button}>
+          <Text style={styles.buttonText}>{'<'}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleNext} style={styles.button}>
+          <Text style={styles.buttonText}>{'>'}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -51,11 +45,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 200,
-    height: 200,
-    resizeMode: 'cover',
-    marginVertical: 10,
+    width: 300,
+    height: 300,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: 'lightblue',
+    padding: 10,
+    marginHorizontal: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
-export default MyImagePicker;
+export default ImageStack;

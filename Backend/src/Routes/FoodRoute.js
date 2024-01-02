@@ -1,5 +1,5 @@
 import express from 'express'
-import { saveFood, selectFoodMains, selectFoodSales, selectFoodDesserts, selectFoodDesserts_Sale, selectFoodMains_Sale, getFoodPending, getFoodApprove, getFoodDeny } from '../Controller/foodController.js'
+import { saveFood, selectFoodMains, selectFoodSales, selectFoodDesserts, selectFoodDesserts_Sale, selectFoodMains_Sale, getFoodPending, getFoodApprove, getFoodDeny, getFood } from '../Controller/foodController.js'
 import { getFoodCount, getImageCount } from '../Controller/foodController.js'
 
 export const foodRouter = express.Router()
@@ -15,3 +15,4 @@ foodRouter.get('/imageCount', getImageCount)
 foodRouter.get('/foodpending/:macb', getFoodPending)
 foodRouter.get('/foodapprove/:macb', getFoodApprove)
 foodRouter.get('/fooddeny/:macb', getFoodDeny)
+foodRouter.get('/getFood/:maMA', getFood)
