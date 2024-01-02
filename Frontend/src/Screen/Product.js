@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { getFood } from '../../../Backend/src/Controller/foodController';
 
 const data={
     img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -12,8 +13,50 @@ const data={
     priceReduced: 9000
 }
 
-const Product=() => {
+const images = [
+    'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
+    'https://media.phunutoday.vn/files/upload_images/2016/01/21/cach-lam-banh-my-trung-ngon-1-phunutoday_vn.jpg',
+    'https://inoxquanghuy.vn/wp-content/uploads/2022/12/hu-tieu-xuong-ngon.jpg',
+    // Thêm đường dẫn hình ảnh khác nếu cần
+  ];
+
+const maMA = 'MA0001'
+
+const Product=({}) => {
     const [count, setCount] = useState(1)
+    const [dataFood, setDataFood] = useState(1)
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        // console.log(username)
+        // getUserId()
+        getFood()
+        // console.log(maKH + 'o useEffect')
+        console.log(data)
+    }, []);
+
+    const getFood = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/getUserId/${maMA}`);
+            const dt = response.data;
+            console.log(dt)
+            setDataFood(dt)
+        } catch (error) {
+            console.error('Error fetching data userId', error.message);
+        }
+        
+    };
+
+    const handleNext = () => {
+        const nextIndex = (currentIndex + 1) % images.length;
+        setCurrentIndex(nextIndex);
+    };
+
+    const handlePrev = () => {
+        const prevIndex = (currentIndex - 1 + images.length) % images.length;
+        setCurrentIndex(prevIndex);
+    };
+    
     const formattedAmount=(item)=>{
         if (item)
             return item.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -52,9 +95,30 @@ const Product=() => {
 
         </View>
 
-        <Image source={{uri:data.img}}  style={{width: 250, height: 250, borderRadius: 0}}/>
+        {/* <ScrollView horizontal={true} style={{width: 250}}>
+            <Image source={{uri:data.img}}  style={{width: 250, height: 250, borderRadius: 0}}/>
+            <Image source={{uri:data.img}}  style={{width: 250, height: 250, borderRadius: 0}}/>
+            <Image source={{uri:data.img}}  style={{width: 250, height: 250, borderRadius: 0}}/>
+        </ScrollView> */}
 
-        <Text style={{backgroundColor: '#EDF9E9', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginTop: 10}}>Món chính</Text>
+        <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+            <TouchableOpacity onPress={handlePrev} style={{width: 50}}>
+                <Text  style={{textAlign: 'center', textAlignVertical: 'center', fontSize: 30}}>{'<'}</Text>
+            </TouchableOpacity>
+            <Image source={{ uri: images[currentIndex] }} style={{ width: 200, height: 200, marginBottom: 10 }} />                
+
+            <TouchableOpacity onPress={handleNext} style={{width: 50}}>
+                <Text style={{ textAlign: 'center', textAlignVertical: 'center', fontSize: 30}}>{'>'}</Text>
+            </TouchableOpacity>
+        </View>
+
+        
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <Text style={{backgroundColor: '#EDF9E9', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginTop: 10, marginHorizontal: 5}}>Món chính</Text>
+            <Text style={{backgroundColor: '#EDF9E9', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginTop: 10, marginHorizontal: 5}}>Món chính</Text>
+            <Text style={{backgroundColor: '#EDF9E9', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginTop: 10, marginHorizontal: 5}}>Món chính</Text>
+        </View>
+        
 
         <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 10, width: '100%'}} numberOfLines={1}>
             {data.name}
@@ -82,11 +146,11 @@ const Product=() => {
             <View style={{ backgroundColor:'#EDF9E9', width: '100%', 
                 flexDirection: 'row', alignItems: 'center', borderRadius: 10, height: 40}}
             >
-                <TouchableOpacity style={{flex: 1,}} onPress={()=>handleOnMinus()}>
+                <TouchableOpacity style={{flex: 1}} onPress={()=>handleOnMinus()}>
                     <AntDesign name="minus" size={24} color="#6AC949" style={{textAlign: 'center'}}/>
                 </TouchableOpacity>
                 <Text style={{flex: 1, fontSize: 18, textAlign: 'center'}}>{count}</Text>
-                <TouchableOpacity style={{flex: 1,}} onPress={()=>handleOnPlus()}>
+                <TouchableOpacity style={{flex: 1}} onPress={()=>handleOnPlus()}>
                     <AntDesign name="plus" size={24} color="#6AC949" style={{textAlign: 'center'}} />
                 </TouchableOpacity>
             </View>

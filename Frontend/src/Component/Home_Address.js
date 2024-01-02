@@ -75,10 +75,10 @@ import { AntDesign } from '@expo/vector-icons';
     value: (index + 1).toString(),
     label: province,
   }));
-  const Home_Address = ({size, height, valueProvince}) => {
+  const Home_Address = ({size, height, valueProvince, valuePlaceholder}) => {
     const [value, setValue] = useState(null);
     const [province, setProvince] = useState(null);
-
+    const [placeholder, setPlaceholder] = useState(valuePlaceholder ?? "Chọn tỉnh thành");
     return (
       <View style={{flex: 1, color: 'red'}}>
         <Dropdown
@@ -99,7 +99,7 @@ import { AntDesign } from '@expo/vector-icons';
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Chọn tỉnh thành"
+          placeholder={placeholder}
           searchPlaceholder="Tìm kiếm ..."
           // activeColor="red"
           value={value}

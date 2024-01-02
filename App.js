@@ -35,6 +35,7 @@ import Login from './Frontend/src/Screen/Login';
 import Register from './Frontend/src/Screen/Register';
 import AuthNav from './Frontend/src/Layout/AuthNav';
 import AuthContext from './Frontend/src/context/AuthContext';
+import ImageStack from './Frontend/test';
 
 
 export const Data = [
@@ -124,7 +125,7 @@ export default function App() {
         <AuthNav />
       </NavigationContainer> */} 
       {/* <Register /> */}
-      <Home/>
+      {/* <Home/> */}
       {/* <Cart/ x> */}
       {/* <Address/> x*/}
       {/* <MyStore/> */}
@@ -133,7 +134,8 @@ export default function App() {
       {/* <Sale_Items/> */}
       {/* <Personal/> */}
       {/* <Profile/> */}
-      {/* <Product/> */}
+      <Product/>
+      {/* <ImageStack/> */}
     </AuthContext>
 
     // <InvoiceComplete/>

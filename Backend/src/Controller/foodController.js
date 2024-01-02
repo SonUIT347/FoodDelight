@@ -153,3 +153,20 @@ export const getImageCount = async (req, res) => {
         }
       });
 }
+
+
+export const getFood = async (req, res) => {
+    const  maMA = req.params.maMA;
+    const q = "(SELECT ma.*, gg.SoTienGiam, a.Url, c.Tinh From monan ma, giamgia gg, anhmonan a, collaborator c WHERE gg.MaMA=ma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ?)"
+    " UNION " +
+"(SELECT ma.*, gg.SoTienGiam=0, a.Url, c.Tinh From monan ma, giamgia gg, anhmonan a, collaborator c WHERE a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator and ma.MaMA and ma.MaMA = ? NOT IN (SELECT gg.MaMA FROM giamgia gg))"
+    // const q='select * FROM taikhoan';
+    db.query(q, [maMA, maMA],(err, data) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error fetching food mains');
+        } else {
+          res.json(data);
+        }
+    });
+};
