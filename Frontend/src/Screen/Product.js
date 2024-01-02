@@ -13,6 +13,7 @@ const data={
 }
 
 const Product=() => {
+    
     const [count, setCount] = useState(1)
     const formattedAmount=(item)=>{
         if (item)

@@ -63,11 +63,11 @@ const Register = ({ navigation }) => {
             }
             const Adress = ''
             const status = ''
+            const Name = 'User'
             try {
                 const res = await axios.post(`http://${ip}:8080/createcus`, {
                     IdUser,
-                    username,
-                    Adress,
+                    Name,
                     status
                 });
                 console.log(res.data)

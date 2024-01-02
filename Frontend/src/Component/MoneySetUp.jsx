@@ -30,7 +30,7 @@ const MoneySetUp = ({ Info, percent, money }) => {
     return (
         <View style={styles.food_ctn}>
             <Image
-                source={{ uri: food.img }}
+                source={{ uri: food.Url }}
                 style={{
                     width: 90,
                     height: 120,
@@ -39,8 +39,8 @@ const MoneySetUp = ({ Info, percent, money }) => {
                 }}
             />
             <View style={styles.foodInfo}>
-                <Text style={styles.foodName}>{food.foodName}</Text>
-                <Text>Số lượng: {food.stock}</Text>
+                <Text style={styles.foodName}>{food.tenma}</Text>
+                <Text>Số lượng: {food.SL}</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => handleCount('minus')}>
@@ -60,7 +60,7 @@ const MoneySetUp = ({ Info, percent, money }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Text>Giá: {food.price}</Text>
+                <Text>Giá: {food.GiaTien}</Text>
                 {discount > 0 ?
                     (<Text>Giá giảm còn: {discount}</Text>) :
                     <Text style={{ color: 'red', fontSize: 15 }}>Giá giảm còn: {discount}</Text>}

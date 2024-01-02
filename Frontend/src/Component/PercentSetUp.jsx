@@ -26,7 +26,7 @@ const PercentSetUp = ({ Info, percent, money }) => {
     return (
         <View style={styles.food_ctn}>
             <Image
-                source={{ uri: food.img }}
+                source={{ uri: food.Url }}
                 style={{
                     width: 90,
                     height: 120,
@@ -35,8 +35,8 @@ const PercentSetUp = ({ Info, percent, money }) => {
                 }}
             />
             <View style={styles.foodInfo}>
-                <Text style={{fontSize:20, fontWeight:'bold'}}>{food.foodName}</Text>
-                <Text>Số lượng: {food.stock}</Text>
+                <Text style={{fontSize:20, fontWeight:'bold'}}>{food.tenma}</Text>
+                <Text>Số lượng: {food.SL}</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity onPress={() => handleCount('minus')}>
                         <AntDesign name="minus" size={24} color="black" />
@@ -54,8 +54,8 @@ const PercentSetUp = ({ Info, percent, money }) => {
                         <AntDesign name="plus" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
-                <Text>Giá: {food.price}</Text>
-                {percent > 0?( <Text>Giá: {food.price - food.price*percent/100}</Text>):(null)}
+                <Text>Giá: {food.GiaTien}</Text>
+                {percent > 0?( <Text>Giá: {food.GiaTien - food.GiaTien*percent/100}</Text>):(null)}
             </View>
         </View>
     )
