@@ -130,7 +130,7 @@ export default function App() {
       {/* <Address/> x*/}
       {/* <MyStore/> */}
       {/* <Pay/> x*/}
-      {/* <Sale/> x*/}
+      {/* <Sale/> */}
       {/* <Sale_Items/> */}
       {/* <Personal/> */}
       {/* <Profile/> */}

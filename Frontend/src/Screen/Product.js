@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView, FlatList} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { getFood } from '../../../Backend/src/Controller/foodController';
+import useAuth from '../context/useAuth';
+import axios from "axios";
 
 const data={
     img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
@@ -22,38 +23,63 @@ const images = [
 
 const maMA = 'MA0001'
 
-const Product=({}) => {
+const Product=() => {
     const [count, setCount] = useState(1)
-    const [dataFood, setDataFood] = useState(1)
+    const [dataFood, setDataFood] = useState('')
+    const [dataTypeFood, setDataTypeFood] = useState([])
+    const [arrImage, setArrImage] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        // console.log(username)
-        // getUserId()
         getFood()
-        // console.log(maKH + 'o useEffect')
-        console.log(data)
+        getImageFood()
+        getTypeFood()
     }, []);
+
+    const {
+        ip
+      } = useAuth()
 
     const getFood = async () => {
         try {
-            const response = await axios.get(`http://${ip}:8080/getUserId/${maMA}`);
+            const response = await axios.get(`http://${ip}:8080/getFood/${maMA}`);
             const dt = response.data;
             console.log(dt)
-            setDataFood(dt)
+            setDataFood(dt[0])
         } catch (error) {
             console.error('Error fetching data userId', error.message);
         }
-        
     };
 
+    const getImageFood = async() => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/getImageFood/${maMA}`);
+            const dt = response.data;
+            console.log(dt)
+            setArrImage(dt)
+        } catch (error) {
+            console.error('Error fetching data imageFood', error.message);
+        }
+    }
+
+    const getTypeFood = async() => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/getTypeFood/${maMA}`);
+            const dt = response.data;
+            console.log(dt)
+            setDataTypeFood(dt)
+        } catch (error) {
+            console.error('Error fetching data imageFood', error.message);
+        }
+    }
+
     const handleNext = () => {
-        const nextIndex = (currentIndex + 1) % images.length;
+        const nextIndex = (currentIndex + 1) % arrImage.length;
         setCurrentIndex(nextIndex);
     };
 
     const handlePrev = () => {
-        const prevIndex = (currentIndex - 1 + images.length) % images.length;
+        const prevIndex = (currentIndex - 1 + arrImage.length) % arrImage.length;
         setCurrentIndex(prevIndex);
     };
     
@@ -75,6 +101,7 @@ const Product=({}) => {
         if (count != 1)
             setCount(count-1)
     };
+
 
   return (
     <View style={styles.container}>
@@ -102,44 +129,52 @@ const Product=({}) => {
         </ScrollView> */}
 
         <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-            <TouchableOpacity onPress={handlePrev} style={{width: 50}}>
+            <TouchableOpacity onPress={()=>handlePrev()} style={{width: 50}}>
                 <Text  style={{textAlign: 'center', textAlignVertical: 'center', fontSize: 30}}>{'<'}</Text>
             </TouchableOpacity>
-            <Image source={{ uri: images[currentIndex] }} style={{ width: 200, height: 200, marginBottom: 10 }} />                
+            <Image source={{ uri: arrImage.length == 0 ? (null):(arrImage[currentIndex].Url) }} style={{ width: 200, height: 200, marginBottom: 10 }} />                
 
-            <TouchableOpacity onPress={handleNext} style={{width: 50}}>
+            <TouchableOpacity onPress={()=>handleNext()} style={{width: 50}}>
                 <Text style={{ textAlign: 'center', textAlignVertical: 'center', fontSize: 30}}>{'>'}</Text>
             </TouchableOpacity>
         </View>
 
         
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            <Text style={{backgroundColor: '#EDF9E9', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginTop: 10, marginHorizontal: 5}}>Món chính</Text>
-            <Text style={{backgroundColor: '#EDF9E9', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginTop: 10, marginHorizontal: 5}}>Món chính</Text>
-            <Text style={{backgroundColor: '#EDF9E9', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginTop: 10, marginHorizontal: 5}}>Món chính</Text>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap', width: '100%'}}>
+            {dataTypeFood.map((item, index) => (
+                <Text 
+                    style={{backgroundColor: '#EDF9E9', padding: 10, borderRadius: 10, 
+                    alignSelf: 'flex-start', marginTop: 10, marginHorizontal: 5}}
+                    key={index}
+                >
+                    {item.TenLoaiMA}
+                </Text>
+            ))}
         </View>
         
 
         <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 10, width: '100%'}} numberOfLines={1}>
-            {data.name}
+            {dataFood.TenMA}
         </Text>
 
         <View style={{flexDirection: 'row'}}>
             <View style={{backgroundColor: '#F5FBF3', flex: 1, marginRight: 25, borderRadius: 10, borderWidth: 1, borderColor: 'green', padding: 10}}>
                 <Text style={{fontSize: 14, fontWeight: '500', color: '#6AC949'}}>Giá bán</Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: 'gray'}}>{formattedAmount(data.price)} đ</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{fontSize: 16, fontWeight: '500', color: 'gray'}}>{formattedAmount(dataFood.GiaTien - dataFood.SoTienGiam)} đ</Text>
+                    <Text style={{fontSize: 16, fontWeight: '500', color: '#dddd', marginLeft: 5, textDecorationLine: 'line-through'}} >{formattedAmount(dataFood.GiaTien)} đ</Text>
+
+                </View>
             </View>
             <View style={{backgroundColor: '#F5FBF3', alignItems: 'center', padding: 10, borderRadius: 10, borderWidth: 1, borderColor: 'green'}}>
                 <Text style={{fontSize: 14, fontWeight: '500', color: '#6AC949'}}>Còn hàng</Text>
-                <Text style={{fontSize: 14, fontWeight: '500', color: 'gray'}}>100</Text>
+                <Text style={{fontSize: 14, fontWeight: '500', color: 'gray'}}>{dataFood.SL}</Text>
             </View>
         </View>
 
-        <ScrollView style={{backgroundColor: '#EDF9E9', marginVertical: 20, flex: 1}}>
-            <Text style={{padding: 10}}>{data.description}</Text>
-            <Text style={{padding: 10}}>{data.description}</Text>
-            <Text style={{padding: 10}}>{data.description}</Text>
-            <Text style={{padding: 10}}>{data.description}</Text>
+        <ScrollView style={{backgroundColor: '#EDF9E9', marginVertical: 20, flex: 1, width: '100%'}}>
+            <Text style={{padding: 10, flex: 1, width: '100%'}}>{dataFood.MoTa == "" ? ("Chưa có mô tả món ăn"):(dataFood.MoTa)}</Text>
+
         </ScrollView>
 
         <View style={{justifyContent: 'flex-end', width: '100%'}}>

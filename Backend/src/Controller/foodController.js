@@ -170,3 +170,33 @@ export const getFood = async (req, res) => {
         }
     });
 };
+
+export const getImageFood = async (req, res) => {
+    const  maMA = req.params.maMA;
+    const q = "SELECT * FROM anhmonan a WHERE a.MaMA = ? ORDER BY a.ViewPost DESC"
+    // const q='select * FROM taikhoan';
+    db.query(q, [maMA],(err, data) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error fetching food mains');
+        } else {
+          res.json(data);
+        }
+    });
+};
+
+export const getTypeFood = async (req, res) => {
+    const  maMA = req.params.maMA;
+    const q = "SELECT lma.TenLoaiMA FROM loaimonan lma, ctlma WHERE lma.MaLoaiMA = ctlma.MaLoaiMA and ctlma.MaMA = ?"
+    // const q='select * FROM taikhoan';
+    db.query(q, [maMA],(err, data) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error fetching food mains');
+        } else {
+          res.json(data);
+        }
+    });
+};
+
+
