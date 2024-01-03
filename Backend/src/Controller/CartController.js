@@ -3,12 +3,12 @@ import db from '../../index.js';
 export const getCart = async (req, res) => {
     const  username = req.params.username;
     const q = "(select ma.MaMA, ma.TenMA, (ma.GiaTien - gg.SoTienGiam) as GiaTien_New, gh.MaGH, gh.MaUser, ctgh.SL, a.Url from giohang gh, ctgh, taikhoan tk, monan ma, giamgia gg,anhmonan a "+
-    "WHERE gh.MaGH = ctgh.MaGH and ctgh.MaMA = ma.MaMA and tk.IdUser = gh.MaUser and tk.UserName = 'tranvanson' and gg.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaMA = a.MaMA) "+
+    "WHERE gh.MaGH = ctgh.MaGH and ctgh.MaMA = ma.MaMA and tk.IdUser = gh.MaUser and tk.UserName = ? and gg.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaMA = a.MaMA) "+
     "UNION (select ma.MaMA, ma.TenMA, (ma.GiaTien) as GiaTien_New, gh.MaGH, gh.MaUser, ctgh.SL, a.Url from giohang gh, ctgh, taikhoan tk, monan ma, anhmonan a "+
-    "WHERE gh.MaGH = ctgh.MaGH and ctgh.MaMA = ma.MaMA and tk.IdUser = gh.MaUser and tk.UserName = 'tranvanson' and ma.MaMA NOT IN (SELECT gg.MaMA FROM giamgia gg) and a.ViewPost = 1 and ma.MaMA = a.MaMA)";
+    "WHERE gh.MaGH = ctgh.MaGH and ctgh.MaMA = ma.MaMA and tk.IdUser = gh.MaUser and tk.UserName = ? and ma.MaMA NOT IN (SELECT gg.MaMA FROM giamgia gg) and a.ViewPost = 1 and ma.MaMA = a.MaMA)";
 
     // const q = "((SELECT ma.MaMA, ma.TenMA, a.Url, (ma.GiaTien - gg.SoTienGiam) as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and gg.MaMA = ma.MaMA and a.ViewPost = 1) UNION (SELECT ma.MaMA, ma.TenMA, a.Url, ma.GiaTien as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and a.ViewPost = 1 and ma.MaMA NOT IN (SELECT gg.MaMA FROM giamgia gg)))"
-    db.query(q, [username], (err, data) => {
+    db.query(q, [username, username], (err, data) => {
         if (err) {
           console.error(err);
           res.status(500).send('Error fetching address');
@@ -56,4 +56,17 @@ export const getPayment = async (req, res) => {
           res.json(data);
         }
     });
+}
+
+export const postUpdatePriceCart = (req,res) => {
+  const {sum, username} = req.body
+  // console.log('thông tin delete: '+ maKH + text + province + numericValue)
+  const q = "UPDATE `giohang` SET `TongTien`= ? WHERE giohang.MaUser = (SELECT tk.IdUser FROM taikhoan tk WHERE tk.UserName = ?)"
+
+  db.query(q, [sum, username],(err, result) => {
+    if(err){
+      res.status(500).send('Error delete address...')
+    }
+    res.status(200).send('Delete address successfuly ...')
+  })
 }

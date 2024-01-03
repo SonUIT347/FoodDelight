@@ -10,6 +10,7 @@ import { addressRoute, deleteAddressRouter, getAddressSelectedRouter, insertAddr
 import { deleteCartRouter, getCartRouter, getPaymentRouter, updateCartRouter } from './src/Routes/CartRoute.js';
 import { postInsertCollaborator } from './src/Controller/collaboratorController.js';
 import { getCollaboratorRouter, insertCollaboratorRouter } from './src/Routes/collaboratorRoute.js';
+import { getBillRouter } from './src/Routes/BillRoute.js';
 // import { getPayment } from './src/Controller/CartController.js';
 
 const app = express()
@@ -67,6 +68,7 @@ app.use(getAddressSelectedRouter)
 app.use(getPaymentRouter)
 app.use(insertCollaboratorRouter)
 app.use(getCollaboratorRouter)
+app.use(getBillRouter)
 // app.get('/food', (req, res) => {
 //     db.query('select * from food', (error, rows, field) =>{
 //         if(error)

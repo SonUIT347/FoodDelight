@@ -7,7 +7,7 @@ import { getFoodCount, getImageCount, getImageFood, getTypeFood } from '../Contr
 export const foodRouter = express.Router()
 
 foodRouter.post('/createfood', saveFood)
-foodRouter.get('/selectFoodMains', selectFoodMains)
+foodRouter.get('/selectFoodMains/:day/:time', selectFoodMains)
 foodRouter.get('/selectFoodDesserts', selectFoodDesserts)
 foodRouter.get('/selectFoodSales', selectFoodSales)
 foodRouter.get('/selectFoodMains_Sale', selectFoodMains_Sale)

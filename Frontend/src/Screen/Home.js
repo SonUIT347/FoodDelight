@@ -10,6 +10,7 @@ import No_Products from "../Component/No_Products";
 import { Data } from "../../../App";
 import useAuth from "../context/useAuth";
 import axios from "axios";
+import moment from "moment";
 
 
 
@@ -46,8 +47,11 @@ const Home = () => {
     }, [province]);
 
     const getDataFoodMain = async () => {
+        const now = moment();
+        const day = now.format('YYYY-MM-DD');
+        const time = now.format('HH:mm:ss');
         try {
-            const response = await axios.get(`http://${ip}:8080/selectFoodMains`);
+            const response = await axios.get(`http://${ip}:8080/selectFoodMains/${day}/${time}`);
             const data = response.data;
             console.log(data)
             setDataMainDishes(data)

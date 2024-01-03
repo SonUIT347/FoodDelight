@@ -37,81 +37,8 @@ import AuthNav from './Frontend/src/Layout/AuthNav';
 import AuthContext from './Frontend/src/context/AuthContext';
 import FoodPending from './Frontend/src/Screen/FoodPending';
 import FoodStatus from './Frontend/src/Component/FoodStatus';
+import Bills from './Frontend/src/Screen/Bills';
 
-
-export const Data = [
-  {
-    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-    name: 'Cơm gà xối mỡ a a a a a a a a a a a a a a a a a',
-    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-    price: 20000,
-    quantitySold: 2100,
-    sale: true,
-    priceReduced: 10000,
-    sold: 210
-    // id: 1,
-  }, {
-    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-    name: 'Cơm gà xối mỡ',
-    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-    price: 20000,
-    quantitySold: 2100,
-    sale: true,
-    priceReduced: 10000,
-    sold: 210
-    // id: 1,
-  }, {
-    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-    name: 'Cơm gà',
-    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-    price: 20000,
-    quantitySold: 2100,
-    sale: true,
-    priceReduced: 18000,
-    sold: 210
-    // id: 1,
-  }, {
-    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-    name: 'Cơm gà',
-    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-    price: 20000,
-    quantitySold: 2100,
-    sale: true,
-    priceReduced: 18000,
-    sold: 210
-    // id: 1,
-  }, {
-    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-    name: 'Cơm gà',
-    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-    price: 20000,
-    quantitySold: 2100,
-    sale: true,
-    priceReduced: 18000,
-    sold: 210
-    // id: 1,
-  }, {
-    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-    name: 'Cơm gà',
-    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-    price: 20000,
-    quantitySold: 2100,
-    sale: true,
-    priceReduced: 18000,
-    sold: 210
-    // id: 1,
-  }, {
-    img: "https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg",
-    name: 'Cơm gà',
-    description: 'Cơm gà xối mỡ siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon siu ngon',
-    price: 20000,
-    quantitySold: 2100,
-    sale: true,
-    priceReduced: 18000,
-    sold: 210
-    // id: 1,
-  },
-]
 
 export default function App() {
   return (
@@ -131,21 +58,23 @@ export default function App() {
         {/* <FoodPending/> */}
         {/* <FoodStatus/> */}
         {/* <TopTab/> */}
-        <CreateSale/>
+        {/* <CreateSale/> */}
         {/* <Address/> */}
-      </NavigationContainer>
       {/* <Register /> */}
-      {/* <Home/> */}
-      {/* <Cart/ x> */}
+      <Home/>
+      {/* <Cart/> */}
       {/* <Address/> */}
       {/* <MyStore/> */}
-      {/* <Pay/> x*/}
+      {/* <Pay/> */}
+      {/* <Bills/> */}
+      {/* <Test/> */}
       {/* <Sale/> */}
       {/* <Sale_Items/> */}
       {/* <Personal/> */}
       {/* <Profile/> */}
       {/* <Product/> */}
        {/* <Home_Items/> */}
+      </NavigationContainer>
     </AuthContext>
 
     // <InvoiceComplete/>
