@@ -8,7 +8,7 @@ const AuthContext = ({ children }) => {
     const [password, setPassword] = useState('');
     const [userCount, setUserCount] = useState(null);
     const [foodCount, setFoodCount] = useState(null);
-    const ip = '172.17.12.156'
+    const ip = '192.168.1.12'
     // const [IdUser, setIdUser] = useState = (0)
     // useEffect(() => {
     //   axios.get('http://192.168.1.30:8080/usercount')

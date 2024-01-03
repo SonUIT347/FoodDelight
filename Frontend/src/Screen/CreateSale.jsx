@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, SafeAreaView, StyleSheet, TextInput, ScrollView, Image, Alert, Platform } from 'react-native'
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, SafeAreaView, StyleSheet, TextInput, ScrollView, Image, Alert, Platform, Modal } from 'react-native'
 import React, { useEffect } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState } from 'react'
@@ -8,6 +8,10 @@ import SaleInput from '../Component/SaleInput';
 import MoneyInput from '../Component/MoneyInput';
 import { MaterialIcons } from '@expo/vector-icons';
 import SaleSetUp from '../Component/SaleSetUp';
+import ChooseFood from './ChooseFood';
+import Food from '../Component/Food';
+import useAuth from '../context/useAuth';
+import axios from 'axios';
 export const data = [
     {
         id: 1,
@@ -64,81 +68,65 @@ export const data = [
         price: 3000000
     }
 ]
-const CreateSale = ({navigation}) => {
+const CreateSale = ({ navigation }) => {
     const [food, setFood] = useState([])
-    const [isDisplay, setIsDisplay] = useState(false)
+    // const [isDisplay, setIsDisplay] = useState(false)
     const [isChoose, setIsChoose] = useState('percent')
     const [saleName, setSaleName] = useState('')
     const [percent, setPercent] = useState(0)
     const [money, setMoney] = useState(0)
-    const [isDateTimePickerVisible, setDateTimePickerVisibility] = useState(false);
-    console.log(saleName)
-    const datetime = () => {
-        console.log('aaa')
-        setIsDisplay(true)
-        // return(
-        //     <DateTimePicker value={date}/>
-        // )
-    }
-    const [showDatePicker, setShowDatePicker] = useState(false);
-    const [showTimePickerStart, setShowTimePickerStart] = useState(false)
-    const [showTimePickerEnd, setShowTimePickerEnd] = useState(false)
-    const [selectedTimeEnd, setSelectedTimeEnd] = useState(new Date())
-    const [selectDate, setSelectedDate] = useState(new Date());
-    const [selectedTimeStart, setSelectedTimeStart] = useState(new Date());
     const [date, setDate] = useState(new Date())
-    const [mode, setMode] = useState('date')
-
-    // const timestamp = Date.parse(selectDateStart);
-    // const dateObject = new Date(timestamp);
-    // const isTargetTimeReached = currentTime.getTime() <= dateObject.getTime();
-    // console.log(isTargetTimeReached)
-    // console.log('seletec ' + dateObject.getHours())
-
-    // const showDateTimePickerEnd = () => {
-    //     setShowDatePickerEnd(true);
-    // };
-
-    const handleDateChange = (event, selectDate) => {
-        const currentDate = selectDate
-        console.log('Selected Date:', date);
-        setSelectedDate(currentDate);
-        setShowDatePicker(false);
-
-    };
-    const handleDateChangeTimeEnd = (event, selectDate) => {
-        const currentDate = selectDate
-        console.log('Selected Date:', date);
-        setSelectedTimeEnd(currentDate);
-        setShowTimePickerEnd(false);
-
-    };
-    const handleDateChangeTimeStart = (event, selectDate) => {
-        const currentDate = selectDate
-        console.log('Selected Date:', date);
-        setSelectedTimeStart(currentDate);
-        setShowTimePickerStart(false);
-
-    };
-    const showMode = (currentMode, flag) => {
-        switch (flag) {
-            case 'timestart': {
-                setShowTimePickerStart(true)
-                setMode(currentMode)
-            }
-            case 'timeend': {
-                setShowTimePickerEnd(true)
-                setMode(currentMode)
-            }
-            case 'date': {
-                setShowDatePicker(true)
-                setMode(currentMode)
-            }
+    const [timeStart, setTimeStart] = useState(new Date());
+    const [timeEnd, setTimeEnd] = useState(new Date());
+    const [showPickerDate, setShowPickerDate] = useState(false);
+    const [showPickerStart, setShowPickerStart] = useState(false);
+    const [showPickerEnd, setShowPickerEnd] = useState(false);
+    const [isShowModal, setIsShowModal] = useState(false)
+    const [chooseData, setChooseData] = useState([])
+    const [dataModal, setDataModal] = useState([])
+    const {
+        ip
+    } = useAuth()
+    const macb = 'MC0001'
+    const getDataModal = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/foodapprove/${macb}`);
+            // console.log('Data from API:', response.data);
+            setDataModal(response.data);
+        } catch (error) {
+            console.error("Error fetching food pending:", error);
         }
-        setShowDatePicker(true)
-        setMode(currentMode)
     }
+    useEffect(() => {
+        getDataModal()
+    }, [])
+    const handleDateChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShowPickerDate(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
 
+    const handleChangeStart = (event, selectedDate) => {
+        const currentDate = selectedDate || timeStart;
+        setShowPickerStart(Platform.OS === 'ios');
+        setTimeStart(currentDate);
+    };
+    const handleChangeEnd = (event, selectedDate) => {
+        const currentDate = selectedDate || timeStart;
+        setShowPickerEnd(Platform.OS === 'ios');
+        setTimeEnd(currentDate);
+    };
+
+    const showDatePickerDate = () => {
+        setShowPickerDate(true);
+    };
+
+    const showTimePickerStart = () => {
+        setShowPickerStart(true);
+    };
+    const showTimePickerEnd = () => {
+        setShowPickerEnd(true);
+    };
     const choose = (active) => {
         setIsChoose(active)
         console.log(isChoose)
@@ -158,7 +146,7 @@ const CreateSale = ({navigation}) => {
     }
     const handleSubmit = () => {
         checkPrice()
-        if (selectedTimeStart.getTime() > selectedTimeEnd.getTime()) {
+        if (timeStart.getTime() > timeEnd.getTime()) {
             Alert.alert('Thời gian bắt đầu phải trước thời gian kết thúc')
         }
     }
@@ -172,29 +160,29 @@ const CreateSale = ({navigation}) => {
                     onChangeText={(text) => setSaleName(text)}
                 />
                 <Line />
-                <TouchableWithoutFeedback onPress={() => showMode('date', flag = 'date')}>
+                <TouchableWithoutFeedback onPress={() => showDatePickerDate()}>
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Ngày giảm giá</Text>
-                        <Text>{selectDate.getDate()}/{selectDate.getMonth() + 1}/{selectDate.getFullYear()}</Text>
+                        <Text>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 <Line />
-                <TouchableWithoutFeedback onPress={() => showMode('time', flag = 'timestart')}>
+                <TouchableWithoutFeedback onPress={() => showTimePickerStart()}>
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Thời gian bắt đầu</Text>
-                        <Text>{selectedTimeStart.getHours()}:{selectedTimeStart.getMinutes()}:00</Text>
+                        <Text>{timeStart.getHours()}:{timeStart.getMinutes()}:00</Text>
                     </View>
                 </TouchableWithoutFeedback>
 
                 <Line />
-                <TouchableWithoutFeedback onPress={() => showMode('time', flag = 'timeend')}>
+                <TouchableWithoutFeedback onPress={() => showTimePickerEnd()}>
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Thời gian kết thúc</Text>
-                        <Text>{selectedTimeEnd.getHours()}:{selectedTimeEnd.getMinutes()}:00</Text>
+                        <Text>{timeEnd.getHours()}:{timeEnd.getMinutes()}:00</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 <Line />
-                <TouchableWithoutFeedback onPress={() => navigation.navigate('ChooseFood', {chooseData:food, setChooseData: setFood})} >
+                <TouchableWithoutFeedback onPress={() => setIsShowModal(!isShowModal)} >
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Chọn sản phẩm</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -204,45 +192,33 @@ const CreateSale = ({navigation}) => {
                 </TouchableWithoutFeedback>
 
                 <Line />
-                {showDatePicker ? (
+                {showPickerDate && (
                     <DateTimePicker
-                        testID='dateTimePicker'
-                        value={selectDate}
-                        mode={mode}
+                        value={date}
+                        mode="datetime"
                         is24Hour={true}
                         display="default"
                         onChange={handleDateChange}
                     />
-                ) : null}
-                {showTimePickerEnd ? (
+                )}
+                {showPickerStart && (
                     <DateTimePicker
-                        testID='dateTimePicker'
-                        value={selectedTimeEnd}
-                        mode={mode}
+                        value={timeStart}
+                        mode="time"
                         is24Hour={true}
                         display="default"
-                        onChange={handleDateChangeTimeEnd}
+                        onChange={handleChangeStart}
                     />
-                ) : null}
-                {showTimePickerStart ? (
+                )}
+                {showPickerEnd && (
                     <DateTimePicker
-                        testID='dateTimePicker'
-                        value={selectedTimeStart}
-                        mode={mode}
+                        value={timeEnd}
+                        mode="time"
                         is24Hour={true}
                         display="default"
-                        onChange={handleDateChangeTimeStart}
+                        onChange={handleChangeEnd}
                     />
-                ) : null}
-                {/* {showDatePickerEnd ? (
-                <DateTimePicker
-                    value={selectDateEnd}
-                    mode="datetime"
-                    is24Hour={true}
-                    display="default"
-                    onChange={handleDateChangeEnd}
-                />
-            ) : null} */}
+                )}
                 {isChoose === 'percent' ? (
                     <>
                         <View style={styles.discountChose}>
@@ -282,7 +258,8 @@ const CreateSale = ({navigation}) => {
                 )}
                 {/* <View style={styles.food}> */}
                 <ScrollView style={{ width: '95%', height: 430 }} nestedScrollEnabled={true}>
-                    {data.map((food) => (
+                    {console.log(chooseData)}
+                    {chooseData.map((food) => (
                         <SaleSetUp
                             Info={food}
                             percent={percent}
@@ -292,7 +269,33 @@ const CreateSale = ({navigation}) => {
                     ))}
                 </ScrollView>
                 {/* </View> */}
-
+                <Modal
+                    animationType='slide'
+                    transparent={true}
+                    visible={isShowModal}
+                    statusBarTranslucent={true}
+                >
+                    <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                        <View style={{ backgroundColor: 'white', borderTopLeftRadius: 10, borderTopRightRadius: 10, padding: 20 }}>
+                            <ScrollView style={{ width: '100%', height: 500 }}>
+                                <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
+                                    {dataModal.map((food, index) => (
+                                        <Food
+                                            // key={food.mama}
+                                            food={food}
+                                            id={food.mama}
+                                            chooseData={chooseData}
+                                            setChooseData={setChooseData}
+                                        />
+                                    ))}
+                                </View>
+                            </ScrollView>
+                            <TouchableOpacity style={styles.submitBtn} onPress={() => setIsShowModal(!isShowModal)}>
+                                <Text style={styles.btnSubmit_text}>Xác nhận</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <TouchableOpacity style={styles.submitBtn} onPress={() => handleSubmit()}>
                     <Text style={styles.btnSubmit_text}>Xác nhận</Text>
                 </TouchableOpacity>

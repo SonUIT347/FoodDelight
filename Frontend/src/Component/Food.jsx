@@ -29,21 +29,21 @@ const Food = ({ food, id, chooseData, setChooseData }) => {
     };
     return (
         <>
-            <TouchableOpacity onPress={() => choose(food.id)}>
+            <TouchableOpacity onPress={() => choose(food.mama)}>
                 <View style={[styles.food_ctn, isTouch && styles.food_ctn_touch]}>
                     <Image
-                        source={{ uri: food.img }}
+                        source={{ uri: food.Url }}
                         style={{
                             width: 90,
                             height: 120,
-                            marginRight: 5,
+                            marginRight:5,
                             borderRadius: 10,
                         }}
                     />
                     <View style={styles.foodInfo}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.foodName}</Text>
-                        <Text>Số lượng: {food.stock}</Text>
-                        <Text>Giá: {food.price}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.tenma}</Text>
+                        <Text>Số lượng: {food.SL}</Text>
+                        <Text>Giá: {food.GiaTien}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#d9d9d9',
-        width: '90%',
+        width: '100%',
         height: 130,
         marginBottom: 10,
         marginTop: 10,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#d9d9d9',
-        width: '90%',
+        width: '100%',
         height: 130,
         marginBottom: 10,
         marginTop: 10,

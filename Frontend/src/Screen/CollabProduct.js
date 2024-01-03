@@ -11,7 +11,7 @@ import useAuth from '../context/useAuth';
 import { storage } from '../firebase/firebaseConfig';
 import { getDownloadURL } from "firebase/storage";
 import { ref, uploadBytesResumable } from 'firebase/storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 const CollabProduct = ({ navigation }) => {
     const {
         ip,
@@ -71,7 +71,7 @@ const CollabProduct = ({ navigation }) => {
     getFoodCount()
     const mama = 'MA00' + (foodCount + 1)
     getImageCount()
-    const maAnh = 'MA00' + (imageCount + 1)
+    const maAnh = 'AH' + (imageCount + 1)
     const addFood = async () => {
         try {
             const imageUrls = await uploadImage();

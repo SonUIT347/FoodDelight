@@ -35,7 +35,8 @@ import Login from './Frontend/src/Screen/Login';
 import Register from './Frontend/src/Screen/Register';
 import AuthNav from './Frontend/src/Layout/AuthNav';
 import AuthContext from './Frontend/src/context/AuthContext';
-import ImageStack from './Frontend/test';
+import FoodPending from './Frontend/src/Screen/FoodPending';
+import FoodStatus from './Frontend/src/Component/FoodStatus';
 
 
 export const Data = [
@@ -124,18 +125,27 @@ export default function App() {
       {/* {/* <NavigationContainer>
         <AuthNav />
       </NavigationContainer> */} 
+      <NavigationContainer>
+        {/* <AuthNav/> */}
+        {/* <TopTab/> */}
+        {/* <FoodPending/> */}
+        {/* <FoodStatus/> */}
+        {/* <TopTab/> */}
+        <CreateSale/>
+        {/* <Address/> */}
+      </NavigationContainer>
       {/* <Register /> */}
       {/* <Home/> */}
       {/* <Cart/ x> */}
-      {/* <Address/> x*/}
+      {/* <Address/> */}
       {/* <MyStore/> */}
       {/* <Pay/> x*/}
       {/* <Sale/> */}
       {/* <Sale_Items/> */}
       {/* <Personal/> */}
       {/* <Profile/> */}
-      <Product/>
-      {/* <ImageStack/> */}
+      {/* <Product/> */}
+       {/* <Home_Items/> */}
     </AuthContext>
 
     // <InvoiceComplete/>

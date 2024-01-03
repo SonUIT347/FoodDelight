@@ -5,8 +5,6 @@ import { View, Text, Image, StyleSheet } from "react-native";
 
 // console.log(provincesAndCities.length())
 
-const amount = 200000;
-
 const ShortPost = ({data}) => {
 
     const HanderSold=()=>{

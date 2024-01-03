@@ -44,7 +44,7 @@ const FoodStatus = ({ food, setFood, type }) => {
         return (
             <View style={styles.food_ctn}>
                 <Image
-                    source={{ uri: food.img }}
+                    source={{ uri: food.Url }}
                     style={{
                         width: 90,
                         height: 120,
@@ -53,9 +53,9 @@ const FoodStatus = ({ food, setFood, type }) => {
                     }}
                 />
                 <View style={styles.foodInfo}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.foodName}</Text>
-                    <Text>Số lượng: {food.stock}</Text>
-                    <Text>Giá: {food.price}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.tenma}</Text>
+                    <Text>Số lượng: {food.SL}</Text>
+                    <Text>Giá: {food.GiaTien}</Text>
                     <View style={styles.button_ctn}>
                         <TouchableOpacity style={{
                             margin: 5, borderRadius: 2,
