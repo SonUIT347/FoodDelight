@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, FlatList, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import No_Products from '../Component/No_Products';
-import { Data } from '../../../App';
 import useAuth from '../context/useAuth';
 import axios from "axios";
 
@@ -10,7 +9,7 @@ const username = 'tranvanson'
 
 const Cart=()=>{
     const [data, setData] = useState([])
-    const [arrCount, setArrCount] = useState(new Array(Data.length).fill(1))
+    const [arrCount, setArrCount] = useState(new Array(0).fill(1))
     const [sum, setSum] = useState()
     
     useEffect(()=>{
@@ -30,7 +29,7 @@ const Cart=()=>{
             const response = await axios.get(`http://${ip}:8080/cart/${username}`);
             const dt = response.data;
             const newArrCount = dt.map(item=>item.SL)
-            console.log(dt)
+            console.log("abc" + dt)
             setData(dt)
             setArrCount(newArrCount)
         } catch (error) {
@@ -63,6 +62,27 @@ const Cart=()=>{
             
     };
 
+    const updatePriceCart = async () => {
+        try {
+            const response = await fetch(`http://${ip}:8080/UpdatePriceCart`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({sum , username}),
+            });
+            if (response.status === 200) {
+                const responseData = await response.json(); // Parse the response as JSON
+            } else {
+                // Authentication failed
+                alert('Update failed. Please check address.');
+                console.log('Update failed');
+            }
+        } catch (error) {
+            console.log('Update error:', error);
+        }              
+    };
+
     const formattedAmount=(item)=>{
         if (item)
             return item.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -93,6 +113,7 @@ const Cart=()=>{
 
     const handleOnPay=()=>{
         updateDataCart()
+        updatePriceCart()
     }
 
     // const handleArrCount=(index)=>{

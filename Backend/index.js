@@ -11,6 +11,8 @@ import { deleteCartRouter, getCartRouter, getPaymentRouter, updateCartRouter } f
 import { postInsertCollaborator } from './src/Controller/collaboratorController.js';
 import { getAllCollabRouter, getAllCollaborator, getCollaboratorRouter, insertCollaboratorRouter } from './src/Routes/collaboratorRoute.js';
 import { adminRoute } from './src/Routes/addminRoute.js';
+import { getCollaboratorRouter, insertCollaboratorRouter } from './src/Routes/collaboratorRoute.js';
+import { getBillRouter } from './src/Routes/BillRoute.js';
 // import { getPayment } from './src/Controller/CartController.js';
 
 const app = express()
@@ -71,6 +73,7 @@ app.use(getCollaboratorRouter)
 app.use(adminRoute)
 app.use(getAllCollaborator)
 app.use(getAllCollabRouter)
+app.use(getBillRouter)
 // app.get('/food', (req, res) => {
 //     db.query('select * from food', (error, rows, field) =>{
 //         if(error)

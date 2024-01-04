@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import useAuth from '../context/useAuth';
 import axios from "axios";
 
-username = 'tranvanson'
+const username = 'tranvanson'
 
 
 const Address = {
@@ -18,11 +18,11 @@ const sum = 100000
 
 const Pay=() => {
     const [dataAddress, setDataAddress] = useState([])
-    const [price, setPrice] = useState([])
+    // const [price, setPrice] = useState(0)
 
     useEffect(()=>{
         getAddressSelected()
-        getPrice()
+        // getPrice()
     }, [])
 
     const {
@@ -30,30 +30,28 @@ const Pay=() => {
     } = useAuth()
 
     const getAddressSelected = async () => {
-        console.log(ip)
-        // console.log("check update: " + "id:" + idAddress +  "text: " + text + province + numericValue)
         try {
             const response = await axios.get(`http://${ip}:8080/AddressSelected/${username}`);
             const dt = response.data;
-            console.log(dt)
-            setDataAddress(dt[0])
+            console.log(response.data)
+            setDataAddress(dt)
         } catch (error) {
             console.error('Error fetching data address', error.message);
-        }
+        }       
     };
 
-    const getPrice = async () => {
-        console.log(ip)
-        // console.log("check update: " + "id:" + idAddress +  "text: " + text + province + numericValue)
-        try {
-            const response = await axios.get(`http://${ip}:8080/Pay/${username}`);
-            const dt = response.data;
-            console.log(dt)
-            setPrice(dt[0].TongTien)
-        } catch (error) {
-            console.error('Error fetching data address', error.message);
-        }
-    };
+    // const getPrice = async () => {
+    //     console.log(ip)
+    //     // console.log("check update: " + "id:" + idAddress +  "text: " + text + province + numericValue)
+    //     try {
+    //         const response = await axios.get(`http://${ip}:8080/Pay/${username}`);
+    //         const dt = response.data;
+    //         // console.log(dt[0])
+    //         setPrice(dt[0])
+    //     } catch (error) {
+    //         console.error('Error fetching data address', error.message);
+    //     }
+    // };
 
 
 
@@ -85,51 +83,30 @@ const Pay=() => {
             <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: '#F5FBF3', borderRadius: 15}}>
                 <View style={{flex: 1, padding: 10, paddingHorizontal: 20}}>
                     <Text style={{color: '#6B6D7B', paddingVertical: 0}}>Địa chỉ</Text>
-                    <Text style={{fontSize: 16, fontWeight: 'bold'}}>{dataAddress.diachi}</Text>
-                    <Text style={{fontSize: 16, fontWeight: 'bold'}}>{dataAddress.tinh}</Text>
-                    <Text style={{fontSize: 14}}>SDT: {dataAddress.sdt}</Text>
+                    {/* {console.log(dataAddress)} */}
+                    {
+                        dataAddress.length == 0 ? (
+                        <>
+                            <Text style={{fontSize: 16, fontWeight: 'bold'}}>Vui lòng chọn địa chỉ</Text>
+                        </>) : (
+                        <>
+                            <Text style={{fontSize: 16, fontWeight: 'bold'}}>{dataAddress[0].diachi}</Text>
+                            <Text style={{fontSize: 16, fontWeight: 'bold'}}>{dataAddress[0].tinh}</Text>
+                            <Text style={{fontSize: 14}}>SDT: {dataAddress[0].sdt} </Text>
+                        </>)
+                         
+                    }
+
+                    
                 </View>
                 <AntDesign name="right" size={24} color="#6AC949" style={{paddingRight: 10}}/>
             </View>
         </TouchableOpacity>
 
-        <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: '#F5FBF3', borderRadius: 15, marginVertical: 20}}>
-            <View style={{flex: 1, padding: 10, paddingHorizontal: 10}}>
-                <Text style={{color: '#6B6D7B', paddingVertical: 0}}>Ngày và giờ</Text>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
-                    <TouchableOpacity style={{padding: 10, borderRadius: 10, borderWidth: 1}}>
-                        <Text>Hôm nay</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{padding: 10, borderRadius: 10, borderWidth: 1}}>
-                        <Text>Ngày mai</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{padding: 10, borderRadius: 10, borderWidth: 1}}>
-                        <Text>Chọn ngày</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
-                    <TouchableOpacity style={{padding: 5, borderRadius: 10, borderWidth: 1}}>
-                        <Text>7.00-10.00</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{padding: 5, borderRadius: 10, borderWidth: 1}}>
-                        <Text>11.00-14.00</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{padding: 5, borderRadius: 10, borderWidth: 1}}>
-                        <Text>17.00-22.00</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
-
         <View style={{justifyContent: 'flex-end', flex: 1, width: '100%'}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, marginBottom: 20}}>
                 <Text style={{fontSize: 18, fontWeight: 'bold'}}>Tổng thanh toán</Text>
-                <Text style={{fontSize: 18, fontWeight: 'bold'}}>{formattedAmount(price)} đ</Text>
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>{formattedAmount(sum)} đ</Text>
             </View>
             <TouchableOpacity style={{backgroundColor: '#45BC1B', marginBottom: 20, borderRadius: 15}}>
                 <Text style={{color: 'white', padding: 20, textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>Thanh Toán</Text>
