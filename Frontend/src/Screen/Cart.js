@@ -4,21 +4,23 @@ import { AntDesign } from '@expo/vector-icons';
 import No_Products from '../Component/No_Products';
 import useAuth from '../context/useAuth';
 import axios from "axios";
+import moment from "moment";
 
 const username = 'tranvanson'
 
-const Cart=()=>{
+const Cart=({ navigation, refreshCount })=>{
     const [data, setData] = useState([])
     const [arrCount, setArrCount] = useState(new Array(0).fill(1))
     const [sum, setSum] = useState()
+    const [note, setNote] = useState('')
     
     useEffect(()=>{
-        setSum(data.reduce((sum, item, index) => sum + arrCount[index]*(item.GiaTien_New), 0))
+        setSum(data.reduce((sum, item, index) => sum + ((arrCount[index] <= item.SLGG) ? (arrCount[index]*(item.GiaTien_New)):(item.SLGG*(item.GiaTien_New) + item.GiaTien*(arrCount[index] - item.SLGG))), 0))
     }, [arrCount])
 
     useEffect(()=>{
         getDataCart()
-    }, [])
+    }, [refreshCount])
 
     const {
         ip
@@ -26,7 +28,10 @@ const Cart=()=>{
 
     const getDataCart = async () => {
         try {
-            const response = await axios.get(`http://${ip}:8080/cart/${username}`);
+            const now = moment();
+            const day = now.format('YYYY-MM-DD');
+            const time = now.format('HH:mm:ss');
+            const response = await axios.get(`http://${ip}:8080/cart/${username}/${day}/${time}`);
             const dt = response.data;
             const newArrCount = dt.map(item=>item.SL)
             console.log("abc" + dt)
@@ -39,13 +44,14 @@ const Cart=()=>{
 
     const updateDataCart = async () => {
         for (let i = 0; i < data.length; i++) {
+            const money = ((arrCount[i] <= data[i].SLGG) ? (arrCount[i]*(data[i].GiaTien_New)):(data[i].SLGG*(data[i].GiaTien_New) + data[i].GiaTien*(arrCount[i] - data[i].SLGG)))
             try {
                 const response = await fetch(`http://${ip}:8080/UpdateCart`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({maMA: data[i].MaMA, username, SL: arrCount[i]}),
+                    body: JSON.stringify({maMA: data[i].MaMA, username, SL: arrCount[i], GiaTien: money}),
                 });
                 if (response.status === 200) {
                     const responseData = await response.json(); // Parse the response as JSON
@@ -63,13 +69,14 @@ const Cart=()=>{
     };
 
     const updatePriceCart = async () => {
+        console.log("ajkdhsfjkadshfkjads" + note)
         try {
             const response = await fetch(`http://${ip}:8080/UpdatePriceCart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({sum , username}),
+                body: JSON.stringify({sum, note, username}),
             });
             if (response.status === 200) {
                 const responseData = await response.json(); // Parse the response as JSON
@@ -114,6 +121,11 @@ const Cart=()=>{
     const handleOnPay=()=>{
         updateDataCart()
         updatePriceCart()
+        navigation.navigate('Pay', { sum: sum, key: 'pay' });
+    }
+
+    const handleChangeNote=(text)=>{
+        setNote(text)
     }
 
     // const handleArrCount=(index)=>{
@@ -174,7 +186,7 @@ const Cart=()=>{
     }
 
     const renderItem = ({ item, index }) => (
-        <View key={index} style={{backgroundColor: '#F5F5F5', marginHorizontal: 20, marginVertical: 5, borderRadius: 14, flexDirection: 'row'}}>
+        <View key={index} style={{backgroundColor: '#F5F5F5', marginHorizontal: 20, marginVertical: 5, borderRadius: 14, flexDirection: 'row', height: 135, alignItems: 'center'}}>
             <Image source={{uri:item.Url}} style={{width: 90, height: 90, borderRadius: 14, margin: 10}}/>
             <View style={{width: '100%', height: '100%', flex: 1, position: 'relative'}}>
                 <View style={{position: 'relative', justifyContent: 'center', marginTop: 10, flexDirection: 'row'}}>
@@ -189,12 +201,32 @@ const Cart=()=>{
                     </TouchableOpacity>
                 </View>
 
-                <Text style={{color: 'gray'}}>{formattedAmount(item.GiaTien_New)}đ/Phần</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{color: 'gray'}}>{formattedAmount(item.GiaTien_New)}đ/Phần</Text>
+                    {item.GiaTien_New == item.GiaTien ? (<></>) : (
+                        <Text style={{color: 'gray', paddingLeft: 10, textDecorationLine: 'line-through'}}>
+                            {formattedAmount(item.GiaTien)}đ
+                        </Text>
+                    )}
+                </View>
+
+                <Text style={{color: 'gray'}}>SLGG: {item.SLGG}</Text>
+
+
 
                 <View style={{position: 'absolute', width: '100%', bottom: 10}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
                         <View style={{backgroundColor: '#6AC949', height: 35, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 10}}>
-                            <Text style={{color: 'white', fontSize: 18}}>{formattedAmount(arrCount[index]*(item.GiaTien_New))}</Text>
+                            {(arrCount[index] <= item.SLGG) ? (
+                                <Text style={{color: 'white', fontSize: 18}}>
+                                    {formattedAmount(arrCount[index]*(item.GiaTien_New))}
+                                </Text>) : (
+                                <Text style={{color: 'white', fontSize: 18}}>
+                                    {formattedAmount(item.SLGG*(item.GiaTien_New) + item.GiaTien*(arrCount[index] - item.SLGG))}
+                                </Text>)
+
+                            }
+                            
                         </View>
                         <View style={{height: 35, width: 100, backgroundColor:'white', marginRight: 10, flexDirection: 'row', alignItems: 'center', borderRadius: 10}}>
                             <TouchableOpacity style={{flex: 1,}} onPress={()=>{handleOnMinus(item, index)}}>
@@ -257,8 +289,10 @@ const Cart=()=>{
             <View style={{backgroundColor: '#F5FBF3', borderWidth: 1, borderColor: 'green', borderRadius: 10, marginHorizontal: 20}}>
                 <TextInput
                     style={{padding: 10}}
+                    value={note}
                     placeholder='Ghi chú'
                     numberOfLines={4}
+                    onChangeText={(text)=>handleChangeNote(text)}
                 />
             </View>
         </View>

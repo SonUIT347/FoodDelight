@@ -81,37 +81,13 @@ export const selectFoodMains = async (req, res) => {
 };
 
 export const selectFoodDesserts = async (req, res) => {
-    const q = "(SELECT ma.*, lma.TenLoaiMA, gg.SoTienGiam, a.Url, c.Tinh From monan ma, loaimonan lma, ctlma, giamgia gg, anhmonan a, collaborator c WHERE ma.MaMA = ctlma.MaMA and ctlma.MaLoaiMA = lma.MaLoaiMA and gg.MaMA=ma.MaMA and lma.TenLoaiMA='Món tráng miệng' and a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator)" +
-        "UNION (SELECT ma.*, lma.TenLoaiMA, gg.SoTienGiam=0, a.Url, c.Tinh From monan ma, loaimonan lma, ctlma, giamgia gg, anhmonan a, collaborator c WHERE ma.MaMA = ctlma.MaMA and ctlma.MaLoaiMA = lma.MaLoaiMA and lma.TenLoaiMA='Món tráng miệng' and a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator and ma.MaMA NOT IN (SELECT gg.MaMA FROM giamgia gg))";
+    const day = req.params.day
+    const time = req.params.time
+    const q = "SELECT ma.*, ctgg.SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món Tráng miệng' and lma.MaLoaiMA = ctlma.MaLoaiMA and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0 " +
+    "UNION " +
+    "SELECT ma.*, 0 SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món tráng miệng' and lma.MaLoaiMA = ctlma.MaLoaiMA and ma.MaMA NOT IN (SELECT ctgg.MaMA FROM giamgia gg, ctgg WHERE gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0)";
     // const q='select * FROM taikhoan';
-    db.query(q, (err, data) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error fetching food desserts');
-        } else {
-            res.json(data);
-        }
-    });
-};
-
-export const selectFoodSales = async (req, res) => {
-    const q = "(SELECT ma.*, lma.TenLoaiMA, gg.SoTienGiam, a.Url, c.Tinh From monan ma, loaimonan lma, ctlma, giamgia gg, anhmonan a, collaborator c WHERE ma.MaMA = ctlma.MaMA and ctlma.MaLoaiMA = lma.MaLoaiMA and gg.MaMA=ma.MaMA and lma.TenLoaiMA='Đang Sale' and a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator)";
-    // const q='select * FROM taikhoan';
-    db.query(q, (err, data) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error fetching food sales');
-        } else {
-            res.json(data);
-        }
-    });
-};
-
-
-export const selectFoodMains_Sale = async (req, res) => {
-    const q = "(SELECT ma.*, lma.TenLoaiMA, gg.SoTienGiam, a.Url, c.Tinh From monan ma, loaimonan lma, ctlma, giamgia gg, anhmonan a, collaborator c WHERE ma.MaMA = ctlma.MaMA and ctlma.MaLoaiMA = lma.MaLoaiMA and gg.MaMA=ma.MaMA and lma.TenLoaiMA='Món chính' and a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator)";
-    // const q='select * FROM taikhoan';
-    db.query(q, (err, data) => {
+    db.query(q, [day, time, time, day, time, time], (err, data) => {
         if (err) {
             console.error(err);
             res.status(500).send('Error fetching food mains');
@@ -121,13 +97,46 @@ export const selectFoodMains_Sale = async (req, res) => {
     });
 };
 
-export const selectFoodDesserts_Sale = async (req, res) => {
-    const q = "(SELECT ma.*, lma.TenLoaiMA, gg.SoTienGiam, a.Url, c.Tinh From monan ma, loaimonan lma, ctlma, giamgia gg, anhmonan a, collaborator c WHERE ma.MaMA = ctlma.MaMA and ctlma.MaLoaiMA = lma.MaLoaiMA and gg.MaMA=ma.MaMA and lma.TenLoaiMA='Món tráng miệng' and a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator)"
+export const selectFoodSales = async (req, res) => {
+    const day = req.params.day
+    const time = req.params.time
+    const q = "SELECT ma.*, ctgg.SoTienGiam, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg WHERE ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0";
     // const q='select * FROM taikhoan';
-    db.query(q, (err, data) => {
+    db.query(q, [day, time, time], (err, data) => {
         if (err) {
             console.error(err);
-            res.status(500).send('Error fetching food desserts');
+            res.status(500).send('Error fetching food sale');
+        } else {
+            res.json(data);
+        }
+    });
+};
+
+
+export const selectFoodMains_Sale = async (req, res) => {
+    const day = req.params.day
+    const time = req.params.time
+    const q = "SELECT ma.*, ctgg.SL AS SLGG, ctgg.SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món chính' and lma.MaLoaiMA = ctlma.MaLoaiMA and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0 " 
+       // const q='select * FROM taikhoan';
+    db.query(q, [day, time, time], (err, data) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching food sale');
+        } else {
+            res.json(data);
+        }
+    });
+};
+
+export const selectFoodDesserts_Sale = async (req, res) => {
+    const day = req.params.day
+    const time = req.params.time
+    const q = "SELECT ma.*, ctgg.SL AS SLGG, ctgg.SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món tráng miệng' and lma.MaLoaiMA = ctlma.MaLoaiMA and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0 "
+    // const q='select * FROM taikhoan';
+    db.query(q, [day, time, time], (err, data) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching food sale');
         } else {
             res.json(data);
         }

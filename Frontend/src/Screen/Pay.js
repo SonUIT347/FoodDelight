@@ -13,17 +13,19 @@ const Address = {
     address: 'KTX khu A, DHQG, TP. Thủ Đức'
 }
 
-const sum = 100000
+// const sum = 100000
 
 
-const Pay=() => {
+const Pay=({ route, navigation }) => {
     const [dataAddress, setDataAddress] = useState([])
-    // const [price, setPrice] = useState(0)
-
+    const sum = route.params.sum;
+    const key = route.params.key;
+    const { name } = route;
     useEffect(()=>{
         getAddressSelected()
         // getPrice()
-    }, [])
+        console.log("Đây là trang " + name)
+    }, [name])
 
     const {
         ip
@@ -40,18 +42,9 @@ const Pay=() => {
         }       
     };
 
-    // const getPrice = async () => {
-    //     console.log(ip)
-    //     // console.log("check update: " + "id:" + idAddress +  "text: " + text + province + numericValue)
-    //     try {
-    //         const response = await axios.get(`http://${ip}:8080/Pay/${username}`);
-    //         const dt = response.data;
-    //         // console.log(dt[0])
-    //         setPrice(dt[0])
-    //     } catch (error) {
-    //         console.error('Error fetching data address', error.message);
-    //     }
-    // };
+    const handleOnAddress=()=>{
+        navigation.navigate('Address', {sum: sum, key: "address"});
+    }
 
 
 
@@ -79,7 +72,7 @@ const Pay=() => {
             </View>
 
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>handleOnAddress()}>
             <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: '#F5FBF3', borderRadius: 15}}>
                 <View style={{flex: 1, padding: 10, paddingHorizontal: 20}}>
                     <Text style={{color: '#6B6D7B', paddingVertical: 0}}>Địa chỉ</Text>
@@ -121,10 +114,10 @@ const styles = StyleSheet.create({
     container: {
     flex: 1,
     marginTop: Platform.OS === 'android' ? 30 : 0,
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
     backgroundColor: '#fff',
     alignItems: 'center',
-    // justifyContent: 'center',
+    // backgroundColor: 'white'
     },
 });
 

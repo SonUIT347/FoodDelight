@@ -53,7 +53,7 @@ export default function App() {
         <AuthNav />
       </NavigationContainer> */} 
       <NavigationContainer>
-        {/* <AuthNav/> */}
+        <AuthNav/>
         {/* <TopTab/> */}
         {/* <FoodPending/> */}
         {/* <FoodStatus/> */}
@@ -61,7 +61,7 @@ export default function App() {
         {/* <CreateSale/> */}
         {/* <Address/> */}
       {/* <Register /> */}
-      <Home/>
+      {/* <Home/> */}
       {/* <Cart/> */}
       {/* <Address/> */}
       {/* <MyStore/> */}

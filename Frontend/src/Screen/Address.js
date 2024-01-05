@@ -12,7 +12,10 @@ const diachi = 'ktx khu B'
 const tinh = 'Bình Dương'
 const sdt = '0914702979'
 
-const Address=() => {
+const Address=({navigation, route}) => {
+    const sum = route.params.sum;
+    const key = route.params.key;
+    const { name } = route;
     const [data, setData] = useState([]);
     const [isModalAddVisible, setModalAddVisible] = useState(false);
     const [isModalEditVisible, setModalEditVisible] = useState(false);
@@ -35,7 +38,7 @@ const Address=() => {
         getDataAddress()
         // console.log(maKH + 'o useEffect')
         console.log(data)
-    }, []);
+    }, [name]);
 
     const getDataAddress = async () => {
         try {
@@ -390,6 +393,10 @@ const Address=() => {
 
     )
 
+    const handleBack=()=>{
+        navigation.navigate('Pay', { sum: sum, key: "pay" });
+    }
+
 
   return (
     <View style={styles.container}>
@@ -397,12 +404,19 @@ const Address=() => {
             style={{flexDirection: "row", justifyContent: "space-between", height: 85,
             alignItems: 'center', width: '100%', position: 'relative', alignSelf: 'flex-start'}}
         >
-            <AntDesign 
-                name="arrowleft" 
-                size={30} color="black" 
+            <TouchableOpacity
                 style={{backgroundColor: 'green', borderRadius: 20, width: 35,
-                height: 35, textAlign: "center", textAlignVertical: 'center', position: "absolute"}}
-            />
+                height: 35, textAlign: "center", textAlignVertical: 'center'}}
+                onPress={()=>handleBack()}
+            >
+                <AntDesign 
+                    name="arrowleft" 
+                    size={30} color="white" 
+                    style={{borderRadius: 20, width: 35,
+                    height: 35, textAlign: "center", textAlignVertical: 'center'}}
+                />
+            </TouchableOpacity>
+
             <View style={{width: '100%'}}>
                 {/* <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>{header}</Text> */}
                 <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>Địa chỉ của bạn</Text>
@@ -582,7 +596,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     // alignItems: 'center',
     marginTop: Platform.OS === 'android' ? 30 : 0,
-    marginHorizontal: 20
+    paddingHorizontal: 20
     // justifyContent: 'center',
     },
     modalContainer: {
