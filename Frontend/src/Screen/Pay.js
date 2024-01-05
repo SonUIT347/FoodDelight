@@ -118,7 +118,7 @@ const Pay=({ route, navigation }) => {
     }
 
     const insertBillDetail = async(item, MaHD)=>{
-        console.log(MaHD, item.MaMA, item.SL, item.GiaTien)
+        console.log("insertBillDetail",MaHD, item.MaMA, item.SL, item.GiaTien)
         try {
             const response = await fetch(`http://${ip}:8080/insertBillDetail`, {
                 method: 'POST',
@@ -154,7 +154,17 @@ const Pay=({ route, navigation }) => {
     }
 
     const insertBill=async(item, index)=>{
-        const MaHD = "HD" + (count + 1 + index)
+        var MaHD
+        if (count + 1 + index < 10)
+            MaHD = "HD000" + (count + 1 + index)
+        else
+            if (count + 1 + index < 100)
+                MaHD = "HD00" + (count + 1 + index)
+            else
+                if (count + 1 + index < 1000)
+                    MaHD = "HD0" + (count + 1 + index)
+                else
+                    MaHD = "HD" + (count + 1 + index)
         const now = moment();
         const Day = now.format('YYYY-MM-DD');
         // const time = now.format('HH:mm:ss');
@@ -257,7 +267,17 @@ const Pay=({ route, navigation }) => {
                     
                     if (PayDirectly)
                     {
-                        const MaHD = "HD" + (count + 1)
+                        var MaHD
+                        if (count + 1 < 10)
+                            MaHD = "HD000" + (count + 1)
+                        else
+                            if (count + 1 < 100)
+                                MaHD = "HD00" + (count + 1)
+                            else
+                                if (count + 1 < 1000)
+                                    MaHD = "HD0" + (count + 1)
+                                else
+                                    MaHD = "HD" + (count + 1)
                         const now = moment();
                         const Day = now.format('YYYY-MM-DD');
                         console.log(MaHD)

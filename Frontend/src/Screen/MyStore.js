@@ -17,7 +17,8 @@ const MyStore = () => {
   const [sdt, setSdt] = useState('')
   const [address, setAddress] = useState('')
   const [email, setEmail] = useState('')
-  const [edit, setEdit] = useState(true)
+  const [deny, setDeny] = useState(false)
+  const [pending, setPending] = useState(false)
   
 
   const {
@@ -31,11 +32,21 @@ const MyStore = () => {
   const getDataCollaborator = async () => {
     try {
       // /Collaborator/:username
-        const response = await axios.get(`http://${ip}:8080/Collaborator/${username}`);
+        const response = await axios.get(`http://${ip}:8080/CollaboratorDeny/${username}`);
         const dt = response.data;
         console.log(dt)
         if(dt.length != 0)
-          setEdit(false)
+          setDeny(true)
+    } catch (error) {
+        console.error('Error fetching data userId', error.message);
+    }
+    try {
+      // /Collaborator/:username
+        const response = await axios.get(`http://${ip}:8080/CollaboratorPending/${username}`);
+        const dt = response.data;
+        console.log(dt)
+        if(dt.length != 0)
+          setPending(true)
     } catch (error) {
         console.error('Error fetching data userId', error.message);
     }
@@ -164,7 +175,7 @@ const MyStore = () => {
                 <Text style={{color: 'white', fontSize: 18, fontWeight: 'bold'}}>Chọn ảnh</Text>
             </TouchableOpacity>
         </View> */}
-        {edit ? (
+        {!pending ? (
           <>
             <View 
                 style={{width: '100%', borderWidth: 1, position: 'relative', 
@@ -304,9 +315,22 @@ const MyStore = () => {
                 </TouchableOpacity> */}
             </View>
           </>):(
+            
           <View style = {{justifyContent: 'center', flex: 1}}>
-            <Text style={{fontSize: 18, textAlign: 'center'}}>Tài khoản này đã đăng ký cửa hàng</Text>
-            <Text style={{fontSize: 18, textAlign: 'center'}}>Vui lòng chờ duyệt </Text>
+            { deny ? (
+                <>
+                    <Text style={{fontSize: 18, textAlign: 'center'}}>Tài khoản này đã đăng ký cửa hàng</Text>
+                    <Text style={{fontSize: 18, textAlign: 'center'}}>Vui lòng chờ duyệt </Text>
+                </>
+                  
+              ) : (
+                <>
+                    <Text style={{fontSize: 18, textAlign: 'center'}}>Bạn đang là cộng tác viên</Text>
+                    <Text style={{fontSize: 18, textAlign: 'center'}}>Vui lòng chờ duyệt </Text>
+                </>
+              )
+            }
+            
           </View>)
         }
 

@@ -235,7 +235,7 @@ const Cart=({ navigation, refreshCount })=>{
                         <View style={{backgroundColor: '#6AC949', height: 35, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 10}}>
                             
                         <Text style={{color: 'white', fontSize: 18}}>
-                            {formattedAmount(item.SLGH*(item.GiaTien))}
+                            {formattedAmount(arrCount[index]*(item.GiaTien))}
                         </Text>
 
                         </View>

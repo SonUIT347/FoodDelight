@@ -2,7 +2,7 @@ import db from '../../index.js';
 
 export const getBill = async (req, res) => {
     const  username = req.params.username;
-    const q = "SELECT * FROM hoadon hd, cthd WHERE hd.MaHD = cthd.MaHD and hd.MaKH = (SELECT tk.IdUser FROM taikhoan tk WHERE tk.UserName = ?)  " +
+    const q = "SELECT *, SUM(cthd.SL) as SLMH FROM hoadon hd, cthd WHERE hd.MaHD = cthd.MaHD and hd.MaKH = (SELECT tk.IdUser FROM taikhoan tk WHERE tk.UserName = ?)  " +
     "GROUP BY hd.MaHD, hd.TongTien, hd.TrangThai, hd.ThoiGianNhanDon, hd.DiaChi, hd.Sdt";
     db.query(q, [username], (err, data) => {
         if (err) {
@@ -40,6 +40,7 @@ export const insertBill = (req,res) => {
     return res.status(200).json({ success: true, message: 'insert bill successfuly...' })
   })
 }
+
 
 export const insertBillDetails = (req,res) => {
   const {MaHD, MaMA, SL, GiaTien} = req.body
