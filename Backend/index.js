@@ -9,6 +9,8 @@ import { foodRouter } from './src/Routes/FoodRoute.js';
 import { addressRoute, deleteAddressRouter, getAddressSelectedRouter, insertAddressRouter, updateAddressRouter, updateValueAddressRouter } from './src/Routes/addressRoute.js';
 import { deleteCartRouter, getCartRouter, getPaymentRouter, updateCartRouter } from './src/Routes/CartRoute.js';
 import { postInsertCollaborator } from './src/Controller/collaboratorController.js';
+import { getAllCollabRouter, getAllCollaborator, getCollaboratorRouter, insertCollaboratorRouter } from './src/Routes/collaboratorRoute.js';
+import { adminRoute } from './src/Routes/addminRoute.js';
 import { getCollaboratorRouter, insertCollaboratorRouter } from './src/Routes/collaboratorRoute.js';
 import { getBillRouter } from './src/Routes/BillRoute.js';
 // import { getPayment } from './src/Controller/CartController.js';
@@ -68,6 +70,9 @@ app.use(getAddressSelectedRouter)
 app.use(getPaymentRouter)
 app.use(insertCollaboratorRouter)
 app.use(getCollaboratorRouter)
+app.use(adminRoute)
+app.use(getAllCollaborator)
+app.use(getAllCollabRouter)
 app.use(getBillRouter)
 // app.get('/food', (req, res) => {
 //     db.query('select * from food', (error, rows, field) =>{

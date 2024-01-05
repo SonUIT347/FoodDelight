@@ -29,7 +29,7 @@ import Personal from './Frontend/src/Screen/Personal';
 import BottomTabUser from './Frontend/src/Layout/BottomTabUser';
 import DrawerTab from './Frontend/src/Layout/DrawerTab';
 import Post from './Frontend/src/Component/Post';
-import Product from './Frontend/src/Screen/Product';
+// import Product from './Frontend/src/Screen/Product';
 import MyStore from './Frontend/src/Screen/MyStore';
 import Login from './Frontend/src/Screen/Login';
 import Register from './Frontend/src/Screen/Register';
@@ -37,6 +37,9 @@ import AuthNav from './Frontend/src/Layout/AuthNav';
 import AuthContext from './Frontend/src/context/AuthContext';
 import FoodPending from './Frontend/src/Screen/FoodPending';
 import FoodStatus from './Frontend/src/Component/FoodStatus';
+import AdminStore from './Frontend/src/Screen/AdminStore';
+import AdminProduct from './Frontend/src/Screen/AdminProduct';
+import AdminTopTab from './Frontend/src/Layout/AdminTopTab';
 import Bills from './Frontend/src/Screen/Bills';
 
 
@@ -53,12 +56,16 @@ export default function App() {
         <AuthNav />
       </NavigationContainer> */} 
       <NavigationContainer>
-        <AuthNav/>
+        {/* <AuthNav/> */}
+        {/* <AdminStore/> */}
+        {/* <AdminProduct/> */}
+        <AdminTopTab/>
         {/* <TopTab/> */}
         {/* <FoodPending/> */}
         {/* <FoodStatus/> */}
         {/* <TopTab/> */}
         {/* <CreateSale/> */}
+        {/* <MyStore/> */}
         {/* <Address/> */}
       {/* <Register /> */}
       {/* <Home/> */}

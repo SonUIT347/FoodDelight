@@ -167,55 +167,77 @@ export const getImageCount = async (req, res) => {
     });
 }
 export const getFoodPending = async (req, res) => {
-    const macb = req.params.macb
-    const q = 'SELECT m.mama, m.tenma, m.SL, m.GiaTien, a.Url FROM monan m, collaborator c, anhmonan a WHERE m.macollaborator = c.macollaborator AND m.MaMA = a.MaMA AND m.trangthai = "pending" AND c.macollaborator = (?)'
+    const macb = req.params.macb;
+    const q = `
+        SELECT m.mama, m.tenma, m.SL, m.GiaTien, MAX(i.Url) AS image
+        FROM monan m
+        JOIN collaborator c ON m.macollaborator = c.macollaborator
+        LEFT JOIN anhmonan i ON m.mama = i.mama
+        WHERE m.trangthai = 'pending' AND c.macollaborator = ?
+        GROUP BY m.mama, m.tenma, m.SL, m.GiaTien;
+    `;
     db.query(q, [macb], (err, data) => {
         if (err) {
-            console.log('Get foodstatus have an error ' + err)
-            res.status(500).send('had an error to fetching food status')
+            console.log('Get food status has an error: ' + err);
+            res.status(500).send('Had an error fetching food status');
         } else {
-            res.json(data)
+            res.json(data);
         }
-    })
-}
+    });
+};
+
 export const getFoodApprove = async (req, res) => {
-    const macb = req.params.macb
-    const q = 'SELECT m.mama, m.tenma, m.SL, m.GiaTien, a.Url FROM monan m, collaborator c, anhmonan a WHERE m.macollaborator = c.macollaborator AND m.MaMA = a.MaMA AND m.trangthai = "approve" AND c.macollaborator = (?)'
-    db.query(q, [macb], (err, rows) => {
+    const macb = req.params.macb;
+    const q = `
+        SELECT m.mama, m.tenma, m.SL, m.GiaTien, MAX(i.Url) AS image
+        FROM monan m
+        JOIN collaborator c ON m.macollaborator = c.macollaborator
+        LEFT JOIN anhmonan i ON m.mama = i.mama
+        WHERE m.trangthai = 'approve' AND c.macollaborator = ?
+        GROUP BY m.mama, m.tenma, m.SL, m.GiaTien;
+    `;
+    db.query(q, [macb], (err, data) => {
         if (err) {
-            console.log('Get foodstatus have an error ' + err)
-            res.status(500).send('had an error to fetching food status')
+            console.log('Get food status has an error: ' + err);
+            res.status(500).send('Had an error fetching food status');
         } else {
-            res.json(rows)
+            res.json(data);
         }
-    })
+    });
 }
 export const getFoodDeny = async (req, res) => {
-    const macb = req.params.macb
-    const q = 'SELECT m.mama, m.tenma, m.SL, m.GiaTien, a.Url FROM monan m, collaborator c, anhmonan a WHERE m.macollaborator = c.macollaborator AND m.MaMA = a.MaMA AND m.trangthai = "deny" AND c.macollaborator = (?)'
-    db.query(q, [macb], (err, rows) => {
+    const macb = req.params.macb;
+    const q = `
+        SELECT m.mama, m.tenma, m.SL, m.GiaTien, MAX(i.Url) AS image
+        FROM monan m
+        JOIN collaborator c ON m.macollaborator = c.macollaborator
+        LEFT JOIN anhmonan i ON m.mama = i.mama
+        WHERE m.trangthai = 'deny' AND c.macollaborator = ?
+        GROUP BY m.mama, m.tenma, m.SL, m.GiaTien;
+    `;
+    db.query(q, [macb], (err, data) => {
         if (err) {
-            console.log('Get foodstatus have an error ' + err)
-            res.status(500).send('had an error to fetching food status')
+            console.log('Get food status has an error: ' + err);
+            res.status(500).send('Had an error fetching food status');
         } else {
-            res.json(rows)
+            res.json(data);
         }
-    })
+    });
 }
 
 
 export const getFood = async (req, res) => {
-    const  maMA = req.params.maMA;
+    const maMA = req.params.maMA;
     const q = "(SELECT ma.*, gg.SoTienGiam, a.Url, c.Tinh From monan ma, giamgia gg, anhmonan a, collaborator c WHERE gg.MaMA=ma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ?)"
     " UNION " +
-"(SELECT ma.*, gg.SoTienGiam=0, a.Url, c.Tinh From monan ma, giamgia gg, anhmonan a, collaborator c WHERE a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator and ma.MaMA and ma.MaMA = ? NOT IN (SELECT gg.MaMA FROM giamgia gg))"
+        "(SELECT ma.*, gg.SoTienGiam=0, a.Url, c.Tinh From monan ma, giamgia gg, anhmonan a, collaborator c WHERE a.MaMA = ma.MaMA and a.ViewPost = 1 and ma.MaCollaborator = c.MaCollaborator and ma.MaMA and ma.MaMA = ? NOT IN (SELECT gg.MaMA FROM giamgia gg))"
     // const q='select * FROM taikhoan';
-    db.query(q, [maMA, maMA],(err, data) => {
+    db.query(q, [maMA, maMA], (err, data) => {
         if (err) {
-          console.error(err);
-          res.status(500).send('Error fetching food mains');
+            console.error(err);
+            res.status(500).send('Error fetching food mains');
         } else {
-          res.json(data);
+            res.json(data);
         }
     });
 };
