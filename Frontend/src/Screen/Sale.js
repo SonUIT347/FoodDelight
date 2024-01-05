@@ -8,6 +8,7 @@ import No_Products from "../Component/No_Products";
 import { Data } from "../../../App";
 import useAuth from '../context/useAuth';
 import axios from "axios";
+import moment from "moment";
 
 const Sale=()=>{
     const [dataFoodMains, setDataFoodMains] = useState([])
@@ -29,8 +30,11 @@ const Sale=()=>{
     } = useAuth()
 
     const getDataFoodMains_Sale = async () => {
+        const now = moment();
+        const day = now.format('YYYY-MM-DD');
+        const time = now.format('HH:mm:ss');
         try {
-            const response = await axios.get(`http://${ip}:8080/selectFoodMains_Sale`);
+            const response = await axios.get(`http://${ip}:8080/selectFoodMains_Sale/${day}/${time}`);
             const data = response.data;
             console.log(data)
             setDataFoodMains(data)
@@ -41,8 +45,11 @@ const Sale=()=>{
     };
 
     const getDataFoodDesserts_Sale = async () => {
+        const now = moment();
+        const day = now.format('YYYY-MM-DD');
+        const time = now.format('HH:mm:ss');
         try {
-            const response = await axios.get(`http://${ip}:8080/selectFoodDesserts_Sale`);
+            const response = await axios.get(`http://${ip}:8080/selectFoodDesserts_Sale/${day}/${time}`);
             const data = response.data;
             console.log(data)
             setDataFoodDesserts(data)

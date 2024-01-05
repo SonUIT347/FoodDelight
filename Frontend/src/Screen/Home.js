@@ -62,8 +62,11 @@ const Home = () => {
     };
 
     const getDataFoodDesserts = async () => {
+        const now = moment();
+        const day = now.format('YYYY-MM-DD');
+        const time = now.format('HH:mm:ss');
         try {
-            const response = await axios.get(`http://${ip}:8080/selectFoodDesserts`);
+            const response = await axios.get(`http://${ip}:8080/selectFoodDesserts/${day}/${time}`);
             const data = response.data;
             // console.log(data)
             setDataDesserts(data)
@@ -74,8 +77,11 @@ const Home = () => {
     };
 
     const getDataFoodSales = async () => {
+        const now = moment();
+        const day = now.format('YYYY-MM-DD');
+        const time = now.format('HH:mm:ss');
         try {
-            const response = await axios.get(`http://${ip}:8080/selectFoodSales`);
+            const response = await axios.get(`http://${ip}:8080/selectFoodSales/${day}/${time}`);
             const data = response.data;
             // console.log(data)
             setDataSale(data)

@@ -6,6 +6,7 @@ import Sale from '../Screen/Sale'
 import Profile from '../Screen/Profile'
 import Personal from '../Screen/Personal'
 import Cart from '../Screen/Cart'
+import CartNav from './CartNav'
 const Tab = createBottomTabNavigator()
 const BottomTabUser = () => {
     return (
@@ -14,7 +15,7 @@ const BottomTabUser = () => {
         }}>
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Sale" component={Sale} />
-          <Tab.Screen name='Cart' component={Cart} />
+          <Tab.Screen name='CartNav' component={CartNav} initialParams={{ screen: 'Cart' }}/>
           <Tab.Screen name='Profile' component={Profile} />
 
         </Tab.Navigator>

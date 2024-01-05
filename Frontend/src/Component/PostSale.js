@@ -19,7 +19,7 @@ import { Zocial } from '@expo/vector-icons';
 const PostSale = ({data}) => {
 
     const HanderRemain=()=>{
-        return data.SL>=1000 ? ("Còn " + (data.SL/1000).toFixed(1)+"k") : ("Còn " + data.SL + "")
+        return data.SL>=1000 ? ("Còn " + (data.SLGG/1000).toFixed(1)+"k") : ("Còn " + data.SLGG + "")
     }
 
     const formattedAmount=(item)=>{
@@ -56,7 +56,7 @@ const PostSale = ({data}) => {
                 
             <Text style={{fontSize: 16, fontWeight: 500, width: '100%', paddingHorizontal: 5}} numberOfLines={1}>{data.TenMA}</Text>
 
-            <Text style={{paddingHorizontal: 5, fontSize: 13, width: '100%'}} numberOfLines={3}>{data.description}</Text>
+            <Text style={{paddingHorizontal: 5, fontSize: 13, width: '100%'}} numberOfLines={3}>{data.MoTa}</Text>
 
             <View style={{padding: 5, flexDirection: 'row', alignItems: "center", width: '100%', justifyContent: "space-between"}}>
                 <TouchableOpacity style={{backgroundColor: '#45BC1B', borderRadius: 9}}>
