@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { saveFood, selectFoodMains, selectFoodSnacks, selectFoodDesserts, selectFoodDesserts_Sale, selectFoodMains_Sale, getFoodPending, getFoodApprove, getFoodDeny, getFood } from '../Controller/foodController.js'
+import { saveFood, selectFoodMains, selectFoodSnacks, selectFoodDesserts, selectFoodDesserts_Sale, selectFoodMains_Sale, getFoodPending, getFoodApprove, getFoodDeny, getFood, getFoodByCategories, getFoodByCategoriesTrangMieng, getFoodByCategoriesKhaiVi } from '../Controller/foodController.js'
 import { getFoodCount, getImageCount, getImageFood, getTypeFood } from '../Controller/foodController.js'
 
 
@@ -17,7 +17,9 @@ foodRouter.get('/imageCount', getImageCount)
 foodRouter.get('/foodpending/:macb', getFoodPending)
 foodRouter.get('/foodapprove/:macb', getFoodApprove)
 foodRouter.get('/fooddeny/:macb', getFoodDeny)
-
+foodRouter.get('/getfoodbycategories/monchinh', getFoodByCategories)
+foodRouter.get('/getfoodbycategories/trangmieng', getFoodByCategoriesTrangMieng)
+foodRouter.get('/getfoodbycategories/khaivi', getFoodByCategoriesKhaiVi)
 foodRouter.get('/getFood/:maMA', getFood)
 foodRouter.get('/getImageFood/:maMA', getImageFood)
 foodRouter.get('/getTypeFood/:maMA', getTypeFood)

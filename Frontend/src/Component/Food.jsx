@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 const Food = ({ food, id, chooseData, setChooseData }) => {
@@ -22,26 +22,24 @@ const Food = ({ food, id, chooseData, setChooseData }) => {
     };
 
     return (
-        <>
-            <TouchableOpacity onPress={() => choose()}>
+        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '95%', marginLeft: 10 }}>
                 <View style={[styles.food_ctn, isTouch && styles.food_ctn_touch]}>
                     <Image
-                        source={{ uri: food.image }}
+                        source={{ uri: food.Url }}
                         style={{
                             width: 90,
                             height: 120,
-                            marginRight:5,
+                            marginRight: 5,
                             borderRadius: 10,
                         }}
                     />
                     <View style={styles.foodInfo}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.tenma}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.TenMA}</Text>
                         <Text>Số lượng: {food.SL}</Text>
                         <Text>Giá: {food.GiaTien}</Text>
                     </View>
                 </View>
-            </TouchableOpacity>
-        </>
+        </View>
     )
 }
 const styles = StyleSheet.create({

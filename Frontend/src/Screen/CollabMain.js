@@ -59,11 +59,14 @@ const CollabMain = ({ navigation }) => {
         }
     }
     useEffect(() => {
-        getCollabData()
-        getCountFoodPending()
-        getCountApprove()
-        getCountDeny()
-    }, [])
+        const unsubscribe = navigation.addListener('focus',()=> {
+            getCollabData()
+            getCountFoodPending()
+            getCountApprove()
+            getCountDeny()
+        })
+        return unsubscribe
+    }, [navigation])
     return (
         <View style={styles.container}>
             <View style={styles.header}>

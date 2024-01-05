@@ -44,6 +44,7 @@ import Bills from './Frontend/src/Screen/Bills';
 
 import Product from './Frontend/src/Screen/Product.js';
 import PayDirectly from './Frontend/src/Layout/PayDirectly';
+import Category from './Frontend/src/Screen/Category';
 
 
 export default function App() {
@@ -54,7 +55,7 @@ export default function App() {
         
       </NavigationContainer> */} 
       <NavigationContainer>
-        {/* <AuthNav/> */}
+        <AuthNav/>
         {/* <AdminStore/> */}
         {/* <AdminProduct/> */}
         {/* <AdminTopTab/> */}
@@ -69,8 +70,9 @@ export default function App() {
         {/* <Invoice/> */}
         {/* <Product/> */}
         {/* <Product/> */}
-        <Bills/>
+        {/* <Bills/> */}
         {/* <Pay/> */}
+        {/* <Category/> */}
       </NavigationContainer>
     </AuthContext>
   );

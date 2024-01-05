@@ -19,7 +19,7 @@ const BottomTabCollab = () => {
     }}>
 
       {/* <Tab.Screen name='Profile' component={MyStore}/> */}
-      <Tab.Screen name='CollabMain' component={CollabMain}
+      <Tab.Screen name='CollabMain' component={HomeCollabNav}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ focused }) => {

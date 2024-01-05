@@ -14,6 +14,7 @@ import { TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import HomeNav from './HomeNav'
 import ProfileNav from './ProfileNav'
+import CateTopTab from './CateTopTab'
 const Tab = createBottomTabNavigator()
 const BottomTabUser = () => {
   return (
@@ -58,7 +59,7 @@ const BottomTabUser = () => {
           //  20521850
         }}
       />
-      <Tab.Screen name='Categories' component={Sale}
+      <Tab.Screen name='Categories' component={CateTopTab}
         initialParams={{ screen: 'Cart' }}
         options={{
           tabBarLabel: 'Categories',

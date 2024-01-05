@@ -64,9 +64,9 @@ export const saveFood = async (req, res) => {
 export const selectFoodMains = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
-    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 "+
-    "and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món Chính' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator"
-        // const q='select * FROM taikhoan';
+    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 " +
+        "and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món Chính' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator"
+    // const q='select * FROM taikhoan';
     db.query(q, [day, time, time, day, time, time], (err, data) => {
         if (err) {
             console.error(err);
@@ -80,8 +80,8 @@ export const selectFoodMains = async (req, res) => {
 export const selectFoodDesserts = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
-    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA "+
-    "and a.ViewPost = 1 and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món tráng miệng' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator";
+    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA " +
+        "and a.ViewPost = 1 and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món tráng miệng' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator";
     // const q='select * FROM taikhoan';
     db.query(q, [day, time, time, day, time, time], (err, data) => {
         if (err) {
@@ -96,8 +96,8 @@ export const selectFoodDesserts = async (req, res) => {
 export const selectFoodSnacks = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
-    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 "+
-    "and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món ăn vặt' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator";
+    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 " +
+        "and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món ăn vặt' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator";
     // const q='select * FROM taikhoan';
     db.query(q, [day, time, time], (err, data) => {
         if (err) {
@@ -113,8 +113,8 @@ export const selectFoodSnacks = async (req, res) => {
 export const selectFoodMains_Sale = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
-    const q = "SELECT ma.*, ctgg.SL AS SLGG, ctgg.SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món chính' and lma.MaLoaiMA = ctlma.MaLoaiMA and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0 " 
-       // const q='select * FROM taikhoan';
+    const q = "SELECT ma.*, ctgg.SL AS SLGG, ctgg.SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món chính' and lma.MaLoaiMA = ctlma.MaLoaiMA and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0 "
+    // const q='select * FROM taikhoan';
     db.query(q, [day, time, time], (err, data) => {
         if (err) {
             console.error(err);
@@ -265,7 +265,57 @@ export const getTypeFood = async (req, res) => {
         }
     });
 };
-
+export const getFoodByCategories = async (req, res) => {
+    const q = `SELECT * FROM loaimonan, monan, ctlma, anhmonan
+    WHERE monan.MaMA = ctlma.MaMA 
+    AND ctlma.MaLoaiMA = loaimonan.MaLoaiMA 
+    AND anhmonan.MaMA = monan.MaMA
+    AND loaimonan.MaLoaiMA = 'LM0001'
+    AND anhmonan.ViewPost = 1
+    AND monan.trangthai = 'approve'`
+    db.query(q, (err, data) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching food mains');
+        } else {
+            res.json(data);
+        }
+    });
+}
+export const getFoodByCategoriesTrangMieng = async (req, res) => {
+    const q = `SELECT * FROM loaimonan, monan, ctlma, anhmonan
+    WHERE monan.MaMA = ctlma.MaMA 
+    AND ctlma.MaLoaiMA = loaimonan.MaLoaiMA 
+    AND anhmonan.MaMA = monan.MaMA
+    AND loaimonan.MaLoaiMA = 'LM0003'
+    AND anhmonan.ViewPost = 1
+    AND monan.trangthai = 'approve'`
+    db.query(q, (err, data) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching food mains');
+        } else {
+            res.json(data);
+        }
+    });
+}
+export const getFoodByCategoriesKhaiVi = async (req, res) => {
+    const q = `SELECT * FROM loaimonan, monan, ctlma, anhmonan
+    WHERE monan.MaMA = ctlma.MaMA 
+    AND ctlma.MaLoaiMA = loaimonan.MaLoaiMA 
+    AND anhmonan.MaMA = monan.MaMA
+    AND loaimonan.MaLoaiMA = 'LM0002'
+    AND anhmonan.ViewPost = 1
+    AND monan.trangthai = 'approve'`
+    db.query(q, (err, data) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching food mains');
+        } else {
+            res.json(data);
+        }
+    });
+}
 export const getFoodById = async (req, res) => {
     const mama = req.params.mama;
     const q = `

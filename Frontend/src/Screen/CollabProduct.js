@@ -11,7 +11,7 @@ import useAuth from '../context/useAuth';
 import { storage } from '../firebase/firebaseConfig';
 import { getDownloadURL } from "firebase/storage";
 import { ref, uploadBytesResumable } from 'firebase/storage';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const CollabProduct = ({ navigation }) => {
     const {
         ip,
@@ -66,7 +66,6 @@ const CollabProduct = ({ navigation }) => {
     };
 
     const trangthai = 'pending'
-    const macollaborator = 'MC0001' //AsyncStorage.setItem('IdUser', userID); 
     const luotban = 0
     getFoodCount()
     const mama = 'MA00' + (foodCount + 1)
@@ -74,6 +73,7 @@ const CollabProduct = ({ navigation }) => {
     const maAnh = 'AH' + (imageCount + 1)
     const addFood = async () => {
         try {
+            const macollaborator = await AsyncStorage.getItem('IdUser'); 
             const imageUrls = await uploadImage();
             const response = await axios.post(`http://${ip}:8080/createfood`, {
                 mama,
@@ -95,6 +95,7 @@ const CollabProduct = ({ navigation }) => {
             setStock(0)
             setSelected([])
             setImage([])
+            Alert.alert('Đã đăng sản phẩm, đang chờ được duyệt')
         } catch (err) {
             console.log('An error to add food: ', err)
         }
