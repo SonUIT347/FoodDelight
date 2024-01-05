@@ -9,7 +9,7 @@ import axios from "axios";
 // const maKH = 'KH0002'
 
 const Address=({navigation, route}) => {
-    const sum = route.params.sum;
+    const sum = route.params?.sum;
     const [data, setData] = useState([]);
     const [isModalAddVisible, setModalAddVisible] = useState(false);
     const [isModalEditVisible, setModalEditVisible] = useState(false);
@@ -395,7 +395,7 @@ const Address=({navigation, route}) => {
             style={{flexDirection: "row", justifyContent: "space-between", height: 85,
             alignItems: 'center', width: '100%', position: 'relative', alignSelf: 'flex-start'}}
         >
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 style={{backgroundColor: 'green', borderRadius: 20, width: 35,
                 height: 35, textAlign: "center", textAlignVertical: 'center'}}
                 onPress={()=>handleBack()}
@@ -406,7 +406,7 @@ const Address=({navigation, route}) => {
                     style={{borderRadius: 20, width: 35,
                     height: 35, textAlign: "center", textAlignVertical: 'center'}}
                 />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <View style={{width: '100%'}}>
                 {/* <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>{header}</Text> */}

@@ -5,6 +5,7 @@ import Profile from '../Screen/Profile'
 import Address from '../Screen/Address'
 import MyStore from '../Screen/MyStore'
 import CartNav from './CartNav'
+import Bills from '../Screen/Bills'
 const stack = createStackNavigator()
 const ProfileNav = () => {
   return (
@@ -14,7 +15,8 @@ const ProfileNav = () => {
         <stack.Screen name='Profile' component={Profile}/>
         <stack.Screen name='Address' component={Address}/>
         <stack.Screen name='Store' component={MyStore}/>
-        <stack.Screen name='Cart' component={CartNav} />
+        <stack.Screen name='Cart' component={CartNav}/>
+        <stack.Screen name='Bill' component={Bills}/>
     </stack.Navigator>
   )
 }

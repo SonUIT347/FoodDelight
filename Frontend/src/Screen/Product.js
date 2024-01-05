@@ -22,7 +22,8 @@ const Product = ({ navigation }) => {
     }, []);
 
     const {
-        ip
+        ip,
+        username
       } = useAuth()
 
 
