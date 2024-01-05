@@ -44,7 +44,7 @@ const FoodStatus = ({ food, setFood, type }) => {
         return (
             <View style={styles.food_ctn}>
                 <Image
-                    source={{ uri: food.Url }}
+                    source={{ uri: food.image }}
                     style={{
                         width: 90,
                         height: 120,
