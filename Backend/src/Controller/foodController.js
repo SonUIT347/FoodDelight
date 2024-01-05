@@ -64,10 +64,9 @@ export const saveFood = async (req, res) => {
 export const selectFoodMains = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
-    const q = "SELECT ma.*, ctgg.SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món chính' and lma.MaLoaiMA = ctlma.MaLoaiMA and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0 " +
-        "UNION " +
-        "SELECT ma.*, 0 SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món chính' and lma.MaLoaiMA = ctlma.MaLoaiMA and ma.MaMA NOT IN (SELECT ctgg.MaMA FROM giamgia gg, ctgg WHERE gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0)";
-    // const q='select * FROM taikhoan';
+    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 "+
+    "and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món Chính' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator"
+        // const q='select * FROM taikhoan';
     db.query(q, [day, time, time, day, time, time], (err, data) => {
         if (err) {
             console.error(err);
@@ -81,9 +80,8 @@ export const selectFoodMains = async (req, res) => {
 export const selectFoodDesserts = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
-    const q = "SELECT ma.*, ctgg.SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món Tráng miệng' and lma.MaLoaiMA = ctlma.MaLoaiMA and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0 " +
-    "UNION " +
-    "SELECT ma.*, 0 SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món tráng miệng' and lma.MaLoaiMA = ctlma.MaLoaiMA and ma.MaMA NOT IN (SELECT ctgg.MaMA FROM giamgia gg, ctgg WHERE gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0)";
+    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA "+
+    "and a.ViewPost = 1 and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món tráng miệng' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator";
     // const q='select * FROM taikhoan';
     db.query(q, [day, time, time, day, time, time], (err, data) => {
         if (err) {
@@ -95,10 +93,11 @@ export const selectFoodDesserts = async (req, res) => {
     });
 };
 
-export const selectFoodSales = async (req, res) => {
+export const selectFoodSnacks = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
-    const q = "SELECT ma.*, ctgg.SoTienGiam, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg WHERE ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0";
+    const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 "+
+    "and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món ăn vặt' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator";
     // const q='select * FROM taikhoan';
     db.query(q, [day, time, time], (err, data) => {
         if (err) {

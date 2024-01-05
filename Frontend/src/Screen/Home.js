@@ -81,7 +81,7 @@ const Home = () => {
         const day = now.format('YYYY-MM-DD');
         const time = now.format('HH:mm:ss');
         try {
-            const response = await axios.get(`http://${ip}:8080/selectFoodSales/${day}/${time}`);
+            const response = await axios.get(`http://${ip}:8080/selectFoodSnacks/${day}/${time}`);
             const data = response.data;
             // console.log(data)
             setDataSale(data)
@@ -104,7 +104,7 @@ const Home = () => {
         const newDataSearch1 = dataMainDishes0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
         const newDataSearch2 = dataSale0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
         const newDataSearch3 = dataDesserts0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch01 = newDataSearch1.filter((item)=>((item.Tinh)==province))
+        const newDataSearch01 = newDataSearch1.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
         const newDataSearch02 = newDataSearch2.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
         const newDataSearch03 = newDataSearch3.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
         setDataMainDishes(newDataSearch01)
@@ -117,7 +117,7 @@ const Home = () => {
         const newDataSearch1 = dataMainDishes0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
         const newDataSearch2 = dataSale0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
         const newDataSearch3 = dataDesserts0.filter((item)=>((item.TenMA).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(searchTextNormalized))
-        const newDataSearch01 = newDataSearch1.filter((item)=>((item.Tinh)==province))
+        const newDataSearch01 = newDataSearch1.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
         const newDataSearch02 = newDataSearch2.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
         const newDataSearch03 = newDataSearch3.filter((item)=>((item.Tinh).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).includes(province))
         setDataMainDishes(newDataSearch01)
@@ -168,7 +168,7 @@ const Home = () => {
                     }
 
                     <TouchableOpacity style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center'}}>
-                        <Text style={{fontSize: 20, fontWeight: 600}}>Đang Sale</Text>
+                        <Text style={{fontSize: 20, fontWeight: 600}}>Món ăn vặt</Text>
                         <AntDesign name="rightcircleo" size={30} color="black" />
                     </TouchableOpacity>
 

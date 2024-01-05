@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { saveFood, selectFoodMains, selectFoodSales, selectFoodDesserts, selectFoodDesserts_Sale, selectFoodMains_Sale, getFoodPending, getFoodApprove, getFoodDeny, getFood } from '../Controller/foodController.js'
+import { saveFood, selectFoodMains, selectFoodSnacks, selectFoodDesserts, selectFoodDesserts_Sale, selectFoodMains_Sale, getFoodPending, getFoodApprove, getFoodDeny, getFood } from '../Controller/foodController.js'
 import { getFoodCount, getImageCount, getImageFood, getTypeFood } from '../Controller/foodController.js'
 
 
@@ -9,7 +9,7 @@ export const foodRouter = express.Router()
 foodRouter.post('/createfood', saveFood)
 foodRouter.get('/selectFoodMains/:day/:time', selectFoodMains)
 foodRouter.get('/selectFoodDesserts/:day/:time', selectFoodDesserts)
-foodRouter.get('/selectFoodSales/:day/:time', selectFoodSales)
+foodRouter.get('/selectFoodSnacks/:day/:time', selectFoodSnacks)
 foodRouter.get('/selectFoodMains_Sale/:day/:time', selectFoodMains_Sale)
 foodRouter.get('/selectFoodDesserts_Sale/:day/:time', selectFoodDesserts_Sale)
 foodRouter.get('/foodCount', getFoodCount)

@@ -11,11 +11,15 @@ const username = 'tranvanson'
 const Cart=({ navigation, refreshCount })=>{
     const [data, setData] = useState([])
     const [arrCount, setArrCount] = useState(new Array(0).fill(1))
-    const [sum, setSum] = useState()
+    const [sum, setSum] = useState(0)
     const [note, setNote] = useState('')
     
     useEffect(()=>{
-        setSum(data.reduce((sum, item, index) => sum + ((arrCount[index] <= item.SLGG) ? (arrCount[index]*(item.GiaTien_New)):(item.SLGG*(item.GiaTien_New) + item.GiaTien*(arrCount[index] - item.SLGG))), 0))
+        console.log("độ dài ", data.length)
+        if(data.length == 0)
+            setSum(0)
+        else
+            setSum(data.reduce((sum, item, index) => sum + arrCount[index]*(item.GiaTien), 0))
     }, [arrCount])
 
     useEffect(()=>{
@@ -33,7 +37,7 @@ const Cart=({ navigation, refreshCount })=>{
             const time = now.format('HH:mm:ss');
             const response = await axios.get(`http://${ip}:8080/cart/${username}/${day}/${time}`);
             const dt = response.data;
-            const newArrCount = dt.map(item=>item.SL)
+            const newArrCount = dt.map(item=>item.SLGH)
             console.log("abc" + dt)
             setData(dt)
             setArrCount(newArrCount)
@@ -44,7 +48,7 @@ const Cart=({ navigation, refreshCount })=>{
 
     const updateDataCart = async () => {
         for (let i = 0; i < data.length; i++) {
-            const money = ((arrCount[i] <= data[i].SLGG) ? (arrCount[i]*(data[i].GiaTien_New)):(data[i].SLGG*(data[i].GiaTien_New) + data[i].GiaTien*(arrCount[i] - data[i].SLGG)))
+            const money = arrCount[i]*(data[i].GiaTien)
             try {
                 const response = await fetch(`http://${ip}:8080/UpdateCart`, {
                     method: 'POST',
@@ -94,7 +98,7 @@ const Cart=({ navigation, refreshCount })=>{
         if (item)
             return item.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         else
-            return
+            return 0
     }
 
     const handleOnPlus = (index) => {
@@ -119,9 +123,25 @@ const Cart=({ navigation, refreshCount })=>{
     };
 
     const handleOnPay=()=>{
-        updateDataCart()
-        updatePriceCart()
-        navigation.navigate('Pay', { sum: sum});
+        if(data.length == 0)
+            Alert.alert(
+                'Thông báo',
+                'Bạn chưa có sản phẩm nào để mua',
+                [
+                    {
+                        text: 'cancel',
+                        style: 'cancel',
+                    }
+                ],
+                { cancelable: false }
+            );
+        else
+        {
+            updateDataCart()
+            updatePriceCart()
+            navigation.navigate('Pay', { sum: sum});
+        }
+        
     }
 
     const handleChangeNote=(text)=>{
@@ -202,31 +222,21 @@ const Cart=({ navigation, refreshCount })=>{
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={{color: 'gray'}}>{formattedAmount(item.GiaTien_New)}đ/Phần</Text>
-                    {item.GiaTien_New == item.GiaTien ? (<></>) : (
-                        <Text style={{color: 'gray', paddingLeft: 10, textDecorationLine: 'line-through'}}>
-                            {formattedAmount(item.GiaTien)}đ
-                        </Text>
-                    )}
+                    <Text style={{color: 'gray'}}>{formattedAmount(item.GiaTien)}đ/Phần</Text>
                 </View>
 
-                <Text style={{color: 'gray'}}>SLGG: {item.SLGG}</Text>
+                <Text style={{color: 'gray'}}>SLCL: {item.SL}</Text>
 
 
 
                 <View style={{position: 'absolute', width: '100%', bottom: 10}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
                         <View style={{backgroundColor: '#6AC949', height: 35, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 10}}>
-                            {(arrCount[index] <= item.SLGG) ? (
-                                <Text style={{color: 'white', fontSize: 18}}>
-                                    {formattedAmount(arrCount[index]*(item.GiaTien_New))}
-                                </Text>) : (
-                                <Text style={{color: 'white', fontSize: 18}}>
-                                    {formattedAmount(item.SLGG*(item.GiaTien_New) + item.GiaTien*(arrCount[index] - item.SLGG))}
-                                </Text>)
-
-                            }
                             
+                        <Text style={{color: 'white', fontSize: 18}}>
+                            {formattedAmount(item.SLGH*(item.GiaTien))}
+                        </Text>
+
                         </View>
                         <View style={{height: 35, width: 100, backgroundColor:'white', marginRight: 10, flexDirection: 'row', alignItems: 'center', borderRadius: 10}}>
                             <TouchableOpacity style={{flex: 1,}} onPress={()=>{handleOnMinus(item, index)}}>
@@ -311,7 +321,7 @@ const Cart=({ navigation, refreshCount })=>{
 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5}}>
                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>Tổng thanh toán</Text>
-                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>{formattedAmount(sum)} đ</Text>
+                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>{formattedAmount(0)} đ</Text>
                 </View>
             </View>
             <TouchableOpacity onPress={()=>handleOnPay()} style={{margin: 20, marginTop: 10, backgroundColor: '#45BC1B', padding: 10, borderRadius: 17, height: 50, alignItems: 'center', justifyContent: 'center'}}>

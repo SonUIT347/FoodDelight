@@ -28,7 +28,7 @@ const ShortPost = ({data}) => {
                 <Text style={{padding: 5, fontWeight: 600, fontSize: 14}} numberOfLines={1}>{data.TenMA}</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', width: '100%', paddingHorizontal: 5}}>
-                <Text style={{fontSize: 12, fontWeight: 300}}>{formattedAmount(data.GiaTien - data.SoTienGiam)}đ</Text>
+                <Text style={{fontSize: 12, fontWeight: 300}}>{formattedAmount(data.GiaTien)}đ</Text>
                 <Text style={{fontSize: 12, fontWeight: 300}}>{HanderSold()}</Text>
             </View>
         </View>

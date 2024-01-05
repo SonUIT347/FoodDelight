@@ -41,6 +41,7 @@ import AdminStore from './Frontend/src/Screen/AdminStore';
 import AdminProduct from './Frontend/src/Screen/AdminProduct';
 import AdminTopTab from './Frontend/src/Layout/AdminTopTab';
 import Bills from './Frontend/src/Screen/Bills';
+import Product from './Frontend/src/Screen/Product';
 
 
 export default function App() {
@@ -51,7 +52,7 @@ export default function App() {
         
       </NavigationContainer> */} 
       <NavigationContainer>
-        <AuthNav/>
+        {/* <AuthNav/> */}
         {/* <AdminStore/> */}
         {/* <AdminProduct/> */}
         {/* <AdminTopTab/> */}
@@ -61,7 +62,8 @@ export default function App() {
         {/* <TopTab/> */}
         {/* <AuthNav/> */}
         {/* <CreateSale/> */}
-        <Invoice/>
+        {/* <Invoice/> */}
+        {/* <Product/> */}
       </NavigationContainer>
     </AuthContext>
   );
