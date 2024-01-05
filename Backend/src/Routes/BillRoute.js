@@ -6,6 +6,7 @@ export const getBillRouter = express.Router()
 export const insertBillRouter = express.Router()
 
 
+
 getBillRouter.get('/getBill/:username', getBill)
 getBillRouter.get('/getDetailedBill/:maHD', getDetailedBill)
 getBillRouter.get('/getCoutBill/', getCoutBill)

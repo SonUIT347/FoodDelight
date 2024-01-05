@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllCollabPending, getAllCollaboratorPending, getCollaborator, getCountDeny, getCountFoodApprove, getCountFoodPending, postInsertCollaborator } from '../Controller/collaboratorController.js'
+import { getAllCollabPending, getAllCollaboratorPending, getCollaborator, getCollaboratorDeny, getCollaboratorPending, getCountDeny, getCountFoodApprove, getCountFoodPending, postInsertCollaborator } from '../Controller/collaboratorController.js'
 
 export const insertCollaboratorRouter = express.Router()
 export const getCollaboratorRouter = express.Router()
@@ -10,6 +10,11 @@ export const getAllCollabRouter = express.Router()
 
 insertCollaboratorRouter.post('/InsertCollaborator', postInsertCollaborator)
 getCollaboratorRouter.get('/Collaborator/:username', getCollaborator)
+
+getCollaboratorRouter.get('/CollaboratorDeny/:username', getCollaboratorDeny)
+getCollaboratorRouter.get('/CollaboratorPending/:username', getCollaboratorPending)
+
+
 
 getAllCollaborator.get('/collaborator/allpending', getAllCollaboratorPending)
 

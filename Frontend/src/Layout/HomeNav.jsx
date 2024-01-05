@@ -6,6 +6,7 @@ import Home from '../Screen/Home'
 import BottomTabUser from './BottomTabUser'
 import DrawerTab from './DrawerTab'
 import ProductNav from './ProductNav'
+import Pay from '../Screen/Pay'
 const stack = createStackNavigator()
 const HomeNav = () => {
   return (
@@ -14,6 +15,7 @@ const HomeNav = () => {
     }}>
         <stack.Screen name='Home' component={BottomTabUser}/>
         <stack.Screen name='HomeDetails' component={Product} options={{headerShown:true}}/>
+        <stack.Screen name='Pay' component={Pay}/>
     </stack.Navigator>
   )
 }

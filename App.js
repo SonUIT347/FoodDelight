@@ -54,7 +54,7 @@ export default function App() {
         
       </NavigationContainer> */} 
       <NavigationContainer>
-        <AuthNav/>
+        {/* <AuthNav/> */}
         {/* <AdminStore/> */}
         {/* <AdminProduct/> */}
         {/* <AdminTopTab/> */}
@@ -69,6 +69,7 @@ export default function App() {
         {/* <Invoice/> */}
         {/* <Product/> */}
         {/* <Product/> */}
+        <Bills/>
         {/* <Pay/> */}
       </NavigationContainer>
     </AuthContext>

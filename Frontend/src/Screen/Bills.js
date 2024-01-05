@@ -14,6 +14,7 @@ const images = [
     'https://inoxquanghuy.vn/wp-content/uploads/2022/12/hu-tieu-xuong-ngon.jpg',
     // Thêm đường dẫn hình ảnh khác nếu cần
   ];
+  
 
 const DetailedBill=({MaHD, ip})=>{
     const [dataDetailedBill, setDataDetailedBill] = useState([])
@@ -131,14 +132,22 @@ const Bills=() => {
                     
 
                     <Text style={{paddingHorizontal: 10, fontSize: 15, paddingBottom: 5, textAlign: 'right', fontStyle: 'italic'}}>Hình thức thanh toán: COD</Text>
-                    <Text style={{paddingHorizontal: 10, fontSize: 15, paddingBottom: 5, textAlign: 'right', fontStyle: 'italic'}}>Số mặt hàng: 5</Text>
+                    <Text style={{paddingHorizontal: 10, fontSize: 15, paddingBottom: 5, textAlign: 'right', fontStyle: 'italic'}}>Số mặt hàng: {item0.SLMH}</Text>
                     <Text style={{paddingHorizontal: 10, fontSize: 15, paddingBottom: 5, textAlign: 'right', fontWeight: 500, fontStyle: 'italic'}}>Tổng hóa đơn: {formattedAmount(item0.TongTien)} đ</Text>
-                    <View style={{alignSelf: 'flex-end', backgroundColor: '#45BC1B', margin: 10, marginTop: 0, borderRadius: 8}}>
-                        <Text style={{padding: 8, fontSize: 15, fontWeight: 500, color: 'white'}}>Đã nhận đơn</Text>
-                    </View>
-                    <View style={{alignSelf: 'flex-end', backgroundColor: 'orange', margin: 10, marginTop: 0, borderRadius: 8}}>
-                        <Text style={{padding: 8, fontSize: 15, fontWeight: 500, color: 'white'}}>Chưa nhận đơn</Text>
-                    </View>
+
+                    {
+                        item0.TrangThai == 'pending' ? (
+                            
+                            <View style={{alignSelf: 'flex-end', backgroundColor: 'orange', margin: 10, marginTop: 0, borderRadius: 8}}>
+                                <Text style={{padding: 8, fontSize: 15, fontWeight: 500, color: 'white'}}>Chưa nhận đơn</Text>
+                            </View>
+                        ) : (
+                            <View style={{alignSelf: 'flex-end', backgroundColor: '#45BC1B', margin: 10, marginTop: 0, borderRadius: 8}}>
+                                <Text style={{padding: 8, fontSize: 15, fontWeight: 500, color: 'white'}}>Đã nhận đơn</Text>
+                            </View>
+                        )
+                    }
+                
                 </View>
             ))}   
         </ScrollView>

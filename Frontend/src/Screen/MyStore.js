@@ -19,6 +19,9 @@ const MyStore = () => {
   const [email, setEmail] = useState('')
   const [edit, setEdit] = useState(true)
 
+  const [deny, setDeny] = useState(false)
+  const [pending, setPending] = useState(false)
+  
 
   const {
     ip, 
@@ -32,11 +35,21 @@ const MyStore = () => {
   const getDataCollaborator = async () => {
     try {
       // /Collaborator/:username
-      const response = await axios.get(`http://${ip}:8080/Collaborator/${username}`);
-      const dt = response.data;
-      console.log(dt)
-      if (dt.length != 0)
-        setEdit(false)
+        const response = await axios.get(`http://${ip}:8080/CollaboratorDeny/${username}`);
+        const dt = response.data;
+        console.log(dt)
+        if(dt.length != 0)
+          setDeny(true)
+    } catch (error) {
+        console.error('Error fetching data userId', error.message);
+    }
+    try {
+      // /Collaborator/:username
+        const response = await axios.get(`http://${ip}:8080/CollaboratorPending/${username}`);
+        const dt = response.data;
+        console.log(dt)
+        if(dt.length != 0)
+          setPending(true)
     } catch (error) {
       console.error('Error fetching data userId', error.message);
     }
@@ -295,10 +308,59 @@ const MyStore = () => {
               </TouchableOpacity>
             </View>
 
-          </>) : (
-          <View style={{ justifyContent: 'center', flex: 1 }}>
-            <Text style={{ fontSize: 18, textAlign: 'center' }}>Tài khoản này đã đăng ký cửa hàng</Text>
-            <Text style={{ fontSize: 18, textAlign: 'center' }}>Vui lòng chờ duyệt </Text>
+            {/* <View 
+                style={{width: '100%', borderWidth: 1, position: 'relative', 
+                padding: 20, borderRadius: 10, borderColor: '#45BC1B', marginVertical: 20}}
+            >
+                <Text 
+                    style={{marginTop: -13, fontSize: 13, backgroundColor: 'white', position: 'absolute', marginLeft: 20,
+                    paddingHorizontal: 10, fontWeight: 500, color: '#45BC1B'}}
+                >
+                    Số điện thoại
+                </Text>
+                <TextInput
+                    style={{}}
+                    // multiline={true}
+                    value={"0917651871"}
+                    // onChangeText={handleTextChange_Sdt}
+                    placeholder='Nhập sdt'
+                    numberOfLines={1}
+                />
+            </View> */}
+
+            <View style={{flex: 1, justifyContent: 'flex-end', width: '100%', alignItems: 'center', position: 'absolute', bottom: 0}}>
+                <TouchableOpacity 
+                    style={{backgroundColor: '#45BC1B', width: '100%', padding: 20, 
+                    marginVertical: 20, borderRadius: 15}}
+                    onPress={()=>HandleRequest()}
+                >
+                    <Text style={styles.txtButton}>Gửi yêu cầu tạo cửa hàng</Text>
+                </TouchableOpacity>
+
+                {/* <TouchableOpacity 
+                    style={{backgroundColor: 'red', width: '100%', padding: 20, marginVertical: 10, 
+                    marginBottom: 20, borderRadius: 15}}
+                >
+                    <Text style={styles.txtButton}>Xóa tài khoản</Text>
+                </TouchableOpacity> */}
+            </View>
+          </>):(
+            
+          <View style = {{justifyContent: 'center', flex: 1}}>
+            { deny ? (
+                <>
+                    <Text style={{fontSize: 18, textAlign: 'center'}}>Tài khoản này đã đăng ký cửa hàng</Text>
+                    <Text style={{fontSize: 18, textAlign: 'center'}}>Vui lòng chờ duyệt </Text>
+                </>
+                  
+              ) : (
+                <>
+                    <Text style={{fontSize: 18, textAlign: 'center'}}>Bạn đang là cộng tác viên</Text>
+                    <Text style={{fontSize: 18, textAlign: 'center'}}>Vui lòng chờ duyệt </Text>
+                </>
+              )
+            }
+            
           </View>)
         }
       </ScrollView>
