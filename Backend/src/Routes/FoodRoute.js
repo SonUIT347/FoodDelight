@@ -17,6 +17,7 @@ foodRouter.get('/imageCount', getImageCount)
 foodRouter.get('/foodpending/:macb', getFoodPending)
 foodRouter.get('/foodapprove/:macb', getFoodApprove)
 foodRouter.get('/fooddeny/:macb', getFoodDeny)
+
 foodRouter.get('/getFood/:maMA', getFood)
 foodRouter.get('/getImageFood/:maMA', getImageFood)
 foodRouter.get('/getTypeFood/:maMA', getTypeFood)

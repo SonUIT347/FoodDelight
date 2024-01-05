@@ -41,7 +41,8 @@ import AdminStore from './Frontend/src/Screen/AdminStore';
 import AdminProduct from './Frontend/src/Screen/AdminProduct';
 import AdminTopTab from './Frontend/src/Layout/AdminTopTab';
 import Bills from './Frontend/src/Screen/Bills';
-import Product from './Frontend/src/Screen/Product';
+
+import Product from './Frontend/src/Screen/Product.js';
 
 
 export default function App() {
@@ -64,6 +65,7 @@ export default function App() {
         {/* <CreateSale/> */}
         {/* <Invoice/> */}
         {/* <Product/> */}
+        <Product/>
       </NavigationContainer>
     </AuthContext>
   );

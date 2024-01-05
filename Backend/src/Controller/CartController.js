@@ -128,3 +128,45 @@ export const deleteCartByMaKH = (req,res) => {
     res.status(200).send('Delete address successfuly ...')
   })
 }
+
+export const getCheckCart = async (req, res) => {
+  const  username = req.params.username;
+  const  MaMA = req.params.MaMA;
+  const q = "SELECT count(*) as COUNT FROM ctgh, giohang gh, taikhoan tk WHERE tk.IdUser = gh.MaUser "+
+  "and gh.MaGH = ctgh.MaGH and tk.UserName = ? and ctgh.MaMA = ?"
+  // const q = "((SELECT ma.MaMA, ma.TenMA, a.Url, (ma.GiaTien - gg.SoTienGiam) as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and gg.MaMA = ma.MaMA and a.ViewPost = 1) UNION (SELECT ma.MaMA, ma.TenMA, a.Url, ma.GiaTien as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and a.ViewPost = 1 and ma.MaMA NOT IN (SELECT gg.MaMA FROM giamgia gg)))"
+  db.query(q, [username, MaMA], (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error fetching count check cart');
+      } else {
+        res.json(data);
+      }
+  });
+}
+
+export const getIdCart = async (req, res) => {
+  const  username = req.params.username;
+  const q = "SELECT gh.MaGH FROM taikhoan tk, giohang gh WHERE tk.IdUser = gh.MaUser and tk.UserName=?"
+  db.query(q, [username], (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error fetching count check cart');
+      } else {
+        res.json(data);
+      }
+  });
+}
+
+export const insertCartDetail = (req,res) => {
+  const {MaGH, MaMA, GiaTien} = req.body
+  console.log('thông tin insert cart detail: '+ MaGH, MaMA, GiaTien)
+  const q = "INSERT INTO `ctgh` (`MaGH`, `MaMA`, `SL`, `GiaTien`) VALUES (?, ?, '1', ?)"
+
+  db.query(q, [MaGH, MaMA, GiaTien],(err, result) => {
+    if(err){
+      res.status(500).send('Error delete address...')
+    }
+    res.status(200).send('Delete address successfuly ...')
+  })
+}
