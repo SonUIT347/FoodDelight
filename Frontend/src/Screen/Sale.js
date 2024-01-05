@@ -213,9 +213,6 @@ const Sale=()=>{
                         </View>
                     )
                 }
-
-
-
                 <View style={{flexDirection: 'row', paddingHorizontal: 20, justifyContent: "space-between", alignItems: 'center', width: '100%', paddingVertical: 10}}>
                     <Text style={{fontSize: 20, fontWeight: 600}}>Món tráng miệng</Text>
                     <AntDesign name="rightcircleo" size={30} color="black" />

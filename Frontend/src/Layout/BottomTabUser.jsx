@@ -79,7 +79,7 @@ const BottomTabUser = () => {
       />
       <Tab.Screen name='Favourites' component={CartNav} initialParams={{ screen: 'Cart' }}
         options={{
-          tabBarLabel: 'Favourites',
+          tabBarLabel: 'Cart',
           headerShown: true,
           tabBarIcon: ({ focused }) => {
             return (

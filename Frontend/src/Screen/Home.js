@@ -218,7 +218,7 @@ const Home = ({navigation}) => {
                                         key = {index} 
                                         style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==dataDesserts.length-1 && {paddingRight: 0}]}
                                     >
-                                        <ShortPost data={item}  navigation={navigation}/>
+                                        <ShortPost data={item} navigation={navigation}/>
                                     </View>
                                 ))}                                
                             </ScrollView>
