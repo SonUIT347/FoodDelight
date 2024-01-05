@@ -76,7 +76,7 @@ const Invoice = ({ navigation }) => {
                                 <Text style={styles.invoiceText}>Hình thức thanh toán COD</Text>
                                 <Text style={styles.invoiceText}>Mặt hàng: {invoice.length}</Text>
                                 {/* Assuming 'TongTien' is a property of each invoice object */}
-                                <Text style={styles.invoiceText}>Tổng hóa đơn: {invoice[0].TongTien} VND</Text>
+                                <Text style={styles.invoiceText}>Tổng hóa đơn: {tongtien[index]} VND</Text>
                                 <View style={styles.touch}>
                                     <TouchableOpacity
                                         style={styles.button}

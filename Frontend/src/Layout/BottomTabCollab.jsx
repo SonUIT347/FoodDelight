@@ -8,16 +8,45 @@ import TopTab from './TopTab'
 import HomeCollabNav from './HomeCollabNav'
 import Invoice from '../Screen/Invoice'
 import InvoiceNav from './InvoiceNav'
-import MyStore from '../Screen/MyStore'
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import Home from '../Screen/Home'
 const Tab = createBottomTabNavigator()
 const BottomTabCollab = () => {
   return (
     <Tab.Navigator initialRouteName='CollabMain' screenOptions={{
-        headerShown:false
+      headerShown: false
     }}>
-        <Tab.Screen name='CollabMain' component={HomeCollabNav}/>
-        {/* <Tab.Screen name='Profile' component={MyStore}/> */}
-        <Tab.Screen name='Invoice' component={InvoiceNav} />
+
+      {/* <Tab.Screen name='Profile' component={MyStore}/> */}
+      <Tab.Screen name='CollabMain' component={CollabMain}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ focused }) => {
+            return (
+              <MaterialIcons
+                name="home"
+                size={24}
+                color={focused ? 'blue' : 'black'} />
+            )
+          },
+          //  20521850
+        }}
+      />
+      <Tab.Screen name='Invoice' component={InvoiceNav}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ focused }) => {
+            return (
+              <FontAwesome5
+                name="file-invoice"
+                size={24}
+                color={focused ? 'blue' : 'black'} />
+            )
+          },
+          //  20521850
+        }}
+      />
     </Tab.Navigator>
   )
 }

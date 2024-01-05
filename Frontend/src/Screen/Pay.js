@@ -8,7 +8,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Alert } from 'react-native';
 
 
-const username = 'tranvanson'
 
 
 const Address = {
@@ -60,7 +59,7 @@ const Pay=({ route, navigation }) => {
 
     const {
         ip,
-        // username
+        username
     } = useAuth()
 
     const getCheck=async()=>{

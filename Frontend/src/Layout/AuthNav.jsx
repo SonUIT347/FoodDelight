@@ -13,7 +13,7 @@ const AuthNav = () => {
     }}>
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Register' component={Register}/>
-        <Stack.Screen name='Home' component={HomeNav} />
+        <Stack.Screen name='Home' component={DrawerTab} />
     </Stack.Navigator>
   )
 }

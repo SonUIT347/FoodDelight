@@ -7,9 +7,6 @@ const data = [
     { label: 'Món chính', value: 'LM0001', isSelected: false },
     { label: 'Tráng miệng', value: 'LM0003', isSelected: false },
     { label: 'Khai vị', value: 'LM0002', isSelected: false },
-    { label: 'Ăn sáng', value: 'LM0004', isSelected: false },
-    { label: 'Ăn trưa', value: 'LM0005', isSelected: false },
-    { label: 'Ăn tối', value: 'LM0006', isSelected: false },
 ];
 
 const Dropdown = ({ selected, setSelected }) => {

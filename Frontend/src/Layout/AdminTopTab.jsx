@@ -6,7 +6,7 @@ import AdminProduct from '../Screen/AdminProduct'
 const tab = createMaterialTopTabNavigator()
 const AdminTopTab = () => {
   return (
-    <tab.Navigator initialRouteName='store' >
+    <tab.Navigator initialRouteName='store' style={{top:50}}>
         <tab.Screen name='store' component={AdminStore}/>
         <tab.Screen name='product' component={AdminProduct} />
     </tab.Navigator>

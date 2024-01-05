@@ -13,6 +13,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import HomeNav from './HomeNav'
+import ProfileNav from './ProfileNav'
 const Tab = createBottomTabNavigator()
 const BottomTabUser = () => {
   return (
@@ -91,10 +92,10 @@ const BottomTabUser = () => {
           // 20521850
         }}
       />
-      <Tab.Screen name='Profile' component={Profile}
+      <Tab.Screen name='Profile' component={ProfileNav}
         options={{
           tabBarLabel: 'Profile',
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
               <FontAwesome

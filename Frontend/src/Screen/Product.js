@@ -3,8 +3,10 @@ import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView, FlatList }
 import { AntDesign } from '@expo/vector-icons';
 import useAuth from '../context/useAuth';
 import axios from "axios";
+import { useRoute } from '@react-navigation/native';
 
-const Product = ({ route, navigation }) => {
+const Product = ({ navigation }) => {
+    const route = useRoute()
     const maMA = route.params
     const [count, setCount] = useState(1)
     const [dataFood, setDataFood] = useState('')

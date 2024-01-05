@@ -24,10 +24,10 @@ const DrawerTab = () => {
   };
   return (
     <Drawer.Navigator initialRouteName='User' screenOptions={{
-      headerShown: true
+      headerShown: false
     }}>
 
-      <Drawer.Screen name='User' component={BottomTabUser} />
+      <Drawer.Screen name='User' component={HomeNav} />
       {role === '1' ? (<Drawer.Screen name='Collaborator' component={BottomTabCollab} />) : (null)}
       {role === '2' ? (<Drawer.Screen name='Admin' component={AdminTopTab} />) : (null)}
 
