@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const uri_0 = "https://www.sjfpavingandlandscaping.com.au/thumbnailsmall/_gbImage.png"
 
-const MyStore = () => {
+const MyStore = ({navigation}) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [province, setProvince] = useState('')
   const [nameCollaborator, setNameCollaborator] = useState('')
@@ -18,6 +18,8 @@ const MyStore = () => {
   const [address, setAddress] = useState('')
   const [email, setEmail] = useState('')
   const [edit, setEdit] = useState(true)
+  const [approve, setApprove] = useState(false)
+
 
   const [deny, setDeny] = useState(false)
   const [pending, setPending] = useState(false)
@@ -29,7 +31,13 @@ const MyStore = () => {
   } = useAuth()
 
   useEffect(() => {
-    getDataCollaborator()
+    const unsubscribe = navigation.addListener('focus', () => {
+      getDataCollaborator()
+      // ...
+    });
+
+    return unsubscribe;
+    
   }, []);
 
   const getDataCollaborator = async () => {
@@ -40,6 +48,8 @@ const MyStore = () => {
         console.log(dt)
         if(dt.length != 0)
           setDeny(true)
+        else
+          setDeny(false)
     } catch (error) {
         console.error('Error fetching data userId', error.message);
     }
@@ -50,6 +60,21 @@ const MyStore = () => {
         console.log(dt)
         if(dt.length != 0)
           setPending(true)
+        else
+          setPending(false)
+    } catch (error) {
+      console.error('Error fetching data userId', error.message);
+    }
+
+    try {
+      // /Collaborator/:username
+        const response = await axios.get(`http://${ip}:8080/CollaboratorApprove/${username}`);
+        const dt = response.data;
+        console.log(dt)
+        if(dt.length != 0)
+          setApprove(true)
+        else
+          setApprove(false)
     } catch (error) {
       console.error('Error fetching data userId', error.message);
     }
@@ -124,7 +149,7 @@ const MyStore = () => {
               ],
               { cancelable: false }
             );
-            setEdit(false)
+            getDataCollaborator()
           } else {
             console.log('Insert failed');
             // Xử lý khi insert không thành công
@@ -174,7 +199,7 @@ const MyStore = () => {
 
         </View>
 
-        {edit ? (
+        {(!pending && !approve) ? (
           <>
             <View
               style={{
@@ -347,7 +372,7 @@ const MyStore = () => {
           </>):(
             
           <View style = {{justifyContent: 'center', flex: 1}}>
-            { deny ? (
+            { pending ? (
                 <>
                     <Text style={{fontSize: 18, textAlign: 'center'}}>Tài khoản này đã đăng ký cửa hàng</Text>
                     <Text style={{fontSize: 18, textAlign: 'center'}}>Vui lòng chờ duyệt </Text>
@@ -356,7 +381,7 @@ const MyStore = () => {
               ) : (
                 <>
                     <Text style={{fontSize: 18, textAlign: 'center'}}>Bạn đang là cộng tác viên</Text>
-                    <Text style={{fontSize: 18, textAlign: 'center'}}>Vui lòng chờ duyệt </Text>
+                    {/* <Text style={{fontSize: 18, textAlign: 'center'}}>Vui lòng chờ duyệt </Text> */}
                 </>
               )
             }

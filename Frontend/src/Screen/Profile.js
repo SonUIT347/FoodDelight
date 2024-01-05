@@ -69,7 +69,7 @@ const Profile=({navigation}) => {
             </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{marginVertical: 10}}>
+        <TouchableOpacity style={{marginVertical: 10}} onPress={() => navigation.navigate('Bill')}>
             <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: '#F5FBF3', borderRadius: 15}}>
                 <View style={{flex: 1, padding: 10, paddingHorizontal: 20}}>
                     <Text style={{fontSize: 16, fontWeight: 'bold'}}>Lịch sử mua hàng</Text>

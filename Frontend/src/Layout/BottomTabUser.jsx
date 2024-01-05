@@ -77,7 +77,7 @@ const BottomTabUser = () => {
           // 20521850
         }}
       />
-      <Tab.Screen name='Favourites' component={CartNav}
+      <Tab.Screen name='Favourites' component={CartNav} initialParams={{ screen: 'Cart' }}
         options={{
           tabBarLabel: 'Favourites',
           headerShown: true,
@@ -93,7 +93,7 @@ const BottomTabUser = () => {
           // 20521850
         }}
       />
-      <Tab.Screen name='Profile' component={ProfileNav}
+      <Tab.Screen name='Profile' component={ProfileNav} initialParams={{ screen: 'Profile' }}
         options={{
           tabBarLabel: 'Profile',
           headerShown: false,

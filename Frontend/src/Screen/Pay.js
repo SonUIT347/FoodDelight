@@ -55,7 +55,7 @@ const Pay=({ route, navigation }) => {
         });
     
         return unsubscribe;
-      }, [navigation]);
+    }, [navigation]);
 
     const {
         ip,
@@ -314,6 +314,21 @@ const Pay=({ route, navigation }) => {
                             if (response.status === 200) {
                                 // const responseData = await response.json(); // Parse the response as JSON
                                 console.log("insert thành công")
+                                Alert.alert(
+                                    'Thông báo',
+                                    'Thanh toán thành công',
+                                    [
+                                      {
+                                        text: 'Ok',
+                                        style: 'cancel',
+                                        onPress: () => {
+                                            navigation.navigate('Home');
+                                        },
+                                      },
+                                    ],
+                                    { cancelable: false }
+                                );
+                                
                             } else {
                                 // Authentication failed
                                 alert('Delete failed. Please check address.');
@@ -322,6 +337,7 @@ const Pay=({ route, navigation }) => {
                         } catch (error) {
                             console.log('Delete error:', error);
                         }
+                        
 
                         //  adsfadfsasdfs
                     }
@@ -340,7 +356,20 @@ const Pay=({ route, navigation }) => {
                             } catch (error) {
                                 console.error('Error fetching data collab', error.message);
                             }
-                            alert('Thanh toán thành công');
+                            Alert.alert(
+                                'Thông báo',
+                                'Thanh toán thành công',
+                                [
+                                  {
+                                    text: 'Ok',
+                                    style: 'cancel',
+                                    onPress: () => {
+                                        navigation.navigate('Home');
+                                    },
+                                  },
+                                ],
+                                { cancelable: false }
+                            );
                             getCheck()
                         }
                         else

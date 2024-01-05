@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import useAuth from '../context/useAuth';
 import axios from "axios";
 
-const username='tranvanson'
+// const username='tranvanson'
 
 const data = [{}, {}]
 
@@ -68,16 +68,22 @@ const DetailedBill=({MaHD, ip})=>{
 
 }
 
-const Bills=() => {
+const Bills=({navigation}) => {
     const [dataBill, setDataBill] = useState([])
     
 
     useEffect(()=>{
-        getBill()
+        const unsubscribe = navigation.addListener('focus', () => {
+            getBill()
+            // ...
+          });
+      
+          return unsubscribe;
     }, [])
 
     const {
-        ip
+        ip,
+        username
     } = useAuth()
 
     const getBill = async () => {

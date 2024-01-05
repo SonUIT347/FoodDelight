@@ -113,7 +113,7 @@ export const getAllCollaboratorPending = async (req, res) => {
 
 export const getCollaboratorDeny = async (req, res) => {
   const username = req.params.username;
-  const q = "SELECT c.* FROM collaborator c, taikhoan tk WHERE c.MaCollaborator = tk.IdUser and tk.UserName = ? and c.TrangThai == 'deny'"
+  const q = "SELECT c.* FROM collaborator c, taikhoan tk WHERE c.MaCollaborator = tk.IdUser and tk.UserName = ? and c.TrangThai = 'deny'"
   // const q='select * FROM taikhoan';
   db.query(q, [username], (err, data) => {
     if (err) {
@@ -127,7 +127,22 @@ export const getCollaboratorDeny = async (req, res) => {
 
 export const getCollaboratorPending = async (req, res) => {
   const username = req.params.username;
-  const q = "SELECT c.* FROM collaborator c, taikhoan tk WHERE c.MaCollaborator = tk.IdUser and tk.UserName = ? and c.TrangThai == 'pending'"
+  const q = "SELECT c.* FROM collaborator c, taikhoan tk WHERE c.MaCollaborator = tk.IdUser and tk.UserName = ? and c.TrangThai = 'pending'"
+  // const q='select * FROM taikhoan';
+  db.query(q, [username], (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error fetching food mains');
+    } else {
+      res.json(data);
+    }
+  });
+  
+};
+
+export const getCollaboratorApprove = async (req, res) => {
+  const username = req.params.username;
+  const q = "SELECT c.* FROM collaborator c, taikhoan tk WHERE c.MaCollaborator = tk.IdUser and tk.UserName = ? and c.TrangThai = 'approve'"
   // const q='select * FROM taikhoan';
   db.query(q, [username], (err, data) => {
     if (err) {
