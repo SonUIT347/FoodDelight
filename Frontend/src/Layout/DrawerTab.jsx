@@ -5,6 +5,7 @@ import BottomTabUser from './BottomTabUser'
 import BottomTabCollab from './BottomTabCollab'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AdminTopTab from './AdminTopTab';
+import HomeNav from './HomeNav';
 const Drawer = createDrawerNavigator()
 const DrawerTab = () => {
   const [role, setRole] = useState(null);
@@ -23,7 +24,7 @@ const DrawerTab = () => {
   };
   return (
     <Drawer.Navigator initialRouteName='User' screenOptions={{
-      headerShown: false
+      headerShown: true
     }}>
 
       <Drawer.Screen name='User' component={BottomTabUser} />

@@ -12,6 +12,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons';
+import HomeNav from './HomeNav'
 const Tab = createBottomTabNavigator()
 const BottomTabUser = () => {
   return (

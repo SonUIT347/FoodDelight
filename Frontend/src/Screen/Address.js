@@ -6,11 +6,7 @@ import Home_Address from '../Component/Home_Address';
 import useAuth from '../context/useAuth';
 import axios from "axios";
 
-const username = 'tranvanson'
 // const maKH = 'KH0002'
-const diachi = 'ktx khu B'
-const tinh = 'Bình Dương'
-const sdt = '0914702979'
 
 const Address=({navigation, route}) => {
     const sum = route.params.sum;
@@ -27,15 +23,12 @@ const Address=({navigation, route}) => {
     const [idAddress, setIdAddress] = useState('');
 
     const {
-        ip
+        ip,
+        username
     } = useAuth()
 
     useEffect(() => {
-        console.log(username)
-        // getUserId()
         getDataAddress()
-        // console.log(maKH + 'o useEffect')
-        console.log(data)
     }, []);
 
     const getDataAddress = async () => {

@@ -6,7 +6,6 @@ import useAuth from '../context/useAuth';
 import axios from "axios";
 import moment from "moment";
 
-const username = 'tranvanson'
 
 const Cart=({ navigation, refreshCount })=>{
     const [data, setData] = useState([])
@@ -21,13 +20,15 @@ const Cart=({ navigation, refreshCount })=>{
         else
             setSum(data.reduce((sum, item, index) => sum + arrCount[index]*(item.GiaTien), 0))
     }, [arrCount])
-
-    useEffect(()=>{
-        getDataCart()
-    }, [refreshCount])
-
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            getDataCart()
+        });
+        return unsubscribe;
+      }, [navigation]);
     const {
-        ip
+        ip, 
+        username
     } = useAuth()
 
     const getDataCart = async () => {
@@ -313,15 +314,9 @@ const Cart=({ navigation, refreshCount })=>{
                     <Text>Số tiền</Text>
                     <Text>{formattedAmount(sum)} đ</Text>
                 </View>
-
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5}}>
-                    <Text>Phí vận chuyển</Text>
-                    <Text>0 đ</Text>
-                </View>
-
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5}}>
                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>Tổng thanh toán</Text>
-                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>{formattedAmount(0)} đ</Text>
+                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>{formattedAmount(sum)} đ</Text>
                 </View>
             </View>
             <TouchableOpacity onPress={()=>handleOnPay()} style={{margin: 20, marginTop: 10, backgroundColor: '#45BC1B', padding: 10, borderRadius: 17, height: 50, alignItems: 'center', justifyContent: 'center'}}>

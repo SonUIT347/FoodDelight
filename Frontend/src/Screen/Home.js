@@ -14,7 +14,7 @@ import moment from "moment";
 
 
 
-const Home = () => {
+const Home = ({navigation}) => {
     const [dataDesserts, setDataDesserts] = useState([])
     const [dataMainDishes, setDataMainDishes] = useState([])
     const [dataSale, setDataSale] = useState([])
@@ -154,13 +154,13 @@ const Home = () => {
                                 style={{marginHorizontal: 20, paddingVertical: 10}}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}
-                            >
+                            >   
                                 {dataMainDishes.map((item, index)=>(
                                     <View
                                         key = {index} 
                                         style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==dataMainDishes.length-1 && {paddingRight: 0}]}
                                     >
-                                        <ShortPost data={item}/>
+                                        <ShortPost data={item} navigation={navigation}/>
                                     </View>
                                 ))}                                
                             </ScrollView>
@@ -190,7 +190,7 @@ const Home = () => {
                                         key = {index} 
                                         style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==dataSale.length-1 && {paddingRight: 0}]}
                                     >
-                                        <ShortPost data={item}/>
+                                        <ShortPost data={item}  navigation={navigation}/>
                                     </View>
                                 ))}                                
                             </ScrollView>
@@ -218,7 +218,7 @@ const Home = () => {
                                         key = {index} 
                                         style={[{paddingHorizontal: 5}, index==0 && {paddingLeft: 0}, index==dataDesserts.length-1 && {paddingRight: 0}]}
                                     >
-                                        <ShortPost data={item}/>
+                                        <ShortPost data={item}  navigation={navigation}/>
                                     </View>
                                 ))}                                
                             </ScrollView>

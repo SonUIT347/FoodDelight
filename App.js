@@ -61,6 +61,7 @@ export default function App() {
         {/* <FoodPending/> */}
         {/* <FoodStatus/> */}
         {/* <TopTab/> */}
+        {/* <Pay/> */}
         {/* <AuthNav/> */}
         {/* <CreateSale/> */}
         {/* <Invoice/> */}

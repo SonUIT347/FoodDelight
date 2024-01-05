@@ -32,7 +32,7 @@ const Login = ({ navigation }) => {
                 // Save the token to AsyncStorage
                 await AsyncStorage.setItem('IdUser', userID);
                 await AsyncStorage.setItem('role', role);
-                navigation.navigate('Drawer');
+                navigation.navigate('Home');
                 console.log('Login success');
                 // setUsername('')
                 setPassword('')
