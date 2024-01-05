@@ -77,3 +77,61 @@ export const postUpdatePriceCart = (req,res) => {
     res.status(200).send('Delete address successfuly ...')
   })
 }
+
+export const getColabInCart = async (req, res) => {
+  const  username = req.params.username;
+  const q = "SELECT ma.MaCollaborator, SUM(ctgh.GiaTien) as TongTien FROM taikhoan tk, giohang gh, ctgh, monan ma WHERE tk.IdUser = gh.MaUser and gh.MaGH = ctgh.MaGH "+
+  "and ma.MaMA = ctgh.MaMA and tk.UserName=? GROUP BY ma.MaCollaborator"
+  // const q = "((SELECT ma.MaMA, ma.TenMA, a.Url, (ma.GiaTien - gg.SoTienGiam) as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and gg.MaMA = ma.MaMA and a.ViewPost = 1) UNION (SELECT ma.MaMA, ma.TenMA, a.Url, ma.GiaTien as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and a.ViewPost = 1 and ma.MaMA NOT IN (SELECT gg.MaMA FROM giamgia gg)))"
+  db.query(q, [username], (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error fetching collab in cart');
+      } else {
+        res.json(data);
+      }
+  });
+}
+
+export const getCartDetailByMaCollab = async (req, res) => {
+  const  MaKH = req.params.MaKH;
+  const  MaCollab = req.params.MaCollab;
+  const q = "SELECT ctgh.* FROM ctgh, monan ma, giohang gg WHERE ctgh.MaMA = ma.MaMA and gg.MaGH = ctgh.MaGH and "+
+  "gg.MaUser = ? and ma.MaCollaborator = ?"
+  // const q = "((SELECT ma.MaMA, ma.TenMA, a.Url, (ma.GiaTien - gg.SoTienGiam) as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and gg.MaMA = ma.MaMA and a.ViewPost = 1) UNION (SELECT ma.MaMA, ma.TenMA, a.Url, ma.GiaTien as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and a.ViewPost = 1 and ma.MaMA NOT IN (SELECT gg.MaMA FROM giamgia gg)))"
+  db.query(q, [MaKH, MaCollab], (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error fetching collab in cart');
+      } else {
+        res.json(data);
+      }
+  });
+}
+
+export const getCheckSL = async (req, res) => {
+  const  MaKH = req.params.MaKH;
+  const q = "SELECT COUNT(*) as count FROM giohang gg, ctgh, monan ma WHERE gg.MaGH = ctgh.MaGH and ma.MaMA = ctgh.MaMA and ctgh.SL > ma.SL and gg.MaUser=?"
+  // const q = "((SELECT ma.MaMA, ma.TenMA, a.Url, (ma.GiaTien - gg.SoTienGiam) as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and gg.MaMA = ma.MaMA and a.ViewPost = 1) UNION (SELECT ma.MaMA, ma.TenMA, a.Url, ma.GiaTien as GiaTien_New from monan ma, anhmonan a, giamgia gg WHERE ma.MaMA = a.MaMA and a.ViewPost = 1 and ma.MaMA NOT IN (SELECT gg.MaMA FROM giamgia gg)))"
+  db.query(q, [MaKH], (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error fetching count check SL');
+      } else {
+        res.json(data);
+      }
+  });
+}
+
+export const deleteCartByMaKH = (req,res) => {
+  const {MaKH} = req.body
+  // console.log('thông tin delete: '+ maKH + text + province + numericValue)
+  const q = "DELETE FROM `ctgh` WHERE ctgh.MaGH = (SELECT gg.MaGH FROM giohang gg WHERE gg.MaUser = ?)"
+
+  db.query(q, [MaKH],(err, result) => {
+    if(err){
+      res.status(500).send('Error delete address...')
+    }
+    res.status(200).send('Delete address successfuly ...')
+  })
+}

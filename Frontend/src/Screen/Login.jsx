@@ -34,7 +34,7 @@ const Login = ({ navigation }) => {
                 await AsyncStorage.setItem('role', role);
                 navigation.navigate('Drawer');
                 console.log('Login success');
-                setUsername('')
+                // setUsername('')
                 setPassword('')
             } else {
                 alert('Login failed. Please check your credentials.');

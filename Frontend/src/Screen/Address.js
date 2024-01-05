@@ -14,8 +14,6 @@ const sdt = '0914702979'
 
 const Address=({navigation, route}) => {
     const sum = route.params.sum;
-    const key = route.params.key;
-    const { name } = route;
     const [data, setData] = useState([]);
     const [isModalAddVisible, setModalAddVisible] = useState(false);
     const [isModalEditVisible, setModalEditVisible] = useState(false);
@@ -38,7 +36,7 @@ const Address=({navigation, route}) => {
         getDataAddress()
         // console.log(maKH + 'o useEffect')
         console.log(data)
-    }, [name]);
+    }, []);
 
     const getDataAddress = async () => {
         try {
