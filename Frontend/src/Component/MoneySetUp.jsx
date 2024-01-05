@@ -1,17 +1,17 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-const MoneySetUp = ({ Info, percent, money }) => {
+const MoneySetUp = ({ Info, magiamgia, money }) => {
     const [food, setFood] = useState(Info)
     const [count, setCount] = useState('0')
     const [discount, setDiscount] = useState(0)
     useEffect(() => {
-        setDiscount(food.price - money)
+        setDiscount(food.GiaTien - money)
     }, [money])
     const handleCount = (name) => {
 
         if (name === 'plus') {
-            if (count < food.stock) {
+            if (count < food.SL) {
                 const a = parseInt(count) + 1
                 setCount(a.toString())
             } else {
@@ -30,7 +30,7 @@ const MoneySetUp = ({ Info, percent, money }) => {
     return (
         <View style={styles.food_ctn}>
             <Image
-                source={{ uri: food.Url }}
+                source={{ uri: food.image }}
                 style={{
                     width: 90,
                     height: 120,

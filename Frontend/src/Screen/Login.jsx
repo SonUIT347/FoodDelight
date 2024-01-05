@@ -5,10 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuth from '../context/useAuth';
 
 const Login = ({ navigation }) => {
-    const handleAccount = () => {
-        // Implement your logic for handling login here
-        console.log('Login pressed');
-    };
     const {
         username,
         password,
@@ -36,15 +32,11 @@ const Login = ({ navigation }) => {
                 // Save the token to AsyncStorage
                 await AsyncStorage.setItem('IdUser', userID);
                 await AsyncStorage.setItem('role', role);
-                // const tk = AsyncStorage.getItem('token')
-                // console.log(tk)
-                // Navigate to the 'Drawer' screen or any other screen
                 navigation.navigate('Drawer');
                 console.log('Login success');
                 // setUsername('')
                 setPassword('')
             } else {
-                // Authentication failed
                 alert('Login failed. Please check your credentials.');
                 console.log('Login failed');
             }

@@ -13,6 +13,9 @@ import { getAllCollabRouter, getAllCollaborator, getCollaboratorRouter, insertCo
 import { adminRoute } from './src/Routes/addminRoute.js';
 // import { getCollaboratorRouter, insertCollaboratorRouter } from './src/Routes/collaboratorRoute.js';
 import { getBillRouter, insertBillRouter } from './src/Routes/BillRoute.js';
+// import { getBillRouter } from './src/Routes/BillRoute.js';
+import { createSaleRouter, saleCountRouter } from './src/Routes/saleRoute.js';
+import { invoiceRouter } from './src/Routes/invoiceRoute.js';
 // import { getPayment } from './src/Controller/CartController.js';
 
 const app = express()
@@ -76,6 +79,9 @@ app.use(getAllCollabRouter)
 app.use(getBillRouter)
 app.use(insertBillRouter)
 
+app.use(saleCountRouter)
+app.use(createSaleRouter)
+app.use(invoiceRouter)
 // app.get('/food', (req, res) => {
 //     db.query('select * from food', (error, rows, field) =>{
 //         if(error)

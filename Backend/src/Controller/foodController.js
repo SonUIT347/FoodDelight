@@ -1,9 +1,7 @@
-import { async } from '@firebase/util';
 import db from '../../index.js';
 
 export const saveFood = async (req, res) => {
     const { mama, macollaborator, nameFood, priceFood, luotban, trangthai, stock, selected, imageUrls, maAnh } = req.body;
-    console.log(imageUrls + 'image')
     const q1 = 'INSERT INTO monan (mama, macollaborator, tenma, giatien, luotban, trangthai, sl) VALUES (?,?,?,?,?,?,?)';
     try {
         await new Promise((resolve, reject) => {
@@ -67,8 +65,8 @@ export const selectFoodMains = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
     const q = "SELECT ma.*, ctgg.SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, giamgia gg, ctgg, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and ma.MaMA = ctgg.MaMA and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món chính' and lma.MaLoaiMA = ctlma.MaLoaiMA and gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0 " +
-    "UNION " +
-    "SELECT ma.*, 0 SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món chính' and lma.MaLoaiMA = ctlma.MaLoaiMA and ma.MaMA NOT IN (SELECT ctgg.MaMA FROM giamgia gg, ctgg WHERE gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0)";
+        "UNION " +
+        "SELECT ma.*, 0 SoTienGiam, lma.TenLoaiMA, a.Url, c.Tinh FROM monan ma, collaborator c, anhmonan a, ctlma, loaimonan lma WHERE ctlma.MaMA = ma.MaMA and ma.MaMA = a.MaMA and ma.MaCollaborator = c.MaCollaborator and a.ViewPost = 1 and ma.TrangThai = 'approve' and lma.TenLoaiMA = 'Món chính' and lma.MaLoaiMA = ctlma.MaLoaiMA and ma.MaMA NOT IN (SELECT ctgg.MaMA FROM giamgia gg, ctgg WHERE gg.MaGiamGia = ctgg.MaGiamGia and gg.NgayGiamGia = ? and gg.GioBatDau <= ? and gg.GioKetThuc >= ? and ctgg.SL > 0)";
     // const q='select * FROM taikhoan';
     db.query(q, [day, time, time, day, time, time], (err, data) => {
         if (err) {
@@ -243,31 +241,53 @@ export const getFood = async (req, res) => {
 };
 
 export const getImageFood = async (req, res) => {
-    const  maMA = req.params.maMA;
+    const maMA = req.params.maMA;
     const q = "SELECT * FROM anhmonan a WHERE a.MaMA = ? ORDER BY a.ViewPost DESC"
     // const q='select * FROM taikhoan';
-    db.query(q, [maMA],(err, data) => {
+    db.query(q, [maMA], (err, data) => {
         if (err) {
-          console.error(err);
-          res.status(500).send('Error fetching food mains');
+            console.error(err);
+            res.status(500).send('Error fetching food mains');
         } else {
-          res.json(data);
+            res.json(data);
         }
     });
 };
 
 export const getTypeFood = async (req, res) => {
-    const  maMA = req.params.maMA;
+    const maMA = req.params.maMA;
     const q = "SELECT lma.TenLoaiMA FROM loaimonan lma, ctlma WHERE lma.MaLoaiMA = ctlma.MaLoaiMA and ctlma.MaMA = ?"
     // const q='select * FROM taikhoan';
-    db.query(q, [maMA],(err, data) => {
+    db.query(q, [maMA], (err, data) => {
         if (err) {
-          console.error(err);
-          res.status(500).send('Error fetching food mains');
+            console.error(err);
+            res.status(500).send('Error fetching food mains');
         } else {
-          res.json(data);
+            res.json(data);
         }
     });
 };
+
+export const getFoodById = async (req, res) => {
+    const mama = req.params.mama;
+    const q = `
+    SELECT m.mama,m.tenma,m.SL,m.GiaTien, MAX(i.Url) AS image
+    FROM monan m
+    LEFT JOIN
+    anhmonan i ON m.mama = i.mama
+    WHERE
+    m.mama = ?
+    GROUP BY
+    m.mama, m.tenma, m.SL, m.GiaTien;
+`;
+    db.query(q, [mama], (err, data) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error fetching food mains');
+        } else {
+            res.json(data);
+        }
+    });
+}
 
 

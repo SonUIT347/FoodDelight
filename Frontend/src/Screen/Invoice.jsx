@@ -1,121 +1,151 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
-
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import InvoiceComponent from '../Component/InvoiceComponent'
 import { FontAwesome5 } from '@expo/vector-icons';
-const Invoice = ({navigation}) => {
+import axios from 'axios';
+import useAuth from '../context/useAuth';
+import No_Products from '../Component/No_Products';
 
-    var sumInvoice = 0
-    const Invoice = [
-        {
-            InvoiceId: 1,
-            data: [
-                {
-                    id: 1,
-                    foodName: 'Cơm chiên cá mặn 11',
-                    stock: 15,
-                    img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
-                    price: 1589666
-                },
-                {
-                    id: 2,
-                    foodName: 'Cơm chiên cá mặn3',
-                    stock: 30,
-                    img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
-                    price: 1444558
-                },
-                {
-                    id: 3,
-                    foodName: 'Cơm chiên cá mặn',
-                    stock: 10,
-                    img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
-                    price: 100000
-                },
-            ],
-            sumPrice:0,
-        },
-        {
-            InvoiceId: 2,
-            data: [
-                {
-                    id: 1,
-                    foodName: 'Cơm chiên cá mặn 11',
-                    stock: 15,
-                    img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
-                    price: 1589666
-                },
-                {
-                    id: 2,
-                    foodName: 'Cơm chiên cá mặn3',
-                    stock: 30,
-                    img: 'https://i.ebayimg.com/images/g/WGMAAOSwtnRgtOux/s-l1600.jpg',
-                    price: 1444558
-                },
-            ],
-            sumPrice:0,
-        },
+const Invoice = ({ navigation }) => {
+    const { ip } = useAuth();
+    const [invoiceData, setInvoiceData] = useState([]);
+    const [invoiceId, setInvoiceId] = useState([]);
+    const [tongtien, setTongTien] = useState([])
+    const macb = 'MC0001';
 
-    ]
-    const [food, setFood] = useState(Invoice)
+    const getHoaDonID = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/invoice/${macb}`);
+            const invoices = response.data;
+            // Extract invoice IDs
+            const invoiceIds = invoices.map(invoice => invoice.MaHD);
+            const invoiceSum = invoices.map(invoice => invoice.TongTien);
+            setInvoiceId(invoiceIds);
+            setTongTien(invoiceSum)
+            console.log(invoiceId)
+            const invoiceDetailsPromises = invoices.map(async (invoice) => {
+                const response = await axios.get(`http://${ip}:8080/invoiceid/${invoice.MaHD}`);
+                return response.data;
+            });
+
+            const invoiceDetails = await Promise.all(invoiceDetailsPromises);
+
+            setInvoiceData(invoiceDetails);
+        } catch (error) {
+            console.error('Error fetching invoice details:', error);
+        }
+    };
+
+    useEffect(() => {
+        getHoaDonID();
+    }, []);
+
+    const handleAccept = async (hoadon_id) => {
+        try {
+            await axios.put(`http://${ip}:8080/update/invoiceaccept/${hoadon_id}`);
+            // Now you can directly use hoadon_id without relying on invoiceId
+            getHoaDonID();
+        } catch (error) {
+            console.error('Error accepting invoice:', error);
+        }
+    };
+    const handleDeny = async (hoadon_id) => {
+        try {
+            await axios.put(`http://${ip}:8080/update/invoicedeny/${hoadon_id}`);
+            // Now you can directly use hoadon_id without relying on invoiceId
+            getHoaDonID();
+        } catch (error) {
+            console.error('Error accepting invoice:', error);
+        }
+    };
+
     return (
-        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-            <ScrollView style={{ width: '100%', height: 800 }}
-                contentContainerStyle={{
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                {food.map((Invoice) => (  
-                    
-                    <View key={Invoice.InvoiceId}>
-                        <View style={styles.invoiceId}>
-                            <FontAwesome5 name="file-invoice" size={20} color="#45BC1B" />
-                            <Text style={{ fontSize: 20, marginLeft: 10 }}>{Invoice.InvoiceId}</Text>
-                        </View>
-                        {Invoice.data.map((data) => (
-                            <InvoiceComponent
-                                key={data.id} 
-                                food={data}
-                            />
-                        ))}
-                            <Text style={styles.invoiceText}>Hình thức thanh toán COD</Text>
-                            <Text style={styles.invoiceText}>Mặt hàng: {Invoice.data.length}</Text>
-                            <Text style={styles.invoiceText}>Tổng hóa đơn: {Invoice.sumPrice} VND</Text>
-                            <View style={styles.touch}>
-                                <TouchableOpacity style={{width:100, height: 30, backgroundColor:'#45BC1B', justifyContent:'center', alignItems:'center', borderRadius:5,margin:5}} onPress={() => navigation.navigate('InvoiceDetail')}>
-                                    <Text style={{color:'white'}}>Nhận đơn</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{width:100, height: 30, backgroundColor:'#F80C0C', justifyContent:'center', alignItems:'center', borderRadius:5,margin:5}}>
-                                    <Text style={{color:'white'}}>Hủy đơn</Text>
-                                </TouchableOpacity>
+        <React.Fragment>
+            {invoiceData.length > 0 ? (
+                <SafeAreaView style={styles.container}>
+                    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                        {invoiceData.map((invoice, index) => (
+                            <View key={invoice[0].MaHD}>
+                                <View style={styles.invoiceId}>
+                                    <FontAwesome5 name="file-invoice" size={20} color="#45BC1B" />
+                                    <Text style={{ fontSize: 20, marginLeft: 10 }}>{invoiceId[index]}</Text>
+                                </View>
+                                {invoice.map((data) => (
+                                    <InvoiceComponent key={data.mama} food={data} />
+                                ))}
+                                <Text style={styles.invoiceText}>Hình thức thanh toán COD</Text>
+                                <Text style={styles.invoiceText}>Mặt hàng: {invoice.length}</Text>
+                                {/* Assuming 'TongTien' is a property of each invoice object */}
+                                <Text style={styles.invoiceText}>Tổng hóa đơn: {invoice[0].TongTien} VND</Text>
+                                <View style={styles.touch}>
+                                    <TouchableOpacity
+                                        style={styles.button}
+                                        onPress={() => handleAccept(invoiceId[index])}>
+                                        <Text style={styles.buttonText}>Nhận đơn</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.button, styles.cancelButton]}
+                                        onPress={() => handleDeny(invoiceId[index])}
+                                    >
+                                        <Text style={styles.buttonText}>Hủy đơn</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                    </View>
-                ))}
-            </ScrollView>
-        </View>
-    )
-}
+                        ))}
+                    </ScrollView>
+                </SafeAreaView>
+            ) : (
+                <View style={{ width: '100%', height: '100%', justifyContent: 'center' }}>
+                    <No_Products />
+                </View>
+
+            )}
+        </React.Fragment>
+    );
+};
+
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        height: 'auto'
+    },
+    scrollViewContent: {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        marginTop: 50,
     },
     invoiceId: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         width: '100%',
         height: 30,
-        alignItems: 'center'
+        alignItems: 'center',
     },
-    invoiceText:{
-        fontSize:20
+    invoiceText: {
+        fontSize: 20,
     },
-    touch:{
+    touch: {
         flexDirection: 'row',
-        justifyContent:'flex-end',
-        alignItems:'center'
-    }
-})
-export default Invoice
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    button: {
+        width: 100,
+        height: 30,
+        backgroundColor: '#45BC1B',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        margin: 5,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    cancelButton: {
+        backgroundColor: '#F80C0C',
+    },
+});
+
+export default Invoice;

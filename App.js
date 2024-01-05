@@ -45,68 +45,25 @@ import Bills from './Frontend/src/Screen/Bills';
 
 export default function App() {
   return (
-    // <CollabProduct/>
-    // <FlashSaleShow/>
-    // <CreateSale />
-    // <ChooseFood/>
-    // <NavigatorContainer>
     <AuthContext>
       {/* <CollabProduct /> */}
       {/* {/* <NavigationContainer>
         
       </NavigationContainer> */} 
       <NavigationContainer>
-        {/* <AuthNav/> */}
+        <AuthNav/>
         {/* <AdminStore/> */}
         {/* <AdminProduct/> */}
         {/* <AdminTopTab/> */}
-        <AuthNav />
         {/* <TopTab/> */}
         {/* <FoodPending/> */}
         {/* <FoodStatus/> */}
         {/* <TopTab/> */}
+        {/* <AuthNav/> */}
         {/* <CreateSale/> */}
-        {/* <MyStore/> */}
-        {/* <Address/> */}
-      {/* <Register /> */}
-      {/* <Home/> */}
-      {/* <Cart/> */}
-      {/* <Address/> */}
-      {/* <MyStore/> */}
-      {/* <Pay/> */}
-      {/* <Bills/> */}
-      {/* <Test/> */}
-      {/* <Sale/> */}
-      {/* <Sale_Items/> */}
-      {/* <Personal/> */}
-      {/* <Profile/> */}
-      {/* <Product/> */}
-       {/* <Home_Items/> */}
+        <Invoice/>
       </NavigationContainer>
     </AuthContext>
-
-    // <InvoiceComplete/>
-    // <MyStore/>
-    // <Login/>
-
-    // <View style={styles.container}>
-    // <CollabProduct/>
-
-
-    // <Sale/>
-    // <Home_Items/>
-    // <Sale_Items/>
-    // <Test/>
-    // <Home/>
-    // <Pay/>
-    // <Profile/>
-    // <Personal/>
-    // <MyStore/>
-    // <Post/>
-    // <Product/>
-    // <Cart />
-    // <Address/>
-
   );
 }
 

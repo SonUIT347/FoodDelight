@@ -1,13 +1,17 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native'
 import React, { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-const PercentSetUp = ({ Info, percent, money }) => {
+import axios from 'axios';
+import useAuth from '../context/useAuth';
+const PercentSetUp = ({ Info, percent, magiamgia }) => {
     const [food, setFood] = useState(Info)
     const [count, setCount] = useState('0')
+    console.log('food sael', food)
     console.log(percent)
+    const {ip} = useAuth()
     const handleCount = (name) => {
         if (name === 'plus') {
-            if (count < food.stock) {
+            if (count < food.SL) {
                 const a = parseInt(count) + 1
                 setCount(a.toString())
             } else {
@@ -23,10 +27,21 @@ const PercentSetUp = ({ Info, percent, money }) => {
         }
         console.log(count)
     }
+    const createCtgg = async () => {
+        const mama = food.mama
+        const sotiengiam = food.GiaTien * percent / 100
+        const response = await axios.post(`http://${ip}:8080/createctgg`, {
+            magiamgia,
+            mama,
+            count,
+            sotiengiam,
+        });
+        console.log('sucees')
+    }
     return (
         <View style={styles.food_ctn}>
             <Image
-                source={{ uri: food.Url }}
+                source={{ uri: food.image }}
                 style={{
                     width: 90,
                     height: 120,
@@ -35,7 +50,7 @@ const PercentSetUp = ({ Info, percent, money }) => {
                 }}
             />
             <View style={styles.foodInfo}>
-                <Text style={{fontSize:20, fontWeight:'bold'}}>{food.tenma}</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.tenma}</Text>
                 <Text>Số lượng: {food.SL}</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity onPress={() => handleCount('minus')}>
@@ -55,8 +70,12 @@ const PercentSetUp = ({ Info, percent, money }) => {
                     </TouchableOpacity>
                 </View>
                 <Text>Giá: {food.GiaTien}</Text>
-                {percent > 0?( <Text>Giá: {food.GiaTien - food.GiaTien*percent/100}</Text>):(null)}
+                {percent > 0 ? (<Text>Giá giảm còn: {food.GiaTien - food.GiaTien * percent / 100}</Text>) : (null)}
+                <TouchableOpacity onPress={() => createCtgg()}>
+                    <Text>Oke</Text>
+                </TouchableOpacity>
             </View>
+
         </View>
     )
 }
@@ -78,7 +97,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginBottom: 10,
         marginTop: 10,
-        borderRadius:7
+        borderRadius: 7
     },
     foodInfo: {
         width: 250,

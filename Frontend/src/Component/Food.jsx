@@ -4,35 +4,29 @@ import { useState } from 'react'
 const Food = ({ food, id, chooseData, setChooseData }) => {
     // console.log(food)
     const [isTouch, setIsTouch] = useState(false)
-    const [temp, setTemp] = useState([])
-    const choose = (id) => {
-        const isAlreadySelected = chooseData.includes(id);
-        console.log(isAlreadySelected)
+    const choose = () => {
+        const isAlreadySelected = chooseData.some(selectedFood => selectedFood.mama === food.mama);
+
         if (isAlreadySelected) {
-            // If the food item is already selected, remove it from temp
-            const updatedTemp = chooseData.filter(item => item !== id);
-            setChooseData(updatedTemp);
+            // If the food item is already selected, remove it from chooseData
+            const updatedData = chooseData.filter(selectedFood => selectedFood.mama !== food.mama);
+            setChooseData(updatedData);
         } else {
-            // If the food item is not selected, add it to temp
-            
-            const updatedTemp = [...chooseData, id];
-            setChooseData(updatedTemp);
+            // If the food item is not selected, add it to chooseData
+            const updatedData = [...chooseData, food];
+            setChooseData(updatedData);
         }
 
         // Toggle the isTouch state
         setIsTouch(!isTouch);
-
-        // Debugging logs
-        // console.log('id ' + id);
-        // console.log('asd ' + temp);
-        // console.log(chooseData);
     };
+
     return (
         <>
-            <TouchableOpacity onPress={() => choose(food.mama)}>
+            <TouchableOpacity onPress={() => choose()}>
                 <View style={[styles.food_ctn, isTouch && styles.food_ctn_touch]}>
                     <Image
-                        source={{ uri: food.Url }}
+                        source={{ uri: food.image }}
                         style={{
                             width: 90,
                             height: 120,
