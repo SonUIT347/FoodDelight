@@ -41,7 +41,7 @@ const Login = ({ navigation }) => {
                 // Navigate to the 'Drawer' screen or any other screen
                 navigation.navigate('Drawer');
                 console.log('Login success');
-                setUsername('')
+                // setUsername('')
                 setPassword('')
             } else {
                 // Authentication failed

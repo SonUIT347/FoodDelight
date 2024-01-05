@@ -53,13 +53,14 @@ export default function App() {
     <AuthContext>
       {/* <CollabProduct /> */}
       {/* {/* <NavigationContainer>
-        <AuthNav />
+        
       </NavigationContainer> */} 
       <NavigationContainer>
         {/* <AuthNav/> */}
         {/* <AdminStore/> */}
         {/* <AdminProduct/> */}
-        <AdminTopTab/>
+        {/* <AdminTopTab/> */}
+        <AuthNav />
         {/* <TopTab/> */}
         {/* <FoodPending/> */}
         {/* <FoodStatus/> */}

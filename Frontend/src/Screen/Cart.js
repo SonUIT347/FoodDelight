@@ -121,7 +121,7 @@ const Cart=({ navigation, refreshCount })=>{
     const handleOnPay=()=>{
         updateDataCart()
         updatePriceCart()
-        navigation.navigate('Pay', { sum: sum, key: 'pay' });
+        navigation.navigate('Pay', { sum: sum});
     }
 
     const handleChangeNote=(text)=>{
