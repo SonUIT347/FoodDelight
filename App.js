@@ -43,6 +43,7 @@ import AdminTopTab from './Frontend/src/Layout/AdminTopTab';
 import Bills from './Frontend/src/Screen/Bills';
 
 import Product from './Frontend/src/Screen/Product.js';
+import PayDirectly from './Frontend/src/Layout/PayDirectly';
 
 
 export default function App() {
@@ -63,10 +64,12 @@ export default function App() {
         {/* <TopTab/> */}
         {/* <Pay/> */}
         {/* <AuthNav/> */}
+        {/* <PayDirectly/> */}
         {/* <CreateSale/> */}
         {/* <Invoice/> */}
         {/* <Product/> */}
         {/* <Product/> */}
+        {/* <Pay/> */}
       </NavigationContainer>
     </AuthContext>
   );

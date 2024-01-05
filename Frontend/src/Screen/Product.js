@@ -81,7 +81,6 @@ const Product = ({ route, navigation }) => {
 
             console.log(maMA)
             const response = await axios.get(`http://${ip}:8080/getFood/${maMA}`);
-            console.log(`http://${ip}:8080/getFood/${maMA}`)
             const dt = response.data;
             // console.log('data' + dt[0])
             setDataFood(dt[0])
@@ -217,16 +216,15 @@ const Product = ({ route, navigation }) => {
                     {dataFood && (
                         <Text style={{ fontSize: 14, fontWeight: '500', color: 'gray' }}>{dataFood.SL}</Text>
                     )}
-
+                    
                 </View>
             </View>
 
             <ScrollView style={{ backgroundColor: '#EDF9E9', marginVertical: 20, flex: 1, width: '100%' }}>
-                {dataFood && (
-                    <Text style={{ padding: 10, flex: 1, width: '100%' }}>{dataFood.MoTa == "" ? ("Chưa có mô tả món ăn") : (dataFood.MoTa)}</Text>
+            {dataFood && (
+                <Text style={{ padding: 10, flex: 1, width: '100%' }}>{dataFood.MoTa == "" ? ("Chưa có mô tả món ăn") : (dataFood.MoTa)}</Text>
 
-                )}
-
+            )}
             </ScrollView>
 
             <View style={{ justifyContent: 'flex-end', width: '100%' }}>

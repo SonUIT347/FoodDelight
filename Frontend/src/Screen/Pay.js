@@ -8,7 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Alert } from 'react-native';
 
 
-// const username = 'tranvanson'
+const username = 'tranvanson'
 
 
 const Address = {
@@ -17,16 +17,33 @@ const Address = {
     address: 'KTX khu A, DHQG, TP. Thủ Đức'
 }
 
-// const sum = 100000
+
+// const PayDirectly = true
+
+// const TongTien = 100000
+
+// const MaMA = 'MA0001'
+
+// const SL = 1
+
+// const MaCollaborator = "MC0001"
 
 
 const Pay=({ route, navigation }) => {
     const [dataAddress, setDataAddress] = useState([])
     const [count, setCount] = useState()
+    const [check, setCheck] = useState()
     const [maKH, setMaKH] = useState()
 
+    // {sum: TongTien, MaMA, SL, MaCollaborator}
     // const [dataCol, setDataAddress] = useState([])
-    const sum = route.params.sum;
+    const sum = route.params?.sum;
+    const MaMA = route.params?.MaMA;
+    const SL = route.params?.SL;
+    const PayDirectly = route.params?.PayDirectly;
+    const MaCollaborator = route.params?.MaCollaborator;
+
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
           // Logic được thực hiện khi màn hình được focus (hiển thị lại)
@@ -34,6 +51,7 @@ const Pay=({ route, navigation }) => {
           // Thêm các logic cần thiết để render lại trang Pay khi cần
           getAddressSelected()
           getCountBill()
+          getCheck()
           // ...
         });
     
@@ -42,8 +60,18 @@ const Pay=({ route, navigation }) => {
 
     const {
         ip,
-        username
+        // username
     } = useAuth()
+
+    const getCheck=async()=>{
+        try {
+            const response = await axios.get(`http://${ip}:8080/checkSL/${maKH}`);
+            const dt = response.data;
+            setCheck(dt[0].count)
+        } catch (error) {
+            console.error('Error fetching data count bill', error.message);
+        }
+    }
 
     const getAddressSelected = async () => {
         try {
@@ -86,7 +114,7 @@ const Pay=({ route, navigation }) => {
         if (item)
             return item.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         else
-            return
+            return 0
     }
 
     const insertBillDetail = async(item, MaHD)=>{
@@ -225,33 +253,83 @@ const Pay=({ route, navigation }) => {
               },
               {
                 text: 'Có',
-                onPress: async() => {
-                    var check;
-                    try {
-                        const response = await axios.get(`http://${ip}:8080/checkSL/${maKH}`);
-                        const dt = response.data;
-                        check = (dt[0].count)
-                    } catch (error) {
-                        console.error('Error fetching data count bill', error.message);
-                    }
-
-                    if(check == 0)
+                onPress: async() => { 
+                    
+                    if (PayDirectly)
                     {
+                        const MaHD = "HD" + (count + 1)
+                        const now = moment();
+                        const Day = now.format('YYYY-MM-DD');
+                        console.log(MaHD)
+                        console.log(maKH)
+
                         try {
-                            const response = await axios.get(`http://${ip}:8080/CollabInCart/${username}`);
-                            const dt = response.data;
-                            console.log(dt)
-                            dt.map((item, index)=>{
-                                insertBill(item, index)
-                            })
+                            const response = await fetch(`http://${ip}:8080/insertBill`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({MaHD, TongTien: sum, MaKH: maKH, MaCollaborator: MaCollaborator,
+                                                    Day, DiaChi: (dataAddress[0].diachi+", "+dataAddress[0].tinh), Sdt: dataAddress[0].sdt}),
+                            });
+                            if (response.status === 200) {
+                                // const responseData = await response.json(); // Parse the response as JSON
+                                console.log("insert thành công")
+                            } else {
+                                // Authentication failed
+                                alert('Delete failed. Please check address.');
+                                console.log('Delete failed');
+                            }
                         } catch (error) {
-                            console.error('Error fetching data collab', error.message);
+                            console.log('Delete error:', error);
                         }
+
+                        try {
+                            const response = await fetch(`http://${ip}:8080/insertBillDetail`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({MaHD: MaHD, MaMA: MaMA, SL: SL, GiaTien: sum}),
+                            });
+                            if (response.status === 200) {
+                                // const responseData = await response.json(); // Parse the response as JSON
+                                console.log("insert thành công")
+                            } else {
+                                // Authentication failed
+                                alert('Delete failed. Please check address.');
+                                console.log('insert failed' + MaHD);
+                            }
+                        } catch (error) {
+                            console.log('Delete error:', error);
+                        }
+
+                        //  adsfadfsasdfs
                     }
                     else
                     {
-                        alert('Thanh toán không thành công');
-                    }        
+                        if(check == 0)
+                        {
+                            
+                            try {
+                                const response = await axios.get(`http://${ip}:8080/CollabInCart/${username}`);
+                                const dt = response.data;
+                                console.log(dt)
+                                dt.map((item, index)=>{
+                                    insertBill(item, index)
+                                })
+                            } catch (error) {
+                                console.error('Error fetching data collab', error.message);
+                            }
+                            alert('Thanh toán thành công');
+                            getCheck()
+                        }
+                        else
+                        {
+                            alert('Thanh toán không thành công');
+                        } 
+                    }
+                    getCountBill()                 
                 },
               },
             ],
