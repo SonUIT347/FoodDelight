@@ -18,7 +18,7 @@ const HomeCollabNav = () => {
         }} component={CollabMain} />
         <Stack.Screen name='StatusNav' options={{ title:'Mon an'}} component={TopTab}/>
         <Stack.Screen name='AddFood' component={CollabProduct} />
-        <Stack.Screen name='CreateSale' component={SaleNav} />
+        {/* <Stack.Screen name='CreateSale' component={SaleNav} /> */}
     </Stack.Navigator>
   )
 }

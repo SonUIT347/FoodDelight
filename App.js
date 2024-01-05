@@ -45,67 +45,13 @@ import Bills from './Frontend/src/Screen/Bills';
 
 export default function App() {
   return (
-    // <CollabProduct/>
-    // <FlashSaleShow/>
-    // <CreateSale />
-    // <ChooseFood/>
-    // <NavigatorContainer>
     <AuthContext>
-      {/* <CollabProduct /> */}
-      {/* {/* <NavigationContainer>
-        <AuthNav />
-      </NavigationContainer> */} 
       <NavigationContainer>
         {/* <AuthNav/> */}
-        {/* <AdminStore/> */}
-        {/* <AdminProduct/> */}
-        <AdminTopTab/>
-        {/* <TopTab/> */}
-        {/* <FoodPending/> */}
-        {/* <FoodStatus/> */}
-        {/* <TopTab/> */}
         {/* <CreateSale/> */}
-        {/* <MyStore/> */}
-        {/* <Address/> */}
-      {/* <Register /> */}
-      <Home/>
-      {/* <Cart/> */}
-      {/* <Address/> */}
-      {/* <MyStore/> */}
-      {/* <Pay/> */}
-      {/* <Bills/> */}
-      {/* <Test/> */}
-      {/* <Sale/> */}
-      {/* <Sale_Items/> */}
-      {/* <Personal/> */}
-      {/* <Profile/> */}
-      {/* <Product/> */}
-       {/* <Home_Items/> */}
+        <Invoice/>
       </NavigationContainer>
     </AuthContext>
-
-    // <InvoiceComplete/>
-    // <MyStore/>
-    // <Login/>
-
-    // <View style={styles.container}>
-    // <CollabProduct/>
-
-
-    // <Sale/>
-    // <Home_Items/>
-    // <Sale_Items/>
-    // <Test/>
-    // <Home/>
-    // <Pay/>
-    // <Profile/>
-    // <Personal/>
-    // <MyStore/>
-    // <Post/>
-    // <Product/>
-    // <Cart />
-    // <Address/>
-
   );
 }
 

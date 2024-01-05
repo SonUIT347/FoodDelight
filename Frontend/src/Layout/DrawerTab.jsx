@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import BottomTabUser from './BottomTabUser'
 import BottomTabCollab from './BottomTabCollab'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import AdminTopTab from './AdminTopTab';
 const Drawer = createDrawerNavigator()
 const DrawerTab = () => {
   const [role, setRole] = useState(null);
@@ -27,6 +28,7 @@ const DrawerTab = () => {
 
       <Drawer.Screen name='User' component={BottomTabUser} />
       {role === '1' ? (<Drawer.Screen name='Collaborator' component={BottomTabCollab} />) : (null)}
+      {role === '2' ? (<Drawer.Screen name='Admin' component={AdminTopTab} />) : (null)}
 
     </Drawer.Navigator>
   )

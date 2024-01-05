@@ -4,18 +4,21 @@ import { AntDesign } from '@expo/vector-icons';
 import PercentSetUp from './PercentSetUp';
 import MoneyInput from './MoneyInput';
 import MoneySetUp from './MoneySetUp';
-const SaleSetUp = ({ Info, percent, money, isChoose }) => {
+const SaleSetUp = ({ Info, percent, money, isChoose, magiamgia }) => {
+    console.log(magiamgia)
     return (
         <>
             {isChoose=='percent' ? (
                 <PercentSetUp
                     Info={Info}
                     percent={percent}
+                    magiamgia={magiamgia}
                 />
             ) : (
                 <MoneySetUp
                     Info={Info}
                     money={money}
+                    magiamgia={magiamgia}
                 />
             )}
         </>

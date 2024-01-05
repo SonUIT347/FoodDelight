@@ -72,49 +72,60 @@ const CreateSale = ({ navigation }) => {
     const [food, setFood] = useState([])
     // const [isDisplay, setIsDisplay] = useState(false)
     const [isChoose, setIsChoose] = useState('percent')
-    const [saleName, setSaleName] = useState('')
+    const [tengiamgia, settengiamgia] = useState('')
     const [percent, setPercent] = useState(0)
     const [money, setMoney] = useState(0)
-    const [date, setDate] = useState(new Date())
-    const [timeStart, setTimeStart] = useState(new Date());
-    const [timeEnd, setTimeEnd] = useState(new Date());
+    const [ngaygiamgia, setDate] = useState(new Date())
+    const [giobatdau, setgiobatdau] = useState(new Date());
+    const [gioketthuc, setgioketthuc] = useState(new Date());
     const [showPickerDate, setShowPickerDate] = useState(false);
     const [showPickerStart, setShowPickerStart] = useState(false);
     const [showPickerEnd, setShowPickerEnd] = useState(false);
     const [isShowModal, setIsShowModal] = useState(false)
     const [chooseData, setChooseData] = useState([])
     const [dataModal, setDataModal] = useState([])
+    const [saleCount, setSaleCount] = useState(0)
     const {
         ip
     } = useAuth()
-    const macb = 'MC0001'
+    const macb = 'MC0002'
     const getDataModal = async () => {
         try {
             const response = await axios.get(`http://${ip}:8080/foodapprove/${macb}`);
-            // console.log('Data from API:', response.data);
             setDataModal(response.data);
+        } catch (error) {
+            console.error("Error fetching food pending:", error);
+        }
+    }
+    const getSaleCount = async () => {
+        try {
+            const response = await axios.get(`http://${ip}:8080/salecount`);
+            setSaleCount(response.data.saleCount);
         } catch (error) {
             console.error("Error fetching food pending:", error);
         }
     }
     useEffect(() => {
         getDataModal()
-    }, [])
+        getSaleCount()
+    }, [giobatdau, gioketthuc])
     const handleDateChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
+        const currentDate = selectedDate || ngaygiamgia;
         setShowPickerDate(Platform.OS === 'ios');
         setDate(currentDate);
     };
 
     const handleChangeStart = (event, selectedDate) => {
-        const currentDate = selectedDate || timeStart;
+        const currentDate = selectedDate || giobatdau;
+        console.log(currentDate)
         setShowPickerStart(Platform.OS === 'ios');
-        setTimeStart(currentDate);
+        setgiobatdau(currentDate);
     };
     const handleChangeEnd = (event, selectedDate) => {
-        const currentDate = selectedDate || timeStart;
+        const currentDate = selectedDate || gioketthuc;
+        console.log(currentDate)
         setShowPickerEnd(Platform.OS === 'ios');
-        setTimeEnd(currentDate);
+        setgioketthuc(currentDate);
     };
 
     const showDatePickerDate = () => {
@@ -129,7 +140,11 @@ const CreateSale = ({ navigation }) => {
     };
     const choose = (active) => {
         setIsChoose(active)
-        console.log(isChoose)
+        // console.log(isChoose)
+    }
+    const handleModle = () => {
+        setIsShowModal(!isShowModal)
+
     }
     const checkPrice = () => {
         const array = []
@@ -144,11 +159,28 @@ const CreateSale = ({ navigation }) => {
             )
         }
     }
+    const magiamgia = 'GG00' + (saleCount + 1)
+    const magg = 'GG00' + (saleCount)
+    const createSale = async () => {
+        const response = await axios.post(`http://${ip}:8080/createsale`, {
+            magiamgia,
+            tengiamgia,
+            giobatdau,
+            gioketthuc,
+            ngaygiamgia
+        });
+        console.log('')
+        settengiamgia('')
+        setDate(new Date)
+        setgiobatdau(new Date)
+        setgioketthuc(new Date)
+    }
     const handleSubmit = () => {
         checkPrice()
-        if (timeStart.getTime() > timeEnd.getTime()) {
+        if (giobatdau.getTime() > gioketthuc.getTime()) {
             Alert.alert('Thời gian bắt đầu phải trước thời gian kết thúc')
         }
+        createSale()
     }
     return (
         <SafeAreaView style={styles.container}>
@@ -157,20 +189,20 @@ const CreateSale = ({ navigation }) => {
                 <TextInput
                     title={'Tên khuyến mãi'}
                     placeholder={'Tên khuyến mãi'}
-                    onChangeText={(text) => setSaleName(text)}
+                    onChangeText={(text) => settengiamgia(text)}
                 />
                 <Line />
                 <TouchableWithoutFeedback onPress={() => showDatePickerDate()}>
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Ngày giảm giá</Text>
-                        <Text>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</Text>
+                        <Text>{ngaygiamgia.getDate()}/{ngaygiamgia.getMonth() + 1}/{ngaygiamgia.getFullYear()}</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 <Line />
                 <TouchableWithoutFeedback onPress={() => showTimePickerStart()}>
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Thời gian bắt đầu</Text>
-                        <Text>{timeStart.getHours()}:{timeStart.getMinutes()}:00</Text>
+                        <Text>{giobatdau.getHours()}:{giobatdau.getMinutes()}:00</Text>
                     </View>
                 </TouchableWithoutFeedback>
 
@@ -178,10 +210,13 @@ const CreateSale = ({ navigation }) => {
                 <TouchableWithoutFeedback onPress={() => showTimePickerEnd()}>
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Thời gian kết thúc</Text>
-                        <Text>{timeEnd.getHours()}:{timeEnd.getMinutes()}:00</Text>
+                        <Text>{gioketthuc.getHours()}:{gioketthuc.getMinutes()}:00</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 <Line />
+                <TouchableOpacity style={styles.submitBtn} onPress={() => handleSubmit()}>
+                    <Text style={styles.btnSubmit_text}>Xác nhận</Text>
+                </TouchableOpacity>
                 <TouchableWithoutFeedback onPress={() => setIsShowModal(!isShowModal)} >
                     <View style={styles.sale_name}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Chọn sản phẩm</Text>
@@ -194,7 +229,7 @@ const CreateSale = ({ navigation }) => {
                 <Line />
                 {showPickerDate && (
                     <DateTimePicker
-                        value={date}
+                        value={ngaygiamgia}
                         mode="datetime"
                         is24Hour={true}
                         display="default"
@@ -203,22 +238,23 @@ const CreateSale = ({ navigation }) => {
                 )}
                 {showPickerStart && (
                     <DateTimePicker
-                        value={timeStart}
+                        value={giobatdau}
                         mode="time"
                         is24Hour={true}
                         display="default"
-                        onChange={handleChangeStart}
+                        onChange={(event,selectedDate)=> handleChangeStart(event, selectedDate)}
                     />
                 )}
                 {showPickerEnd && (
                     <DateTimePicker
-                        value={timeEnd}
+                        value={gioketthuc}
                         mode="time"
                         is24Hour={true}
                         display="default"
-                        onChange={handleChangeEnd}
+                        onChange={(event, selectedDate) => handleChangeEnd(event, selectedDate)}
                     />
                 )}
+
                 {isChoose === 'percent' ? (
                     <>
                         <View style={styles.discountChose}>
@@ -258,13 +294,14 @@ const CreateSale = ({ navigation }) => {
                 )}
                 {/* <View style={styles.food}> */}
                 <ScrollView style={{ width: '95%', height: 430 }} nestedScrollEnabled={true}>
-                    {console.log(chooseData)}
+                    {/* {console.log(chooseData)} */}
                     {chooseData.map((food) => (
                         <SaleSetUp
                             Info={food}
                             percent={percent}
                             money={money}
                             isChoose={isChoose}
+                            magiamgia={magg}
                         />
                     ))}
                 </ScrollView>
@@ -281,7 +318,7 @@ const CreateSale = ({ navigation }) => {
                                 <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                                     {dataModal.map((food, index) => (
                                         <Food
-                                            // key={food.mama}
+                                            key={food.mama}
                                             food={food}
                                             id={food.mama}
                                             chooseData={chooseData}
@@ -290,15 +327,12 @@ const CreateSale = ({ navigation }) => {
                                     ))}
                                 </View>
                             </ScrollView>
-                            <TouchableOpacity style={styles.submitBtn} onPress={() => setIsShowModal(!isShowModal)}>
+                            <TouchableOpacity style={styles.submitBtn} onPress={() => handleModle()}>
                                 <Text style={styles.btnSubmit_text}>Xác nhận</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
-                <TouchableOpacity style={styles.submitBtn} onPress={() => handleSubmit()}>
-                    <Text style={styles.btnSubmit_text}>Xác nhận</Text>
-                </TouchableOpacity>
             </ScrollView>
 
 

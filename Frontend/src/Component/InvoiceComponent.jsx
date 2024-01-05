@@ -5,7 +5,7 @@ const InvoiceComponent = ({ food }) => {
     return (
         <View style={styles.food_ctn}>
             <Image
-                source={{ uri: food.img }}
+                source={{ uri: food.Url }}
                 style={{
                     width: 90,
                     height: 120,
@@ -14,9 +14,9 @@ const InvoiceComponent = ({ food }) => {
                 }}
             />
             <View style={styles.foodInfo}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.foodName}</Text>
-                <Text style={{marginTop:5, marginBottom:5, fontSize: 15}}>Số lượng: {food.stock}</Text>
-                <Text style={{fontSize: 15}}>Giá: {food.price}</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{food.TenMA}</Text>
+                <Text style={{marginTop:5, marginBottom:5, fontSize: 15}}>Số lượng: {food.SL}</Text>
+                <Text style={{fontSize: 15}}>Giá: {food.GiaTien}</Text>
             </View>
         </View>
     )

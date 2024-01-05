@@ -8,6 +8,7 @@ import TopTab from './TopTab'
 import HomeCollabNav from './HomeCollabNav'
 import Invoice from '../Screen/Invoice'
 import InvoiceNav from './InvoiceNav'
+import MyStore from '../Screen/MyStore'
 const Tab = createBottomTabNavigator()
 const BottomTabCollab = () => {
   return (
@@ -15,7 +16,7 @@ const BottomTabCollab = () => {
         headerShown:false
     }}>
         <Tab.Screen name='CollabMain' component={HomeCollabNav}/>
-        <Tab.Screen name='Profile' component={Profile}/>
+        {/* <Tab.Screen name='Profile' component={MyStore}/> */}
         <Tab.Screen name='Invoice' component={InvoiceNav} />
     </Tab.Navigator>
   )
