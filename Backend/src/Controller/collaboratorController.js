@@ -18,16 +18,63 @@ export const getCollaborator = async (req, res) => {
 export const getAllCollabPending = async (req, res) => {
   const q = 'SELECT * FROM collaborator WHERE trangthai = "pending"'
   db.query(q, (err, data) => {
-    if(err){
+    if (err) {
       console.error(err);
       res.status(500).send('Error fetching user count');
     }
-    else{
+    else {
       res.json(data);
     }
   })
 }
-
+export const getCountFoodPending = async (req, res) => {
+  const macb = req.params.macb
+  const q = `SELECT COUNT(*) AS foodpendingcount FROM monan, collaborator 
+              WHERE monan.MaCollaborator = collaborator.MaCollaborator 
+              AND monan.TrangThai = 'pending' 
+              AND collaborator.MaCollaborator = ?`
+  db.query(q, [macb], (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error fetching user count');
+    } else {
+      const foodpendingcount = rows[0].foodpendingcount;
+      res.json({ foodpendingcount });
+    }
+  });
+}
+export const getCountFoodApprove = async (req, res) => {
+  const macb = req.params.macb
+  const q = `SELECT COUNT(*) AS foodapprovecount FROM monan, collaborator 
+              WHERE monan.MaCollaborator = collaborator.MaCollaborator 
+              AND monan.TrangThai = 'approve' 
+              AND collaborator.MaCollaborator = ?`
+  db.query(q, [macb], (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error fetching user count');
+    } else {
+      const foodapprovecount = rows[0].foodapprovecount;
+      res.json({ foodapprovecount });
+    }
+  });
+}
+export const getCountDeny = async (req, res) => {
+  const macb = req.params.macb
+  const q = `SELECT COUNT(*) AS fooddenycount FROM monan, collaborator 
+              WHERE monan.MaCollaborator = collaborator.MaCollaborator 
+              AND monan.TrangThai = 'deny' 
+              AND collaborator.MaCollaborator = ?`
+  db.query(q, [macb], (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error fetching user count');
+    } else {
+      const fooddenycount = rows[0].fooddenycount;
+      res.json({ fooddenycount });
+    }
+  });
+}
 export const postInsertCollaborator = (req, res) => {
   const { maKH, nameCollaborator, address, province, sdt, email } = req.body
   console.log('thông tin update: ' + '' + maKH + ' ' + nameCollaborator + ' ' + address + ' ' + province + ' ' + sdt + ' ' + email)

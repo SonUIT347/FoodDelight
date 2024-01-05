@@ -54,7 +54,7 @@ export default function App() {
         
       </NavigationContainer> */} 
       <NavigationContainer>
-        {/* <AuthNav/> */}
+        <AuthNav/>
         {/* <AdminStore/> */}
         {/* <AdminProduct/> */}
         {/* <AdminTopTab/> */}
@@ -63,7 +63,7 @@ export default function App() {
         {/* <FoodStatus/> */}
         {/* <TopTab/> */}
         {/* <AuthNav/> */}
-        <PayDirectly/>
+        {/* <PayDirectly/> */}
         {/* <CreateSale/> */}
         {/* <Invoice/> */}
         {/* <Product/> */}

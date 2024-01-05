@@ -1,13 +1,69 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { Feather, Foundation, AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import Line from '../Component/Line';
+import useAuth from '../context/useAuth';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CollabMain = ({navigation}) => {
+const CollabMain = ({ navigation }) => {
+    const {
+        ip,
+        username
+    } = useAuth()
+    
+    const [collab, setCollab] = useState([])
+    const [pendingCount, setPendingCount] = useState(0)
+    const [approveCount, setApproveCount] = useState(0)
+    const [denyCount, setDenyCount] = useState(0)
+    const getCollabData = async () => {
+        await axios.get(`http://${ip}:8080/Collaborator/${username}`).then(response => {
+            setCollab(response.data[0].TenUser)
+            console.log(collab)
+        }
+        )
+    }
+    const getCountFoodPending = async () => {
+        try {
+            const macb = await AsyncStorage.getItem('IdUser');
+            const response = await axios.get(`http://${ip}:8080/foodpendingcount/${macb}`);
+            setPendingCount(response.data.foodpendingcount);
+            console.log(pendingCount);
+        } catch (error) {
+            console.error('Error fetching food count:', error);
+        }
+    };
+    const getCountApprove = async () => {
+        try {
+            const macb = await AsyncStorage.getItem('IdUser');
+            const response = await axios.get(`http://${ip}:8080/foodapprovecount/${macb}`);
+            setApproveCount(response.data.foodapprovecount);
+            console.log(approveCount);
+        } catch (error) {
+            console.error('Error fetching food count:', error);
+        }
+    };
+    const getCountDeny = async () => {
+        try {
+            const macb = await AsyncStorage.getItem('IdUser');
+            const response = await axios.get(`http://${ip}:8080/fooddenycount/${macb}`);
+            setDenyCount(response.data.fooddenycount);
+            console.log(denyCount);
+        } catch (error) {
+            console.error('Error fetching food count:', error);
+
+        }
+    }
+    useEffect(() => {
+        getCollabData()
+        getCountFoodPending()
+        getCountApprove()
+        getCountDeny()
+    }, [])
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -16,7 +72,7 @@ const CollabMain = ({navigation}) => {
                     size={24}
                     color="#4ECB71"
                 />
-                <Text style={styles.header_text}>Shop com ga</Text>
+                <Text style={styles.header_text}>{collab}</Text>
             </View>
             <TouchableWithoutFeedback style={{ width: '100%' }}>
                 <View style={styles.dailyoverview}>
@@ -53,19 +109,19 @@ const CollabMain = ({navigation}) => {
                 <View style={styles.product_element}>
                     <View >
                         <TouchableOpacity style={styles.income} onPress={() => navigation.navigate('StatusNav')}>
-                            <Text>58</Text>
+                            <Text>{approveCount}</Text>
                             <Text style={{ fontSize: 12 }}>Đang hoạt động</Text>
                         </TouchableOpacity>
                     </View>
                     <View >
                         <TouchableOpacity style={styles.income}>
-                            <Text>58</Text>
+                            <Text>{pendingCount}</Text>
                             <Text style={{ fontSize: 12 }}>Đang chờ duyệt</Text>
                         </TouchableOpacity>
                     </View>
                     <View >
                         <TouchableOpacity style={styles.income}>
-                            <Text>58</Text>
+                            <Text>{denyCount}</Text>
                             <Text style={{ fontSize: 12 }}>Từ chối</Text>
                         </TouchableOpacity>
                     </View>
@@ -90,22 +146,22 @@ const CollabMain = ({navigation}) => {
                 </View>
 
             </TouchableOpacity>
-            <TouchableOpacity style={styles.createsale} onPress={() => navigation.navigate('CreateSale')}>
+            {/* <TouchableOpacity style={styles.createsale} onPress={() => navigation.navigate('CreateSale')}>
                 <Foundation
                     name="burst-sale"
                     size={24}
                     color="red"
                 />
                 <Text style={{ fontSize: 20, marginLeft: 10 }}>Tạo khuyến mãi</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.createsale}>
+            </TouchableOpacity> */}
+            {/* <TouchableOpacity style={styles.createsale}>
                 <AntDesign
                     name="totop"
                     size={24}
                     color="#4ECB71"
                 />
                 <Text style={{ fontSize: 20, marginLeft: 10 }}>Sản phẩm bán chạy</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
         </View>
     )
