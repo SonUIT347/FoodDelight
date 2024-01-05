@@ -20,16 +20,20 @@ const images = [
     // Thêm đường dẫn hình ảnh khác nếu cần
   ];
 
-const maMA = 'MA0001'
+// const maMA = 'MA0001'
 const username = 'tranvanson'
 
-const Product=() => {
+const Product=({ route, navigation }) => {
     const [count, setCount] = useState(1)
-    const [dataFood, setDataFood] = useState('')
+    const [dataFood, setDataFood] = useState([])
     const [dataTypeFood, setDataTypeFood] = useState([])
     const [arrImage, setArrImage] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0);
     const [checkCart, setCheckCart] = useState(0);
+
+    const maMA = `${route.params.MaMA}`
+    
+    console.log("maMA ", maMA)
 
     useEffect(() => {
         getFood()
@@ -153,6 +157,11 @@ const Product=() => {
             setCount(count-1)
     };
 
+    const handerPayDirectly =(MaMA, SL, TongTien, MaCollaborator)=>{
+        console.log("handerPayDirectly ", MaMA, SL, TongTien, MaCollaborator)
+        navigation.navigate('Pay', {sum: TongTien, MaMA, SL, MaCollaborator, PayDirectly: true});
+    }
+
 
   return (
     <View style={styles.container}>
@@ -203,14 +212,14 @@ const Product=() => {
 
 
         <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 10, width: '100%'}} numberOfLines={1}>
-            {dataFood.TenMA}
+            {/* {dataFood.TenMA} */}
         </Text>
 
         <View style={{flexDirection: 'row'}}>
             <View style={{backgroundColor: '#F5FBF3', flex: 1, marginRight: 25, borderRadius: 10, borderWidth: 1, borderColor: 'green', padding: 10}}>
                 <Text style={{fontSize: 14, fontWeight: '500', color: '#6AC949'}}>Giá bán</Text>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={{fontSize: 16, fontWeight: '500', color: 'gray'}}>{formattedAmount(dataFood.GiaTien)} đ</Text>
+                    <Text style={{fontSize: 16, fontWeight: '500', color: 'gray'}}>{dataFood.length == 0 ? (0):(formattedAmount(dataFood.GiaTien))} đ</Text>
                     {/* <Text style={{fontSize: 16, fontWeight: '500', color: '#dddd', marginLeft: 5, textDecorationLine: 'line-through'}} >{formattedAmount(dataFood.GiaTien)} đ</Text> */}
 
                 </View>
@@ -222,7 +231,11 @@ const Product=() => {
         </View>
 
         <ScrollView style={{backgroundColor: '#EDF9E9', marginVertical: 20, flex: 1, width: '100%'}}>
-            <Text style={{padding: 10, flex: 1, width: '100%'}}>{dataFood.MoTa == "" ? ("Chưa có mô tả món ăn"):(dataFood.MoTa)}</Text>
+            <Text style={{padding: 10, flex: 1, width: '100%'}}>
+                {
+                    dataFood.length == 0 ? (0) : (dataFood.MoTa == "" ? ("Chưa có mô tả món ăn"):(dataFood.MoTa))
+                }
+                </Text>
 
         </ScrollView>
 
@@ -239,7 +252,7 @@ const Product=() => {
                 </TouchableOpacity>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20, marginTop: 10}}>
-                <TouchableOpacity onPress={()=>{}} style={styles.closeButton1}>
+                <TouchableOpacity onPress={()=>handerPayDirectly(maMA, count, dataFood.GiaTien*count, dataFood.MaCollaborator)} style={styles.closeButton1}>
                     <Text style={styles.closeButtonText}>Mua</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>handleAddCart(dataFood.GiaTien)} style={styles.closeButton2}>

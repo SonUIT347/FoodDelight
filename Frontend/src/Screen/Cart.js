@@ -139,7 +139,7 @@ const Cart=({ navigation, refreshCount })=>{
         {
             updateDataCart()
             updatePriceCart()
-            navigation.navigate('Pay', { sum: sum});
+            navigation.navigate('Pay', {sum: sum});
         }
         
     }

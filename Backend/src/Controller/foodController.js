@@ -223,9 +223,10 @@ export const getFoodDeny = async (req, res) => {
 }
 
 
+
 export const getFood = async (req, res) => {
     const maMA = req.params.maMA;
-    const q = "SELECT * FROM monan ma WHERE ma.MaMA = ?"
+    const q = "SELECT * FROM monan ma, collaborator c WHERE ma.MaMA = ? and c.MaCollaborator = ma.MaCollaborator"
     // const q='select * FROM taikhoan';
     db.query(q, [maMA], (err, data) => {
         if (err) {
