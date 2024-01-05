@@ -6,7 +6,7 @@ import Post from "../Component/Post";
 import Search from "../Component/Search";
 import No_Products from "../Component/No_Products";
 
-import { Data } from "../../../App";
+const Data = []
 
 const header = "Món ăn chính"
 
