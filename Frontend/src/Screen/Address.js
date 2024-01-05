@@ -586,7 +586,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     // alignItems: 'center',
-    marginTop: Platform.OS === 'android' ? 30 : 0,
+    // marginTop: Platform.OS === 'android' ? 30 : 0,
     paddingHorizontal: 20
     // justifyContent: 'center',
     },

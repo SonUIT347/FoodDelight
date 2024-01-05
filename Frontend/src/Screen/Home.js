@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: 'green',
     width: '100%',
-    marginTop: Platform.OS === 'android' ? 30 : 0,
+    // marginTop: Platform.OS === 'android' ? 30 : 0,
     // height: '100%',
     // alignItems: 'center',
     // justifyContent: 'center',

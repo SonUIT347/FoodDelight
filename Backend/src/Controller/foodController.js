@@ -97,7 +97,7 @@ export const selectFoodSnacks = async (req, res) => {
     const day = req.params.day
     const time = req.params.time
     const q = "SELECT * FROM monan ma, anhmonan a, loaimonan l, ctlma, collaborator c WHERE ma.MaMA = ctlma.MaMA and a.MaMA = ma.MaMA and a.ViewPost = 1 " +
-        "and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món ăn vặt' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator";
+        "and ma.TrangThai = 'approve' and ctlma.MaLoaiMA = l.MaLoaiMA and l.TenLoaiMA = 'Món khai vị' and ma.SL > 0 and c.MaCollaborator = ma.MaCollaborator";
     // const q='select * FROM taikhoan';
     db.query(q, [day, time, time], (err, data) => {
         if (err) {

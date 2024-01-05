@@ -259,10 +259,11 @@ const Cart=({ navigation, refreshCount })=>{
     <View style={styles.container}>
         {/* {console.log(data.length)} */}
         {console.log(arrCount)}
-        <View 
+
+        {/* <View 
             style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20, height: 85,
             alignItems: 'center', width: '100%', position: 'relative' }}
-        >
+        > */}
             {/* <AntDesign 
                 name="delete" 
                 size={20} color="black" 
@@ -271,10 +272,11 @@ const Cart=({ navigation, refreshCount })=>{
             /> */}
             <View style={{width: '100%'}}>
                 {/* <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>{header}</Text> */}
-                <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>Giỏ hàng</Text>
+                {/* <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>Giỏ hàng</Text> */}
             </View>
 
-        </View>
+        {/* </View> */}
+
         <View style={{flex: 1}}>
             { 
                 data.length == 0 ? (

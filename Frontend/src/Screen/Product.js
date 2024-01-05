@@ -146,15 +146,15 @@ const Product = ({ navigation }) => {
   return (
     <View style={styles.container}>
         <View 
-            style={{flexDirection: "row", justifyContent: "space-between", height: 85,
+            style={{flexDirection: "row", justifyContent: "space-between", height: 45,
             alignItems: 'center', width: '100%', position: 'relative', alignSelf: 'flex-start'}}
         >
-            <AntDesign 
+            {/* <AntDesign 
                 name="arrowleft" 
                 size={30} color="black" 
                 style={{backgroundColor: 'green', borderRadius: 20, width: 35,
                 height: 35, textAlign: "center", textAlignVertical: 'center', position: "absolute"}}
-            />
+            /> */}
             <View style={{width: '100%'}}>
                 {/* <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>{header}</Text> */}
                 <Text style={{fontSize: 20, fontWeight: 500, textAlign: 'center', width: '100%'}}>Chi tiết sản phẩm</Text>
@@ -249,8 +249,8 @@ const styles = StyleSheet.create({
     container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginHorizontal: 20,
-    marginTop: Platform.OS === 'android' ? 30 : 0,
+    paddingHorizontal: 20,
+    // marginTop: Platform.OS === 'android' ? 30 : 0,
     alignItems: 'center',
     // justifyContent: 'center',
     },
