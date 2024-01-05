@@ -1,11 +1,11 @@
 import db from '../../index.js';
 
 export const saveFood = async (req, res) => {
-    const { mama, macollaborator, nameFood, priceFood, luotban, trangthai, stock, selected, imageUrls, maAnh } = req.body;
-    const q1 = 'INSERT INTO monan (mama, macollaborator, tenma, giatien, luotban, trangthai, sl) VALUES (?,?,?,?,?,?,?)';
+    const { mama, macollaborator, nameFood, priceFood, luotban, trangthai, stock, selected, imageUrls, maAnh, desFood } = req.body;
+    const q1 = 'INSERT INTO monan (mama, macollaborator, tenma, giatien, luotban, trangthai, sl, mota) VALUES (?,?,?,?,?,?,?,?)';
     try {
         await new Promise((resolve, reject) => {
-            db.query(q1, [mama, macollaborator, nameFood, priceFood, luotban, trangthai, stock], (err, data) => {
+            db.query(q1, [mama, macollaborator, nameFood, priceFood, luotban, trangthai, stock, desFood], (err, data) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -35,17 +35,17 @@ export const saveFood = async (req, res) => {
         console.error('Error creating food detail:', err);
         res.status(500).send('Error creating food detail...');
     }
-    const q3 = 'INSERT INTO anhmonan (maanh, mama, url) VALUES ?'
+    const q3 = 'INSERT INTO anhmonan (maanh, mama, url, viewpost) VALUES ?'
     try {
         const values = imageUrls.map((url, index) => [
             maAnh + index, // Assuming index + 1 is the image ID; adjust based on your schema
             mama,
-            url
+            url,
+            index === 0 ? 1 : 0,
         ]);
 
         await new Promise((resolve, reject) => {
             db.query(q3, [values], (err, data) => {
-                console.log(q3)
                 if (err) {
                     reject(err);
                 } else {

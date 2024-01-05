@@ -85,7 +85,8 @@ const CollabProduct = ({ navigation }) => {
                 stock,
                 selected,
                 imageUrls,
-                maAnh
+                maAnh,
+                desFood
             });
             // navigation.navigate('Drawer');
             setNameFood('')

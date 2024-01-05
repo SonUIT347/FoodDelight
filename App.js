@@ -47,9 +47,9 @@ export default function App() {
   return (
     <AuthContext>
       <NavigationContainer>
-        {/* <AuthNav/> */}
+        <AuthNav/>
         {/* <CreateSale/> */}
-        <Invoice/>
+        {/* <Invoice/> */}
       </NavigationContainer>
     </AuthContext>
   );
