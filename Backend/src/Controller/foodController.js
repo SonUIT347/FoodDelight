@@ -173,7 +173,29 @@ export const getFoodPending = async (req, res) => {
         WHERE m.trangthai = 'pending' AND c.macollaborator = ?
         GROUP BY m.mama, m.tenma, m.SL, m.GiaTien;
     `;
+
     db.query(q, [macb], (err, data) => {
+        if (err) {
+            console.log('Get food status has an error: ' + err);
+            res.status(500).send('Had an error fetching food status');
+        } else {
+            res.json(data);
+        }
+    });
+};
+
+export const getAllFoodPending = async (req, res) => {
+    // const macb = req.params.macb;
+    const q = `
+        SELECT m.mama, m.tenma, m.SL, m.GiaTien, MAX(i.Url) AS image
+        FROM monan m
+        JOIN collaborator c ON m.macollaborator = c.macollaborator
+        LEFT JOIN anhmonan i ON m.mama = i.mama
+        WHERE m.trangthai = 'pending'
+        GROUP BY m.mama, m.tenma, m.SL, m.GiaTien;
+    `;
+    
+    db.query(q, (err, data) => {
         if (err) {
             console.log('Get food status has an error: ' + err);
             res.status(500).send('Had an error fetching food status');

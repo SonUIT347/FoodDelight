@@ -397,8 +397,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // marginTop: Platform.OS === 'android' ? 30 : 0,
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
     alignItems: 'center',
+    backgroundColor: 'white'
   },
   image: {
     width: 100,

@@ -52,7 +52,7 @@ const DetailedBill=({MaHD, ip})=>{
                     >
                         {/* {console.log("đây là chi tiết món ăn")} */}
                         {/* {console.log(item)} */}
-                        <Image source={{uri:images[0]}} style={{width: 90, height: 90, borderRadius: 14, margin: 5}}/>
+                        <Image source={{uri:item.Url}} style={{width: 90, height: 90, borderRadius: 14, margin: 5}}/>
         
                         <View style={{flex: 1, padding: 5, paddingLeft: 0}}>
                             <Text style={{paddingHorizontal: 10, fontSize: 16, fontWeight: 500, paddingBottom: 5}} numberOfLines={1}>{item.TenMA}</Text>
